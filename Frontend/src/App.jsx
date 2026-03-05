@@ -10,21 +10,17 @@ import Testimonials from "./Components/Testimonial/Testimonial";
 function App() {
   return (
     <BrowserRouter>
-
-        <Routes>
-          <Route path="/" element={<div>Home</div>} />
-          <Route path="/Classes" element={<Classes/>}/>
-          <Route path="/Teachers" element={<Teacher/>}/>
-        </Routes>
+      
       <Navbar />
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/Teachers" element={<Teacher />} />
         <Route path="/test" element={<Testimonials />} />
+        <Route path="/Classes" element={<Classes />} />
       </Routes>
 
       <Footer />
-
     </BrowserRouter>
   );
 }
