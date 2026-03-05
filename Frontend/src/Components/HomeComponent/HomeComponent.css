@@ -95,26 +95,40 @@ margin-bottom:30px;
 .home-hero-buttons{
 display:flex;
 align-items:center;
-gap:28px;
+gap:30px;
 flex-wrap:wrap;
 }
 
 /* join button */
 
 .home-btn-join{
+position:relative;
 background:#ff5aa5;
-color:white;
-padding:14px 40px;
-font-size:18px;
+color:#fff;
+padding:16px 48px;
+font-size:20px;
 font-weight:600;
-border-radius:12px;
-border:2px dashed white;
+border:none;
+border-radius:14px;
 cursor:pointer;
-transition:all .3s ease;
+overflow:hidden;
 }
 
+.home-btn-join::before{
+content:"";
+position:absolute;
+top:6px;
+left:6px;
+right:6px;
+bottom:6px;
+border:2px dashed white;
+border-radius:10px;
+pointer-events:none;
+}
+
+
 .home-btn-join:hover{
-background:#ff2f8d;
+background:#2f40ff;
 transform:translateY(-2px);
 }
 
@@ -156,27 +170,31 @@ transform:scale(1.1);
 .home-support{
 display:flex;
 align-items:center;
-gap:16px;
-margin-top:30px;
+gap:12px;
+margin-top:20px;
+flex-wrap:nowrap;
 }
 
 .home-support-imgs{
 display:flex;
+align-items:center;
 }
 
 .home-support-imgs img{
-width:42px;
-height:42px;
+width:32px;
+height:32px;
 border-radius:50%;
 object-fit:cover;
-border:3px solid white;
-margin-left:-12px;
+border:2px solid white;
+margin-left:-8px;
 }
 
 .home-support p{
-font-size:17px;
+font-size:14px;
 font-weight:500;
 color:#333;
+white-space:nowrap;
+margin:0;
 }
 
 /* ===============================
@@ -187,11 +205,10 @@ color:#333;
 position:absolute;
 top:50%;
 transform:translateY(-50%);
-width:55px;
-height:55px;
+width:60px;
+height:60px;
 border-radius:50%;
-border:2px dashed white;
-background:#ff63b1;
+background:#ff5aa5;
 color:white;
 font-size:22px;
 cursor:pointer;
@@ -199,7 +216,19 @@ z-index:3;
 display:flex;
 align-items:center;
 justify-content:center;
-transition:.3s;
+border:none;
+}
+
+.home-arrow::before{
+content:"";
+position:absolute;
+top:6px;
+left:6px;
+right:6px;
+bottom:6px;
+border:2px dashed white;
+border-radius:50%;
+pointer-events:none;
 }
 
 .home-arrow:hover{
@@ -398,13 +427,22 @@ gap:10px;
 }
 
 .home-hero-sun{
-width:55px;
+width:77px;
 left:15px;
 }
 
 .home-hero-star{
 width:55px;
 right:15px;
+}
+
+.home-support-imgs img{
+width:28px;
+height:28px;
+}
+
+.home-support p{
+font-size:13px;
 }
 
 }

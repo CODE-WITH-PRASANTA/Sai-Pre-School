@@ -1,12 +1,17 @@
 import React from 'react'
-import HomeComponent from '../../Components/HomeComponent/HomeComponent';
+import Testimonials from '../../Components/Testimonials/Testimonials.JSX'
+import HomeComponent from '../../Components/HomeComponent/HomeComponent'
+import HomeSecondCompo from '../../Components/HomeSecondCompo/HomeSecondCompo'
 
 const Home = () => {
   return (
-    <div>
-        <HomeComponent/>
-      
-    </div>
+
+    <>
+    <HomeComponent/>
+    <HomeSecondCompo/>
+
+      <Testimonials/>
+    </>
   )
 }
 

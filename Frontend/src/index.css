@@ -1,1 +1,51 @@
 @import "tailwindcss";
+
+
+.social-icon {
+  @apply w-10 h-10 flex items-center justify-center rounded-full bg-pink-500 text-white cursor-pointer transition transform hover:scale-110 hover:bg-pink-600;
+}
+
+
+
+/* Footer icon */
+
+.footer-link {
+@apply cursor-pointer hover:text-pink-500 transition font-bold
+}
+.social-btn{
+  @apply w-10 h-10 flex items-center justify-center rounded-full bg-pink-500 text-white cursor-pointer transition hover:scale-110 hover:bg-pink-600;
+}
+
+.footer-title{
+  @apply text-xl font-semibold text-blue-600 mb-6;
+}
+
+.footer-link{
+  @apply cursor-pointer hover:text-pink-500 transition;
+}
+
+.floating-btn{
+  @apply fixed bg-pink-500 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition hover:bg-pink-600;
+}
+
+/* testmonial */
+
+@keyframes floatSlow {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-18px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes floatSlow2 {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(22px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-floatSlow {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+.animate-floatSlow2 {
+  animation: floatSlow2 7s ease-in-out infinite;
+}
