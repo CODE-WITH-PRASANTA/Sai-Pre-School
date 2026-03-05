@@ -3,25 +3,22 @@ import "./App.css";
 import Navbar from "./Pages/Navbar/Navbar";
 import Home from "./Pages/Home/Home";
 import Footer from "./Pages/Footer/Footer";
-import Testimonials from "./Components/Testimonials/Testimonials.JSX";
+import Testimonials from "./Components/Testimonial/Testimonial";
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <Navbar />
+    <BrowserRouter>
 
-        <Routes>
-          
-          <Route path="/" element={<Home/>} />
+      <Navbar />
 
-          <Route path="/test" element={<Testimonials/>}/>
-        </Routes>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/test" element={<Testimonials />} />
+      </Routes>
 
-        <Footer/>
+      <Footer />
 
-      </BrowserRouter>
-    </>
+    </BrowserRouter>
   );
 }
 
