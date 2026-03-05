@@ -1,0 +1,264 @@
+/* ===============================
+   ClassTime (Reference Layout)
+   Base: class-time
+================================ */
+
+.class-time{
+  position: relative;
+  width: 100%;
+  background: #ffffff;
+  padding: clamp(26px, 4vw, 44px) 0 clamp(34px, 5vw, 60px);
+  overflow: hidden;
+}
+
+/* ✅ dotted route background (same vibe as reference) */
+.class-time__bg{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 1;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(0, 170, 255, 0.08) 0 2px, transparent 3px) 0 0/28px 28px,
+    radial-gradient(circle at 90% 40%, rgba(255, 80, 170, 0.08) 0 2px, transparent 3px) 0 0/30px 30px;
+}
+
+/* dashed path lines (SVG) */
+.class-time__bg::before,
+.class-time__bg::after{
+  content: "";
+  position: absolute;
+  inset: -40px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.7;
+}
+
+.class-time__bg::before{
+  left: -14%;
+  top: 10%;
+  width: 60%;
+  height: 90%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='500' viewBox='0 0 900 500'%3E%3Cpath d='M40 120 C 160 40, 270 220, 380 150 S 610 220, 720 140 S 860 200, 890 120' fill='none' stroke='%2390d7ff' stroke-width='3' stroke-dasharray='10 10' stroke-linecap='round'/%3E%3Cpath d='M70 360 C 170 280, 250 430, 370 350 S 580 420, 690 340 S 840 390, 880 330' fill='none' stroke='%2390d7ff' stroke-width='3' stroke-dasharray='10 10' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.class-time__bg::after{
+  right: -18%;
+  top: 6%;
+  width: 62%;
+  height: 90%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='520' viewBox='0 0 900 520'%3E%3Cpath d='M20 140 C 180 60, 260 230, 420 150 S 650 240, 760 160 S 860 240, 890 170' fill='none' stroke='%23ff9ed6' stroke-width='3' stroke-dasharray='10 10' stroke-linecap='round'/%3E%3Cpath d='M30 390 C 190 300, 270 470, 430 380 S 660 470, 770 390 S 865 460, 895 420' fill='none' stroke='%23ff9ed6' stroke-width='3' stroke-dasharray='10 10' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* container */
+.class-time__container{
+  position: relative;
+  z-index: 1;
+  width: min(1280px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+/* ✅ grid (3 + 3) */
+.class-time__grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 2.2vw, 30px);
+}
+
+/* card */
+.class-time__card{
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 18px 45px rgba(15, 25, 70, 0.10);
+  overflow: hidden;
+  transform: translateY(0);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+/* ✅ dashed pink border like reference */
+.class-time__card::before{
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 14px;
+  border: 2px dashed rgba(255, 80, 170, 0.85);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.class-time__card:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 22px 60px rgba(15, 25, 70, 0.14);
+}
+
+.class-time__media{
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+
+.class-time__img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ✅ yellow class time bar */
+.class-time__timeBar{
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  width: calc(100% - 64px);
+  background: #f3ff1a;
+  border-radius: 6px;
+  padding: 10px 12px;
+  text-align: center;
+  z-index: 2;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+}
+
+.class-time__timeText{
+  font-size: 14px;
+  font-weight: 800;
+  color: #111;
+}
+
+/* body */
+.class-time__body{
+  padding: 18px 18px 20px;
+}
+
+.class-time__title{
+  margin: 8px 0 10px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #ff4fa6; /* pink like reference */
+  line-height: 1.15;
+}
+
+.class-time__desc{
+  margin: 0 0 18px;
+  color: #6b6f7a;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* stats row */
+.class-time__stats{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.class-time__stat{
+  border-radius: 8px;
+  padding: 12px 12px;
+  color: #fff;
+  font-weight: 800;
+}
+
+.class-time__statLabel{
+  font-size: 12px;
+  opacity: 0.95;
+  margin-bottom: 4px;
+}
+
+.class-time__statValue{
+  font-size: 18px;
+  letter-spacing: 0.2px;
+}
+
+.class-time__stat--blue{ background: #67b9e9; }
+.class-time__stat--green{ background: #68c85e; }
+.class-time__stat--orange{ background: #ffa63a; }
+
+/* ===============================
+   ✅ Pagination (added only)
+================================ */
+
+.class-time__pagination{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: clamp(18px, 2.4vw, 28px);
+}
+
+.class-time__pageBtn{
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 900;
+  color: #111;
+  background: rgba(255, 80, 170, 0.14);
+  box-shadow: 0 10px 22px rgba(15, 25, 70, 0.10);
+  transition: transform 180ms ease, background 180ms ease, opacity 180ms ease;
+}
+
+.class-time__pageBtn:hover{
+  transform: translateY(-1px);
+  background: rgba(255, 80, 170, 0.20);
+}
+
+.class-time__pageBtn:disabled{
+  cursor: not-allowed;
+  opacity: 0.45;
+  transform: none;
+}
+
+.class-time__pageNums{
+  display: inline-flex;
+  gap: 10px;
+}
+
+.class-time__pageNum{
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 0;
+  cursor: pointer;
+  font-weight: 900;
+  color: #111;
+  background: #ffffff;
+  box-shadow: 0 10px 22px rgba(15, 25, 70, 0.10);
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.class-time__pageNum:hover{
+  transform: translateY(-1px);
+  background: rgba(0, 170, 255, 0.10);
+}
+
+.class-time__pageNum--active{
+  background: #ff4fa6;
+  color: #ffffff;
+}
+
+/* ===============================
+   Responsive
+================================ */
+
+@media (max-width: 1024px){
+  .class-time__grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .class-time__media{ height: 230px; }
+}
+
+@media (max-width: 640px){
+  .class-time__grid{
+    grid-template-columns: 1fr;
+  }
+  .class-time__media{ height: 220px; }
+  .class-time__timeBar{ width: calc(100% - 54px); }
+
+  .class-time__pagination{
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}
