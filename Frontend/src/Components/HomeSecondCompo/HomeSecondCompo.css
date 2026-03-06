@@ -1,0 +1,211 @@
+/* =========================
+   SECTION
+========================= */
+
+.home2{
+position:relative;
+background:#f5f5f5;
+overflow:hidden;
+}
+
+/* =========================
+   STATS BAR
+========================= */
+
+.home2-stats{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:60px;
+padding:50px 20px;
+background-size:cover;
+background-repeat:repeat;
+position:relative;
+}
+
+.home2-stat{
+text-align:center;
+}
+
+.home2-stat h2{
+font-size:60px;
+font-weight:700;
+color:black;
+}
+
+.home2-stat p{
+margin-top:10px;
+font-size:18px;
+color:#333;
+}
+
+.home2-divider{
+width:1px;
+height:70px;
+background:#888;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.home2-content{
+max-width:1200px;
+margin:auto;
+text-align:center;
+padding:80px 20px;
+}
+
+.home2-title{
+font-size:48px;
+color:#4f67e6;
+margin-bottom:20px;
+}
+
+.home2-text{
+font-size:18px;
+color:#666;
+max-width:600px;
+margin:auto;
+margin-bottom:80px;
+}
+
+/* =========================
+   ICON GRID
+========================= */
+
+.home2-icons{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:60px;
+}
+
+.home2-item{
+position:relative;
+text-align:center;
+animation:floatIcons 5s ease-in-out infinite;
+}
+
+.home2-icon{
+width:110px;
+position:absolute;
+top:35%;
+left:38%;
+transform:translate(-50%,-50%);
+}
+
+.home2-star{
+width:180px;
+}
+
+.home2-item p{
+margin-top:20px;
+font-size:20px;
+color:#333;
+line-height:1.4;
+}
+
+/* =========================
+   FLOAT ANIMATION
+========================= */
+
+@keyframes floatIcons{
+0%{transform:translateY(0px)}
+50%{transform:translateY(-15px)}
+100%{transform:translateY(0px)}
+}
+
+/* =========================
+   CLOUD
+========================= */
+
+.home2-cloud{
+position:absolute;
+right:120px;
+top:280px;
+width:120px;
+opacity:.9;
+}
+
+/* =========================
+   TRAIN
+========================= */
+
+.home2-train{
+position:relative;
+bottom: 100px;
+left:-250px;
+width:260px;
+animation:trainMove 12s linear infinite;
+
+}
+
+@keyframes trainMove{
+
+0%{
+left:-300px;
+}
+
+100%{
+left:110%;
+}
+
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width:1200px){
+
+.home2-icons{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media (max-width:768px){
+
+.home2-stats{
+flex-wrap:wrap;
+gap:30px;
+}
+
+.home2-divider{
+display:none;
+}
+
+.home2-title{
+font-size:36px;
+}
+
+.home2-text{
+font-size:16px;
+}
+
+.home2-icons{
+grid-template-columns:1fr;
+gap:60px;
+}
+
+.home2-cloud{
+display:none;
+}
+
+}
+
+@media (max-width:480px){
+
+.home2-title{
+font-size:28px;
+}
+
+.home2-text{
+font-size:15px;
+}
+
+.home2-stat h2{
+font-size:40px;
+}
+
+}
