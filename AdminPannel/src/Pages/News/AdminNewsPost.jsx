@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import API, { IMAGE_URL } from "../../api/axios";
 
 export default function AdminNewsPost() {
+
   const [news, setNews] = useState({
     title: "",
     image: null,
@@ -12,6 +14,24 @@ export default function AdminNewsPost() {
 
   const [newsList, setNewsList] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
+  const [editId, setEditId] = useState(null);
+
+  /* ================= FETCH NEWS ================= */
+
+  const fetchNews = async () => {
+    try {
+      const res = await API.get("/news");
+      setNewsList(res.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchNews();
+  }, []);
+
+  /* ================= INPUT ================= */
 
   const handleChange = (e) => {
     setNews({
@@ -19,6 +39,8 @@ export default function AdminNewsPost() {
       [e.target.name]: e.target.value,
     });
   };
+
+  /* ================= IMAGE ================= */
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -32,34 +54,85 @@ export default function AdminNewsPost() {
     }
   };
 
-  const handleSubmit = () => {
-    if (editIndex !== null) {
-      const updated = [...newsList];
-      updated[editIndex] = news;
-      setNewsList(updated);
-      setEditIndex(null);
-    } else {
-      setNewsList([...newsList, news]);
+  /* ================= SUBMIT ================= */
+
+  const handleSubmit = async () => {
+
+    const formData = new FormData();
+
+    formData.append("title", news.title);
+    formData.append("description", news.description);
+    formData.append("author", news.author);
+    formData.append("date", news.date);
+
+    if (news.image) {
+      formData.append("image", news.image);
     }
 
+    try {
+
+      if (editIndex !== null) {
+
+        await API.put(`/news/${editId}`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        setEditIndex(null);
+        setEditId(null);
+
+      } else {
+
+        await API.post("/news", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+
+      }
+
+      fetchNews();
+
+      setNews({
+        title: "",
+        image: null,
+        imagePreview: "",
+        description: "",
+        author: "",
+        date: "",
+      });
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  /* ================= DELETE ================= */
+
+  const deleteNews = async (id) => {
+    try {
+
+      await API.delete(`/news/${id}`);
+
+      fetchNews();
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  /* ================= EDIT ================= */
+
+  const editNews = (item, index) => {
+
     setNews({
-      title: "",
+      title: item.title,
+      description: item.description,
+      author: item.author,
+      date: item.date,
       image: null,
-      imagePreview: "",
-      description: "",
-      author: "",
-      date: "",
+      imagePreview: `${IMAGE_URL}${item.image}`,
     });
-  };
 
-  const deleteNews = (index) => {
-    const updated = newsList.filter((_, i) => i !== index);
-    setNewsList(updated);
-  };
-
-  const editNews = (index) => {
-    setNews(newsList[index]);
     setEditIndex(index);
+    setEditId(item._id);
   };
 
   return (
@@ -195,12 +268,12 @@ export default function AdminNewsPost() {
 
             <tbody>
               {newsList.map((item, index) => (
-                <tr key={index} className="text-center">
+                <tr key={item._id} className="text-center">
 
                   <td className="border p-2">
-                    {item.imagePreview && (
+                    {item.image && (
                       <img
-                        src={item.imagePreview}
+                        src={`${IMAGE_URL}${item.image}`}
                         alt=""
                         className="w-16 h-12 object-cover mx-auto"
                       />
@@ -214,14 +287,14 @@ export default function AdminNewsPost() {
                   <td className="border p-2">
                     <div className="flex flex-wrap justify-center gap-2">
                       <button
-                        onClick={() => editNews(index)}
+                        onClick={() => editNews(item, index)}
                         className="bg-yellow-500 text-white px-3 py-1 rounded"
                       >
                         Edit
                       </button>
 
                       <button
-                        onClick={() => deleteNews(index)}
+                        onClick={() => deleteNews(item._id)}
                         className="bg-red-600 text-white px-3 py-1 rounded"
                       >
                         Delete

@@ -5,6 +5,12 @@ import Dashboard from "./Pages/Dashboard/Dashboard";
 import AdminNewsPost from "./Pages/News/AdminNewsPost";
 import AdminEventPost from "./Pages/AdminEventPost/AdminEventPost";
 
+// import Gallery from "./Pages/Gallery/Gallery";
+// import Events from "./Pages/Events/Events";
+// import Classes from "./Pages/Classes/Classes";
+// import Teachers from "./Pages/Teachers/Teachers";
+
+import Testimonial from "./Pages/Testimonial/Testimonial";
 
 export default function App() {
   return (
@@ -16,9 +22,17 @@ export default function App() {
         <Route element={<AdminLayout />}>
 
           <Route path="/" element={<Dashboard />} />
+
           <Route path="/admin/news" element={<AdminNewsPost />} />
+
           <Route path="/admin/event" element={<AdminEventPost />} />
-          
+
+          {/* <Route path="/admin/gallery" element={<Gallery />} /> */}
+          {/* <Route path="/admin/events" element={<Events />} /> */}
+          {/* <Route path="/admin/classes" element={<Classes />} /> */}
+          {/* <Route path="/admin/teachers" element={<Teachers />} /> */}
+
+          <Route path="/admin/testimonials" element={<Testimonial />} />
 
         </Route>
 

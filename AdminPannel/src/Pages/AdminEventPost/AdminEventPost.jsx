@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import API, { IMAGE_URL } from "../../api/axios";
 
 export default function AdminEventPost() {
 
@@ -13,6 +14,24 @@ export default function AdminEventPost() {
 
   const [eventList, setEventList] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
+  const [editId, setEditId] = useState(null);
+
+  /* ================= FETCH EVENTS ================= */
+
+  const fetchEvents = async () => {
+    try {
+      const res = await API.get("/events");
+      setEventList(res.data.data || []);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  /* ================= INPUT CHANGE ================= */
 
   const handleChange = (e) => {
     setEvent({
@@ -20,6 +39,8 @@ export default function AdminEventPost() {
       [e.target.name]: e.target.value
     });
   };
+
+  /* ================= IMAGE ================= */
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -33,35 +54,89 @@ export default function AdminEventPost() {
     }
   };
 
-  const handleSubmit = () => {
+  /* ================= SUBMIT ================= */
 
-    if (editIndex !== null) {
-      const updated = [...eventList];
-      updated[editIndex] = event;
-      setEventList(updated);
-      setEditIndex(null);
-    } else {
-      setEventList([...eventList, event]);
+  const handleSubmit = async () => {
+
+    const formData = new FormData();
+
+    formData.append("title", event.title);
+    formData.append("location", event.location);
+    formData.append("date", event.date);
+    formData.append("description", event.description);
+
+    if (event.image) {
+      formData.append("image", event.image);
     }
 
+    try {
+
+      if (editIndex !== null) {
+
+        await API.put(`/events/${editId}`, formData, {
+          headers: { "Content-Type": "multipart/form-data" }
+        });
+
+        setEditIndex(null);
+        setEditId(null);
+
+      } else {
+
+        await API.post("/events", formData, {
+          headers: { "Content-Type": "multipart/form-data" }
+        });
+
+      }
+
+      fetchEvents();
+
+      setEvent({
+        title: "",
+        image: null,
+        imagePreview: "",
+        location: "",
+        date: "",
+        description: ""
+      });
+
+    } catch (err) {
+      console.log(err);
+    }
+
+  };
+
+  /* ================= DELETE ================= */
+
+  const deleteEvent = async (id) => {
+
+    try {
+
+      await API.delete(`/events/${id}`);
+
+      fetchEvents();
+
+    } catch (err) {
+      console.log(err);
+    }
+
+  };
+
+  /* ================= EDIT ================= */
+
+  const editEvent = (item, index) => {
+
     setEvent({
-      title: "",
+      title: item.title,
+      location: item.location,
+      date: item.date,
+      description: item.description,
       image: null,
-      imagePreview: "",
-      location: "",
-      date: "",
-      description: ""
+      imagePreview: item.image ? `${IMAGE_URL}${item.image}` : ""
     });
-  };
 
-  const deleteEvent = (index) => {
-    const updated = eventList.filter((_, i) => i !== index);
-    setEventList(updated);
-  };
-
-  const editEvent = (index) => {
-    setEvent(eventList[index]);
     setEditIndex(index);
+    setEditId(item._id);
+
   };
 
   return (
@@ -207,12 +282,12 @@ export default function AdminEventPost() {
             <tbody>
 
               {eventList.map((item, index) => (
-                <tr key={index} className="text-center">
+                <tr key={item._id} className="text-center">
 
                   <td className="border p-2">
-                    {item.imagePreview && (
+                    {item.image && (
                       <img
-                        src={item.imagePreview}
+                        src={`${IMAGE_URL}${item.image}`}
                         className="w-16 h-12 object-cover mx-auto"
                         alt=""
                       />
@@ -227,14 +302,14 @@ export default function AdminEventPost() {
                     <div className="flex flex-wrap justify-center gap-2">
 
                       <button
-                        onClick={() => editEvent(index)}
+                        onClick={() => editEvent(item, index)}
                         className="bg-yellow-500 text-white px-3 py-1 rounded"
                       >
                         Edit
                       </button>
 
                       <button
-                        onClick={() => deleteEvent(index)}
+                        onClick={() => deleteEvent(item._id)}
                         className="bg-red-600 text-white px-3 py-1 rounded"
                       >
                         Delete

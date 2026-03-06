@@ -3,6 +3,8 @@ import Testimonials from "../../Components/Testimonial/Testimonial";
 import HomeComponent from "../../Components/HomeComponent/HomeComponent";
 import HomeSecondCompo from "../../Components/HomeSecondCompo/HomeSecondCompo";
 import About from "../../Components/About/About";
+import Classes from "../Classes/Classes";
+import Events from "../Events/Events";
 
 const Home = () => {
   return (
@@ -13,6 +15,7 @@ const Home = () => {
 
       <HomeSecondCompo />
 
+      
       <div id="about">
         <About />
       </div>
