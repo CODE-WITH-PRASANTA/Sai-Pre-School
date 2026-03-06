@@ -17,9 +17,6 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const menu = [
     { name: "Dashboard", path: "/", icon: <FaHome /> },
     { name: "News", path: "/admin/news", icon: <FaNewspaper /> },
-<<<<<<< HEAD
-    { name: "Gallery", path: "/admin/gallery", icon: <FaImages /> },
-=======
 
     {
       name: "Gallery",
@@ -30,14 +27,10 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
       ],
     },
 
->>>>>>> b4bdca312009debbf726532c01b50f1bf07b8a15
     { name: "Event", path: "/admin/event", icon: <FaCalendarAlt /> },
     { name: "Classes", path: "/admin/classes", icon: <FaChalkboardTeacher /> },
     { name: "Teacher Post", path: "/admin/teachers", icon: <FaUserTie /> },
-<<<<<<< HEAD
-=======
 
->>>>>>> b4bdca312009debbf726532c01b50f1bf07b8a15
     { name: "Testimonials Post", path: "/admin/testimonials", icon: <FaCommentDots /> },
   ];
 
@@ -81,23 +74,6 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
         <nav className="p-4 space-y-2">
 
           {menu.map((item) => (
-<<<<<<< HEAD
-            <NavLink
-              key={item.path}
-              to={item.path}
-              onClick={() => setSidebarOpen(false)}
-              className={({ isActive }) =>
-                `flex items-center gap-3 p-3 rounded transition
-                ${isActive ? "bg-blue-600" : "hover:bg-gray-800"}`
-              }
-            >
-
-              {item.icon}
-
-              {sidebarOpen && item.name}
-
-            </NavLink>
-=======
             <div key={item.name}>
               {/* MAIN MENU */}
               {item.submenu ? (
@@ -149,7 +125,6 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 </div>
               )}
             </div>
->>>>>>> b4bdca312009debbf726532c01b50f1bf07b8a15
           ))}
 
         </nav>
