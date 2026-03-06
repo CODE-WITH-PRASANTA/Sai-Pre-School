@@ -3,11 +3,12 @@ import AdminLayout from "./AppLayout/AdminLayout";
 
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import News from "./Pages/News/News";
-// import Gallery from "./Pages/Gallery/Gallery";
 // import Events from "./Pages/Events/Events";
 // import Classes from "./Pages/Classes/Classes";
 // import Teachers from "./Pages/Teachers/Teachers";
 import Testimonial from "./Pages/Testimonial/Testimonial";
+import GalleryPost from "./Pages/GalleryPost/GalleryPost";
+import GalleryView from "./Pages/GalleryView/GalleryView";
 
 export default function App() {
   return (
@@ -20,11 +21,12 @@ export default function App() {
 
           <Route path="/" element={<Dashboard />} />
           <Route path="/admin/news" element={<News />} />
-          {/* <Route path="/admin/gallery" element={<Gallery />} /> */}
+          <Route path="/admin/gallery-post" element={<GalleryPost/>} />
+          <Route path="/admin/gallery-view" element={<GalleryView/>} />
           {/* <Route path="/admin/events" element={<Events />} /> */}
           {/* <Route path="/admin/classes" element={<Classes />} /> */}
           {/* <Route path="/admin/teachers" element={<Teachers />} /> */}
-          {<Route path="/admin/testimonials" element={<Testimonial />} />}
+          <Route path="/admin/testimonials" element={<Testimonial />} />
 
         </Route>
 
