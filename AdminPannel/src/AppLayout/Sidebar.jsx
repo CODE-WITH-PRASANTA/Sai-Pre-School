@@ -13,7 +13,6 @@ import {
 } from "react-icons/fa";
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
-
   const menu = [
     { name: "Dashboard", path: "/", icon: <FaHome /> },
     { name: "News", path: "/admin/news", icon: <FaNewspaper /> },
@@ -31,7 +30,12 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
     { name: "Classes", path: "/admin/classes", icon: <FaChalkboardTeacher /> },
     { name: "Teacher Post", path: "/admin/teachers", icon: <FaUserTie /> },
 
-    { name: "Testimonials Post", path: "/admin/testimonials", icon: <FaCommentDots /> },
+    {
+      name: "Testimonials Post",
+      path: "/admin/testimonials",
+      icon: <FaCommentDots />,
+    },
+    { name: "Contact", path: "/admin/contact", icon: <FaNewspaper /> },
   ];
 
   const [openMenu, setOpenMenu] = useState(null);
@@ -55,9 +59,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
         ${sidebarOpen ? "w-64 translate-x-0" : "w-20 -translate-x-full"}
         lg:translate-x-0`}
       >
-
         <div className="flex items-center justify-between p-6 border-b border-gray-700">
-
           <span className="font-bold text-lg">
             {sidebarOpen ? "Admin Panel" : "AP"}
           </span>
@@ -68,11 +70,9 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
           >
             <FaTimes />
           </button>
-
         </div>
 
         <nav className="p-4 space-y-2">
-
           {menu.map((item) => (
             <div key={item.name}>
               {/* MAIN MENU */}
@@ -126,9 +126,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               )}
             </div>
           ))}
-
         </nav>
-
       </div>
     </>
   );

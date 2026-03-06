@@ -9,6 +9,7 @@ import Classes from "./Pages/Classes/Classes";
 import Testimonial from "./Pages/Testimonial/Testimonial";
 import GalleryPost from "./Pages/GalleryPost/GalleryPost";
 import GalleryView from "./Pages/GalleryView/GalleryView";
+import Contact from "./Pages/Contact/Contact";
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="/admin/classes" element={<Classes />} />
 
           <Route path="/admin/testimonials" element={<Testimonial />} />
+          <Route path="/admin/contact" element={<Contact/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -9,7 +9,7 @@
   width: 100%;
   overflow: hidden;
   padding: 88px 20px 96px;
-  margin-top: -380px;
+  /* margin-top: -380px; */
   background:
     radial-gradient(circle at top left, rgba(255, 197, 228, 0.65), transparent 28%),
     radial-gradient(circle at top right, rgba(184, 213, 255, 0.62), transparent 30%),
