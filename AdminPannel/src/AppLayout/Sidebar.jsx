@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
 
 import {
   FaTimes,
@@ -16,12 +17,35 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const menu = [
     { name: "Dashboard", path: "/", icon: <FaHome /> },
     { name: "News", path: "/admin/news", icon: <FaNewspaper /> },
+<<<<<<< HEAD
     { name: "Gallery", path: "/admin/gallery", icon: <FaImages /> },
+=======
+
+    {
+      name: "Gallery",
+      icon: <FaImages />,
+      submenu: [
+        { name: "Gallery Post", path: "/admin/gallery-post" },
+        { name: "Gallery View", path: "/admin/gallery-view" },
+      ],
+    },
+
+>>>>>>> b4bdca312009debbf726532c01b50f1bf07b8a15
     { name: "Event", path: "/admin/event", icon: <FaCalendarAlt /> },
     { name: "Classes", path: "/admin/classes", icon: <FaChalkboardTeacher /> },
     { name: "Teacher Post", path: "/admin/teachers", icon: <FaUserTie /> },
+<<<<<<< HEAD
+=======
+
+>>>>>>> b4bdca312009debbf726532c01b50f1bf07b8a15
     { name: "Testimonials Post", path: "/admin/testimonials", icon: <FaCommentDots /> },
   ];
+
+  const [openMenu, setOpenMenu] = useState(null);
+
+  const toggleMenu = (name) => {
+    setOpenMenu(openMenu === name ? null : name);
+  };
 
   return (
     <>
@@ -57,6 +81,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
         <nav className="p-4 space-y-2">
 
           {menu.map((item) => (
+<<<<<<< HEAD
             <NavLink
               key={item.path}
               to={item.path}
@@ -72,6 +97,59 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               {sidebarOpen && item.name}
 
             </NavLink>
+=======
+            <div key={item.name}>
+              {/* MAIN MENU */}
+              {item.submenu ? (
+                <button
+                  onClick={() => toggleMenu(item.name)}
+                  className="flex items-center justify-between w-full p-3 rounded hover:bg-gray-800 transition"
+                >
+                  <div className="flex items-center gap-3">
+                    {item.icon}
+                    {sidebarOpen && item.name}
+                  </div>
+
+                  {sidebarOpen && (
+                    <span className="text-xs">
+                      {openMenu === item.name ? "▲" : "▼"}
+                    </span>
+                  )}
+                </button>
+              ) : (
+                <NavLink
+                  to={item.path}
+                  onClick={() => setSidebarOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-3 rounded transition
+            ${isActive ? "bg-blue-600" : "hover:bg-gray-800"}`
+                  }
+                >
+                  {item.icon}
+                  {sidebarOpen && item.name}
+                </NavLink>
+              )}
+
+              {/* SUBMENU */}
+              {item.submenu && openMenu === item.name && sidebarOpen && (
+                <div className="ml-8 mt-1 space-y-1">
+                  {item.submenu.map((sub) => (
+                    <NavLink
+                      key={sub.path}
+                      to={sub.path}
+                      onClick={() => setSidebarOpen(false)}
+                      className={({ isActive }) =>
+                        `block text-sm p-2 rounded
+                ${isActive ? "bg-blue-500" : "hover:bg-gray-800"}`
+                      }
+                    >
+                      {sub.name}
+                    </NavLink>
+                  ))}
+                </div>
+              )}
+            </div>
+>>>>>>> b4bdca312009debbf726532c01b50f1bf07b8a15
           ))}
 
         </nav>
