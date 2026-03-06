@@ -23,7 +23,6 @@ const Navbar = () => {
       {/* Top Bar */}
       <div className="bg-pink-500 text-white text-xs md:text-sm hidden md:block">
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-6 lg:px-10 py-2">
-
           <div className="flex flex-wrap items-center gap-4 md:gap-6">
             <div className="flex items-center gap-2">
               <FaPhoneAlt />
@@ -42,14 +41,12 @@ const Navbar = () => {
             <FaClock />
             <span>9:30am - 5:30pm</span>
           </div>
-
         </div>
       </div>
 
       {/* Main Navbar */}
       <div className="sticky top-0 z-50 bg-gray-100 shadow-md">
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-6 lg:px-10 py-4">
-
           {/* Logo */}
           <div className="flex items-center gap-2 cursor-pointer">
             <span className="text-xl md:text-2xl lg:text-3xl font-bold text-pink-500">
@@ -62,19 +59,52 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <ul className="hidden lg:flex items-center gap-6 xl:gap-8 text-sm xl:text-base font-medium">
-
-            <li><NavLink to="/" className={navLinkClass}>HOME</NavLink></li>
-            <li><NavLink to="/about" className={navLinkClass}>ABOUT</NavLink></li>
-            <li><NavLink to="/news" className={navLinkClass}>NEWS</NavLink></li>
-            <li><NavLink to="/classes" className={navLinkClass}>CLASSES</NavLink></li>
-            <li><NavLink to="/teachers" className={navLinkClass}>TEACHERS</NavLink></li>
-            <li><NavLink to="/events" className={navLinkClass}>EVENTS</NavLink></li>
-            <li><NavLink to="/gallery" className={navLinkClass}>GALLERY</NavLink></li>
-            <li><NavLink to="/test" className={navLinkClass}>TESTIMONIALS</NavLink></li>
-            <li><NavLink to="/contact" className={navLinkClass}>CONTACT</NavLink></li>
-
+            <li>
+              <a href="#home" >
+                HOME
+              </a>
+            </li>
+            <li>
+              <a href="#about" className={navLinkClass}>
+                ABOUT
+              </a>
+            </li>
+            <li>
+              <a href="#news" className={navLinkClass}>
+                NEWS
+              </a>
+            </li>
+            <li>
+              <a href="#classes" className={navLinkClass}>
+                CLASSES
+              </a>
+            </li>
+            <li>
+              <a href="#teachers" className={navLinkClass}>
+                TEACHERS
+              </a>
+            </li>
+            <li>
+              <a href="#events" className={navLinkClass}>
+                EVENTS
+              </a>
+            </li>
+            <li>
+              <a href="#gallery" className={navLinkClass}>
+                GALLERY
+              </a>
+            </li>
+            <li>
+              <a href="#testimonials" className={navLinkClass}>
+                TESTIMONIALS
+              </a>
+            </li>
+            <li>
+              <a href="#contact" className={navLinkClass}>
+                CONTACT
+              </a>
+            </li>
           </ul>
-
           {/* Hamburger */}
           <button
             className="lg:hidden text-2xl"
@@ -82,7 +112,6 @@ const Navbar = () => {
           >
             {menuOpen ? <FaTimes /> : <FaBars />}
           </button>
-
         </div>
 
         {/* Mobile Menu */}
@@ -92,17 +121,51 @@ const Navbar = () => {
           }`}
         >
           <ul className="flex flex-col gap-5 px-6 text-gray-700 font-medium">
-
-            <li><NavLink onClick={closeMenu} to="/">HOME</NavLink></li>
-            <li><NavLink onClick={closeMenu} to="/about">ABOUT</NavLink></li>
-            <li><NavLink onClick={closeMenu} to="/news">NEWS</NavLink></li>
-            <li><NavLink onClick={closeMenu} to="/classes">CLASSES</NavLink></li>
-            <li><NavLink onClick={closeMenu} to="/teachers">TEACHERS</NavLink></li>
-            <li><NavLink onClick={closeMenu} to="/events">EVENTS</NavLink></li>
-            <li><NavLink onClick={closeMenu} to="/gallery">GALLERY</NavLink></li>
-            <li><NavLink onClick={closeMenu} to="/test">TESTIMONIALS</NavLink></li>
-            <li><NavLink onClick={closeMenu} to="/contact">CONTACT</NavLink></li>
-
+            <li>
+              <a onClick={closeMenu} href="#home">
+                HOME
+              </a>
+            </li>
+            <li>
+              <a onClick={closeMenu} href="#about">
+                ABOUT
+              </a>
+            </li>
+            <li>
+              <a onClick={closeMenu} href="#news">
+                NEWS
+              </a>
+            </li>
+            <li>
+              <a onClick={closeMenu} href="#classes">
+                CLASSES
+              </a>
+            </li>
+            <li>
+              <a onClick={closeMenu} href="#teachers">
+                TEACHERS
+              </a>
+            </li>
+            <li>
+              <a onClick={closeMenu} href="#events">
+                EVENTS
+              </a>
+            </li>
+            <li>
+              <a onClick={closeMenu} href="#gallery">
+                GALLERY
+              </a>
+            </li>
+            <li>
+              <a onClick={closeMenu} href="#testimonials">
+                TESTIMONIALS
+              </a>
+            </li>
+            <li>
+              <a onClick={closeMenu} href="#contact">
+                CONTACT
+              </a>
+            </li>
           </ul>
         </div>
       </div>

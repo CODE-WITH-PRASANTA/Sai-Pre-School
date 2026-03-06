@@ -1,0 +1,389 @@
+/* =========================
+   SECTION
+========================= */
+
+.home2{
+position:relative;
+background:#f5f5f5;
+overflow:hidden;
+}
+
+/* =========================
+   SECTION WRAPPER
+========================= */
+
+.home2-section{
+position:relative;
+overflow:hidden;
+}
+
+/* =========================
+   STATS BAR
+========================= */
+
+.home2-stats{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:60px;
+padding:20px 20px;
+background-size:cover;
+background-repeat:repeat;
+position:relative;
+z-index:1;
+overflow:hidden;
+}
+
+/* ===== TOP CURVE ===== */
+
+.home2-stats::before{
+content:"";
+position:absolute;
+top:-1px;
+left:0;
+width:100%;
+height:60px;
+background:url("/src/assets/shape-top.png") repeat-x;
+background-size:auto 20px;
+z-index:2;
+background-position: center top;
+}
+
+/* ===== BOTTOM CURVE ===== */
+
+.home2-stats::after{
+content:"";
+position:absolute;
+bottom:-1px;
+left:0;
+width:100%;
+height:60px;
+background:url("/src/assets/shape-top.png") repeat-x;
+background-size:auto 20px;
+transform:rotate(180deg);
+z-index:2;
+}
+
+.home2-stat{
+text-align:center;
+z-index:3;
+}
+
+.home2-stat h2{
+font-size:60px;
+font-weight:700;
+color:black;
+}
+
+.home2-stat p{
+margin-top:10px;
+font-size:18px;
+color:#333;
+}
+
+.home2-divider{
+width:1px;
+height:70px;
+background:#888;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.home2-content{
+max-width:1200px;
+margin:auto;
+text-align:center;
+padding:80px 20px;
+}
+
+.home2-title{
+font-size:48px;
+color:#4f67e6;
+margin-bottom:20px;
+}
+
+.home2-text{
+font-size:18px;
+color:#666;
+max-width:600px;
+margin:auto;
+margin-bottom:80px;
+}
+
+/* =========================
+   ICON GRID
+========================= */
+
+.home2-icons{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:60px;
+align-items:center;
+justify-items:center;
+position:relative;
+z-index:2;
+}
+
+/* item */
+
+.home2-item{
+text-align:center;
+}
+
+/* wrapper for star + icon */
+
+.home2-img-wrap{
+position:relative;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+/* star */
+
+.home2-star{
+width:180px;
+}
+
+/* icon */
+
+.home2-icon{
+width:110px;
+position:absolute;
+animation:floatIcons 4s ease-in-out infinite;
+}
+
+/* floating animation */
+
+@keyframes floatIcons{
+
+0%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-15px);
+}
+
+100%{
+transform:translateY(0);
+}
+
+}
+
+.home2-item p{
+margin-top:20px;
+font-size:20px;
+color:#333;
+line-height:1.4;
+max-width:260px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width:1200px){
+
+.home2-icons{
+grid-template-columns:repeat(2,1fr);
+gap:50px;
+}
+
+}
+
+@media (max-width:768px){
+
+.home2-icons{
+grid-template-columns:1fr;
+gap:40px;
+}
+
+.home2-star{
+width:150px;
+}
+
+.home2-icon{
+width:90px;
+}
+
+.home2-item p{
+font-size:18px;
+}
+
+}
+
+@media (max-width:480px){
+
+.home2-star{
+width:130px;
+}
+
+.home2-icon{
+width:75px;
+}
+
+.home2-item p{
+font-size:16px;
+}
+
+}
+
+/* =========================
+   CLOUD
+========================= */
+
+.home2-cloud{
+position:absolute;
+right:120px;
+top:280px;
+width:120px;
+opacity:.9;
+animation: cloudFloat 4s ease-in-out infinite;
+}
+
+/* Floating animation */
+
+@keyframes cloudFloat{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-20px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width:1200px){
+
+.home2-cloud{
+right:80px;
+top:260px;
+width:100px;
+}
+
+}
+
+@media (max-width:768px){
+
+.home2-cloud{
+right:40px;
+top:240px;
+width:80px;
+}
+
+}
+
+@media (max-width:480px){
+
+.home2-cloud{
+right:20px;
+top:220px;
+width:60px;
+}
+
+}
+
+/* =========================
+   TRAIN
+========================= */
+
+.home2-train{
+position:absolute;
+bottom:-2px;
+left:-300px;
+width:220px;
+
+animation:trainMove 12s linear infinite;
+
+z-index:1;   /* behind text */
+opacity:0.9;
+}
+
+
+/* animation */
+
+@keyframes trainMove{
+
+0%{
+transform:translateX(0);
+}
+
+100%{
+transform:translateX(140vw);
+}
+
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width:1200px){
+
+.home2-icons{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media (max-width:768px){
+
+.home2-stats{
+flex-wrap:wrap;
+gap:30px;
+}
+
+.home2-divider{
+display:none;
+}
+
+.home2-title{
+font-size:36px;
+}
+
+.home2-text{
+font-size:16px;
+}
+
+.home2-icons{
+grid-template-columns:1fr;
+gap:60px;
+}
+
+.home2-cloud{
+display:none;
+}
+
+}
+
+@media (max-width:480px){
+
+.home2-title{
+font-size:28px;
+}
+
+.home2-text{
+font-size:15px;
+}
+
+.home2-stat h2{
+font-size:40px;
+}
+
+.home2-train{
+   width: 120px;
+}
+}
