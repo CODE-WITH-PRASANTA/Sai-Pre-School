@@ -6,7 +6,6 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }) {
 
       <div className="flex items-center gap-4">
 
-        {/* Hamburger Menu */}
         <button
           className="text-xl"
           onClick={() => setSidebarOpen(!sidebarOpen)}

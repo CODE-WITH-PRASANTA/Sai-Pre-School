@@ -9,8 +9,13 @@ import Events from "../Events/Events";
 const Home = () => {
   return (
     <>
-      <HomeComponent />
+      <div id="home">
+        <HomeComponent />
+      </div>
+
       <HomeSecondCompo />
+
+      
       <div id="about">
         <About />
       </div>
