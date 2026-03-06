@@ -3,8 +3,7 @@ import "./App.css";
 import Navbar from "./Pages/Navbar/Navbar";
 import Home from "./Pages/Home/Home";
 import Footer from "./Pages/Footer/Footer";
-import Testimonials from "./Components/Testimonial/Testimonial";
-import News from "./Pages/News/News";
+// import Testimonials from "./Components/Testimonial/Testimonial";
 
 function App() {
   return (
@@ -14,8 +13,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/test" element={<Testimonials />} />
-        <Route path="/news" element={<News/>}/>
+        {/* <Route path="/test" element={<Testimonials />} /> */}
       </Routes>
 
       <Footer />

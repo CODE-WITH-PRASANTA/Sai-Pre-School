@@ -9,8 +9,13 @@ const Home = () => {
     <>
       <HomeComponent/>
       <HomeSecondCompo/>
-      <About/>
-      <Testimonials/>
+     <div id="about">
+       <About/>
+     </div>
+
+      <div id="testimonials">
+        <Testimonials/>
+      </div>
     </>
   )
 }
