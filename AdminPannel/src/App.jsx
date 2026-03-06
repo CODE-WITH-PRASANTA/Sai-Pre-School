@@ -24,7 +24,6 @@ export default function App() {
 
           <Route path="/admin/event" element={<AdminEventPost />} />
 
-          {/* <Route path="/admin/gallery" element={<Gallery />} /> */}
           <Route path="/admin/gallery-post" element={<GalleryPost />} />
           <Route path="/admin/gallery-view" element={<GalleryView />} />
           <Route path="/admin/classes" element={<Classes />} />
