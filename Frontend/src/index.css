@@ -49,3 +49,8 @@
 .animate-floatSlow2 {
   animation: floatSlow2 7s ease-in-out infinite;
 }
+
+
+html {
+  scroll-behavior: smooth;
+}
