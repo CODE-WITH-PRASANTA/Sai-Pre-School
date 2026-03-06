@@ -15,7 +15,6 @@ const ClassesHome = () => {
 
   return (
     <section className={`${base} ${inView ? `${base}--in` : ""}`}>
-
       {/* background pattern */}
       <div
         className={`${base}__bg`}
@@ -25,32 +24,22 @@ const ClassesHome = () => {
       {/* blue overlay */}
       <div className={`${base}__overlay`} />
 
+      {/* floating blobs */}
+      <span className={`${base}__blob ${base}__blob--1`} />
+      <span className={`${base}__blob ${base}__blob--2`} />
+      <span className={`${base}__blob ${base}__blob--3`} />
+
       {/* hero content */}
       <div className={`${base}__inner`}>
-
-        {/* TITLE */}
         <h1 className={`${base}__title`}>Classes</h1>
 
-        {/* BREADCRUMB */}
         <div className={`${base}__crumbs`}>
-          <span className={`${base}__homeIcon`}>
-            <svg viewBox="0 0 24 24" width="16" height="16">
-              <path
-                d="M12 3.2 3 10.2v10.6c0 .7.6 1.2 1.2 1.2H9v-7h6v7h4.8c.7 0 1.2-.6 1.2-1.2V10.2L12 3.2z"
-                fill="currentColor"
-              />
-            </svg>
-          </span>
-
           <span className={`${base}__crumb`}>Home</span>
-
           <span className={`${base}__sep`}>›</span>
-
           <span className={`${base}__crumb ${base}__crumb--active`}>
             Classes
           </span>
         </div>
-
       </div>
 
       {/* floating cloud */}
@@ -59,8 +48,12 @@ const ClassesHome = () => {
           className={`${base}__cloud`}
           style={{ backgroundImage: `url(${cloudImg})` }}
         />
-      </div>
 
+        {/* bubbles */}
+        <span className={`${base}__puff ${base}__puff--1`} />
+        <span className={`${base}__puff ${base}__puff--2`} />
+        <span className={`${base}__puff ${base}__puff--3`} />
+      </div>
     </section>
   );
 };

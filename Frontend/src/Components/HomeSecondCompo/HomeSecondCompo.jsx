@@ -75,41 +75,53 @@ const HomeSecondCompo = () => {
 
         <img src={cloud} className="home2-cloud" alt="" />
 
+        <div className="home2-section">
+
         {/* icon grid */}
 
         <div className="home2-icons">
 
-          <div className="home2-item">
-            <img src={starBlue} className="home2-star" />
-            <img src={icon1} className="home2-icon" />
-            <p>To Think Creatively and Create</p>
-          </div>
+  <div className="home2-item">
+    <div className="home2-img-wrap">
+      <img src={starBlue} className="home2-star" />
+      <img src={icon1} className="home2-icon" />
+    </div>
+    <p>To Think Creatively and Create</p>
+  </div>
 
-          <div className="home2-item">
-            <img src={starPink} className="home2-star" />
-            <img src={icon2} className="home2-icon" />
-            <p>To Feel Fine and to Understand Emotions</p>
-          </div>
+  <div className="home2-item">
+    <div className="home2-img-wrap">
+      <img src={starPink} className="home2-star" />
+      <img src={icon2} className="home2-icon" />
+    </div>
+    <p>To Feel Fine and to Understand Emotions</p>
+  </div>
 
-          <div className="home2-item">
-            <img src={starBlue} className="home2-star" />
-            <img src={icon3} className="home2-icon" />
-            <p>To be Independent and Active</p>
-          </div>
+  <div className="home2-item">
+    <div className="home2-img-wrap">
+      <img src={starBlue} className="home2-star" />
+      <img src={icon3} className="home2-icon" />
+    </div>
+    <p>To be Independent and Active</p>
+  </div>
 
-          <div className="home2-item">
-            <img src={starLight} className="home2-star" />
-            <img src={icon4} className="home2-icon" />
-            <p>To Apply Knowledge in Life</p>
-          </div>
+  <div className="home2-item">
+    <div className="home2-img-wrap">
+      <img src={starLight} className="home2-star" />
+      <img src={icon4} className="home2-icon" />
+    </div>
+    <p>To Apply Knowledge in Life</p>
+  </div>
 
-        </div>
+</div>
 
       </div>
 
       {/* train decoration */}
 
       <img src={train} className="home2-train" alt="" />
+
+      </div>
 
     </section>
   );
