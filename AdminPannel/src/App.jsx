@@ -9,6 +9,7 @@ import Classes from "./Pages/Classes/Classes";
 // import Classes from "./Pages/Classes/Classes";
 // import Teachers from "./Pages/Teachers/Teachers";
 import Testimonial from "./Pages/Testimonial/Testimonial";
+import Contact from "./Pages/Contact/Contact";
 
 export default function App() {
   return (
@@ -24,7 +25,7 @@ export default function App() {
           {/* <Route path="/admin/gallery" element={<Gallery />} /> */}
           {/* <Route path="/admin/events" element={<Events />} /> */}
            <Route path="/admin/classes" element={<Classes/>} /> 
-          {/* <Route path="/admin/teachers" element={<Teachers />} /> */}
+           <Route path="/admin/Contact" element={<Contact/>} /> 
           {<Route path="/admin/testimonials" element={<Testimonial />} />}
 
         </Route>
