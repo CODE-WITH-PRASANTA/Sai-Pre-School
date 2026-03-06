@@ -6,11 +6,6 @@ import AdminNewsPost from "./Pages/News/AdminNewsPost";
 import AdminEventPost from "./Pages/AdminEventPost/AdminEventPost";
 
 import Classes from "./Pages/Classes/Classes";
-// import Gallery from "./Pages/Gallery/Gallery";
-// import Events from "./Pages/Events/Events";
-// import Classes from "./Pages/Classes/Classes";
-// import Teachers from "./Pages/Teachers/Teachers";
-
 import Testimonial from "./Pages/Testimonial/Testimonial";
 import GalleryPost from "./Pages/GalleryPost/GalleryPost";
 import GalleryView from "./Pages/GalleryView/GalleryView";
@@ -27,7 +22,6 @@ export default function App() {
 
           <Route path="/admin/event" element={<AdminEventPost />} />
 
-          {/* <Route path="/admin/gallery" element={<Gallery />} /> */}
           <Route path="/admin/gallery-post" element={<GalleryPost />} />
           <Route path="/admin/gallery-view" element={<GalleryView />} />
           <Route path="/admin/classes" element={<Classes />} />

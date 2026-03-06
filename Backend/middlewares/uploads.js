@@ -23,6 +23,8 @@ const getUploadPath = (req) => {
   let uploadPath = "uploads/common";
 
   for (const route in routeFolderMap) {
+
+    
     if (req.originalUrl.includes(route)) {
       uploadPath = routeFolderMap[route];
       break;
