@@ -10,7 +10,7 @@ const testimonials = [
   {
     id: 1,
     name: "John Doe",
-    role: "Client",
+    role: "Client",                    
     img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
     text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
   },
