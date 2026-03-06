@@ -3,6 +3,8 @@ import AdminLayout from "./AppLayout/AdminLayout";
 
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import News from "./Pages/News/News";
+import Classes from "./Pages/Classes/Classes";
+// import Gallery from "./Pages/Gallery/Gallery";
 // import Events from "./Pages/Events/Events";
 // import Classes from "./Pages/Classes/Classes";
 // import Teachers from "./Pages/Teachers/Teachers";
@@ -24,7 +26,7 @@ export default function App() {
           <Route path="/admin/gallery-post" element={<GalleryPost/>} />
           <Route path="/admin/gallery-view" element={<GalleryView/>} />
           {/* <Route path="/admin/events" element={<Events />} /> */}
-          {/* <Route path="/admin/classes" element={<Classes />} /> */}
+           <Route path="/admin/classes" element={<Classes/>} /> 
           {/* <Route path="/admin/teachers" element={<Teachers />} /> */}
           <Route path="/admin/testimonials" element={<Testimonial />} />
 

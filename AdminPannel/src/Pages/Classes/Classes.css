@@ -1,0 +1,345 @@
+* {
+  box-sizing: border-box;
+}
+
+.classes-page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top left, rgba(76, 110, 245, 0.08), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.08), transparent 28%),
+    #f5f7fb;
+  font-family: "Inter", sans-serif;
+}
+
+.classes-page__container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.classes-page__topGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.classes-page__card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 22px;
+  padding: 24px;
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.08),
+    0 2px 10px rgba(15, 23, 42, 0.04);
+  backdrop-filter: blur(12px);
+}
+
+.classes-page__tableCard {
+  overflow: visible;
+}
+
+.classes-page__cardHead {
+  margin-bottom: 22px;
+}
+
+.classes-page__cardHead--table {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.classes-page__title {
+  margin: 0 0 6px;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.classes-page__subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.classes-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.classes-page__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.classes-page__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.classes-page__input {
+  width: 100%;
+  height: 48px;
+  border-radius: 14px;
+  border: 1px solid #dbe2ea;
+  background: #ffffff;
+  padding: 0 16px;
+  font-size: 14px;
+  color: #0f172a;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.classes-page__input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+}
+
+.classes-page__input::placeholder {
+  color: #94a3b8;
+}
+
+.classes-page__btnRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.classes-page__saveBtn,
+.classes-page__cancelBtn,
+.classes-page__actionBtn,
+.classes-page__dropdownItem {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: inherit;
+}
+
+.classes-page__saveBtn {
+  min-width: 140px;
+  height: 48px;
+  padding: 0 22px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #4f46e5, #2563eb);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.22);
+}
+
+.classes-page__saveBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 24px rgba(37, 99, 235, 0.28);
+}
+
+.classes-page__cancelBtn {
+  min-width: 120px;
+  height: 48px;
+  padding: 0 20px;
+  border-radius: 14px;
+  background: #eef2f7;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.classes-page__cancelBtn:hover {
+  background: #e2e8f0;
+}
+
+.classes-page__previewTableWrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.classes-page__previewTable {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+}
+
+.classes-page__previewTable th,
+.classes-page__previewTable td {
+  padding: 16px 18px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.classes-page__previewTable th {
+  width: 38%;
+  background: #f8fafc;
+  color: #334155;
+  font-weight: 700;
+}
+
+.classes-page__previewTable td {
+  color: #0f172a;
+  font-weight: 500;
+  background: #ffffff;
+}
+
+.classes-page__previewTable tr:last-child th,
+.classes-page__previewTable tr:last-child td {
+  border-bottom: none;
+}
+
+.classes-page__countBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid #bfdbfe;
+}
+
+.classes-page__tableWrap {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.classes-page__table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+}
+
+.classes-page__table thead tr {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+.classes-page__table th {
+  padding: 16px 18px;
+  text-align: left;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.classes-page__table td {
+  padding: 16px 18px;
+  font-size: 14px;
+  color: #334155;
+  border-bottom: 1px solid #eef2f7;
+  vertical-align: middle;
+  background: #ffffff;
+}
+
+.classes-page__table tbody tr:hover td {
+  background: #f8fbff;
+}
+
+.classes-page__empty {
+  text-align: center;
+  color: #64748b;
+  font-weight: 600;
+  padding: 28px 16px !important;
+}
+
+.classes-page__actionWrap {
+  position: relative;
+  display: inline-block;
+}
+
+.classes-page__actionBtn {
+  min-width: 105px;
+  height: 40px;
+  border-radius: 12px;
+  background: #eef2ff;
+  color: #4338ca;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 0 14px;
+}
+
+.classes-page__actionBtn:hover {
+  background: #e0e7ff;
+}
+
+.classes-page__dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 140px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.14);
+  overflow: hidden;
+  z-index: 30;
+}
+
+.classes-page__dropdownItem {
+  width: 100%;
+  text-align: left;
+  padding: 12px 14px;
+  background: #ffffff;
+  color: #1e293b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.classes-page__dropdownItem:hover {
+  background: #f8fafc;
+}
+
+.classes-page__dropdownItem--danger {
+  color: #dc2626;
+}
+
+.classes-page__dropdownItem--danger:hover {
+  background: #fef2f2;
+}
+
+@media (max-width: 1024px) {
+  .classes-page__topGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .classes-page {
+    padding: 16px;
+  }
+
+  .classes-page__card {
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .classes-page__title {
+    font-size: 20px;
+  }
+
+  .classes-page__btnRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .classes-page__saveBtn,
+  .classes-page__cancelBtn {
+    width: 100%;
+  }
+}
