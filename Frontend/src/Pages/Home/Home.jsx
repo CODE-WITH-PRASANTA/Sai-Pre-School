@@ -5,6 +5,8 @@ import HomeSecondCompo from "../../Components/HomeSecondCompo/HomeSecondCompo";
 import About from "../../Components/About/About";
 import Classes from "../Classes/Classes";
 import Events from "../Events/Events";
+import Teacher from "../Teacher/Teacher";
+import OurGallery from "../OurGallery/OurGallery";
 
 const Home = () => {
   return (
@@ -19,10 +21,25 @@ const Home = () => {
       <div id="about">
         <About />
       </div>
-
       <div id="testimonials">
         <Testimonials />
       </div>
+      <div id="teachers">
+        <Teacher/>
+      </div>
+
+      <div id="classes">
+        <Classes/>
+      </div>
+
+      <div id="events">
+        <Events/>
+      </div>
+
+      <div id="gallery">
+        <OurGallery/>
+      </div>
+
     </>
   );
 };
