@@ -8,7 +8,7 @@ import Classes from "./Pages/Classes/Classes";
 // import Events from "./Pages/Events/Events";
 // import Classes from "./Pages/Classes/Classes";
 // import Teachers from "./Pages/Teachers/Teachers";
-// import Testimonials from "./Pages/Testimonials/Testimonials";
+import Testimonial from "./Pages/Testimonial/Testimonial";
 
 export default function App() {
   return (
@@ -25,7 +25,7 @@ export default function App() {
           {/* <Route path="/admin/events" element={<Events />} /> */}
            <Route path="/admin/classes" element={<Classes/>} /> 
           {/* <Route path="/admin/teachers" element={<Teachers />} /> */}
-          {/* <Route path="/admin/testimonials" element={<Testimonials />} /> */}
+          {<Route path="/admin/testimonials" element={<Testimonial />} />}
 
         </Route>
 
