@@ -4,7 +4,10 @@ import Testimonials from '../../Components/Testimonial/Testimonial'
 const Home = () => {
   return (
     <>
+    
       <Testimonials/>
+      
+
     </>
   )
 }
