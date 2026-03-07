@@ -44,11 +44,11 @@ const Contact = () => {
 
   const [editId, setEditId] = useState(null);
   const [openMenuId, setOpenMenuId] = useState(null);
-  const actionRef = useRef(null);
+  const wrapperRef = useRef(null);
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
-      if (actionRef.current && !actionRef.current.contains(e.target)) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
         setOpenMenuId(null);
       }
     };
@@ -139,12 +139,13 @@ const Contact = () => {
 
   return (
     <section className={base}>
-      <div className={`${base}__container`}>
+      <div className={`${base}__container`} ref={wrapperRef}>
         <div className={`${base}__topGrid`}>
           {/* LEFT FORM BOX */}
           <div className={`${base}__card`}>
             <form className={`${base}__form`} onSubmit={handleSave}>
-              <div className={`${base}__sectionTitle`}>Academy Title</div>
+              <div className={`${base}__sectionTitle`}>Contact Info Fields</div>
+
               <div className={`${base}__field`}>
                 <label className={`${base}__label`}>Academy Title</label>
                 <input
@@ -157,7 +158,6 @@ const Contact = () => {
                 />
               </div>
 
-              <div className={`${base}__sectionTitle`}>Contact Info Fields</div>
               <div className={`${base}__gridTwo`}>
                 <div className={`${base}__field`}>
                   <label className={`${base}__label`}>Phone Number</label>
@@ -432,7 +432,7 @@ const Contact = () => {
                       <td>{item.address}</td>
                       <td>{item.subscribeEmail || "—"}</td>
                       <td>
-                        <div className={`${base}__actionWrap`} ref={actionRef}>
+                        <div className={`${base}__actionWrap`}>
                           <button
                             type="button"
                             className={`${base}__actionBtn`}
@@ -454,7 +454,7 @@ const Contact = () => {
 
                               <button
                                 type="button"
-                                className={`${base}__dropdownItem} ${base}__dropdownItem--danger`}
+                                className={`${base}__dropdownItem ${base}__dropdownItem--danger`}
                                 onClick={() => handleDelete(item.id)}
                               >
                                 Delete
