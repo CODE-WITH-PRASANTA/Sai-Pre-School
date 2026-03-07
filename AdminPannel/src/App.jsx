@@ -11,6 +11,7 @@ import GalleryPost from "./Pages/GalleryPost/GalleryPost";
 import GalleryView from "./Pages/GalleryView/GalleryView";
 import Contact from "./Pages/Contact/Contact";
 import Admission from "./Pages/Admission/Admission";
+import TeacherPost from "./Pages/TeacherPost/TeacherPost";
 
 export default function App() {
   return (
@@ -24,11 +25,10 @@ export default function App() {
 
           <Route path="/admin/event" element={<AdminEventPost />} />
 
-          {/* <Route path="/admin/gallery" element={<Gallery />} /> */}
           <Route path="/admin/gallery-post" element={<GalleryPost />} />
           <Route path="/admin/gallery-view" element={<GalleryView />} />
           <Route path="/admin/classes" element={<Classes />} />
-
+          <Route path="/admin/teachers" element={<TeacherPost/>}/>
           <Route path="/admin/testimonials" element={<Testimonial />} />
           <Route path="/admin/contact" element={<Contact/>}/>
           <Route path="/admin/admission" element={<Admission/>}/>
