@@ -36,6 +36,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
       icon: <FaCommentDots />,
     },
     { name: "Contact", path: "/admin/contact", icon: <FaNewspaper /> },
+     { name: "Admission", path: "/admin/admission", icon: <FaNewspaper /> },
   ];
 
   const [openMenu, setOpenMenu] = useState(null);
