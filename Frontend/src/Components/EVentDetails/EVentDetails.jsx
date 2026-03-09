@@ -24,8 +24,7 @@ const EVentDetails = () => {
         month: "JULY",
         title: "Business Conferences 2025",
         place: "89 NEWYORK CITY.",
-        desc:
-          "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
+        desc: "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
         img: e1,
       },
       {
@@ -34,8 +33,7 @@ const EVentDetails = () => {
         month: "JULY",
         title: "5 Outrageous Ideas For You",
         place: "89 NEWYORK CITY.",
-        desc:
-          "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
+        desc: "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
         img: e2,
       },
       {
@@ -44,8 +42,7 @@ const EVentDetails = () => {
         month: "JULY",
         title: "Seven Latest Developments",
         place: "89 NEWYORK CITY.",
-        desc:
-          "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
+        desc: "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
         img: e3,
       },
       {
@@ -54,8 +51,7 @@ const EVentDetails = () => {
         month: "JULY",
         title: "Five Mind Numbing Facts About",
         place: "89 NEWYORK CITY.",
-        desc:
-          "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
+        desc: "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
         img: e4,
       },
 
@@ -66,8 +62,7 @@ const EVentDetails = () => {
         month: "JULY",
         title: "Five Ways To Introduce",
         place: "89 NEWYORK CITY.",
-        desc:
-          "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
+        desc: "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
         img: e5,
       },
       {
@@ -76,8 +71,7 @@ const EVentDetails = () => {
         month: "JULY",
         title: "Ten Things To Know About",
         place: "89 NEWYORK CITY.",
-        desc:
-          "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
+        desc: "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
         img: e6,
       },
       {
@@ -86,8 +80,7 @@ const EVentDetails = () => {
         month: "JULY",
         title: "Ways To Make It Better",
         place: "89 NEWYORK CITY.",
-        desc:
-          "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
+        desc: "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
         img: e1,
       },
       {
@@ -96,8 +89,7 @@ const EVentDetails = () => {
         month: "JULY",
         title: "What’s New This Weekend",
         place: "89 NEWYORK CITY.",
-        desc:
-          "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
+        desc: "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
         img: e2,
       },
 
@@ -108,8 +100,7 @@ const EVentDetails = () => {
         month: "AUG",
         title: "Best Moments Of The Year",
         place: "89 NEWYORK CITY.",
-        desc:
-          "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
+        desc: "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
         img: e3,
       },
       {
@@ -118,8 +109,7 @@ const EVentDetails = () => {
         month: "AUG",
         title: "How To Plan Like A Pro",
         place: "89 NEWYORK CITY.",
-        desc:
-          "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
+        desc: "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
         img: e4,
       },
       {
@@ -128,8 +118,7 @@ const EVentDetails = () => {
         month: "AUG",
         title: "Things You Must Try",
         place: "89 NEWYORK CITY.",
-        desc:
-          "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
+        desc: "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
         img: e5,
       },
       {
@@ -138,12 +127,11 @@ const EVentDetails = () => {
         month: "AUG",
         title: "A Guide For Beginners",
         place: "89 NEWYORK CITY.",
-        desc:
-          "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
+        desc: "Lorem ipsum dolor sit amet elit. Cum veritatis sequi nulla nihil, dolor voluptatum nemo adipisci eligendi! Sed nisi perferendis, totam harum dicta.",
         img: e6,
       },
     ],
-    []
+    [],
   );
 
   const pageSize = 4;
@@ -160,6 +148,11 @@ const EVentDetails = () => {
   return (
     <section className={base}>
       <div className={`${base}__container`}>
+        {/* Heading */}
+        <div className={`${base}__heading`}>
+          <h2>Events</h2>
+        </div>
+
         <div className={`${base}__grid`}>
           {current.map((e) => (
             <article key={e.id} className={`${base}__card`}>

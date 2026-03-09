@@ -46,8 +46,7 @@ const Testimonials = () => {
       <div className="testimonial-title">
         <h2>Testimonials about center</h2>
         <p>
-          We have an excellent teacher to child ratio at our Kindergarten to
-          ensure that each child receives the attention he or she needs
+          Sai Kids is known as a Top Pre School in Bhubaneswar, where parents trust our teachers, learning activities, and safe Day Care in Bhubaneswar.
         </p>
       </div>
 

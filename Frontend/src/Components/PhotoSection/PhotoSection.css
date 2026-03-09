@@ -44,12 +44,13 @@
 }
 
 .photo-section__subtitle {
-  margin: 0 auto;
-  max-width: 760px;
-  font-family: "Outfit", sans-serif;
-  font-size: clamp(1rem, 1.15vw, 1.32rem);
-  line-height: 1.65;
-  color: #5e6478;
+   margin:10px auto 0;
+  max-width:760px;
+  font-size: clamp(14px, 1.5vw, 18px);
+  line-height:1.65;
+  color:#2b2f3a;
+  opacity:.92;
+  text-align: center;
   animation: fadeUp 1s ease both;
 }
 
