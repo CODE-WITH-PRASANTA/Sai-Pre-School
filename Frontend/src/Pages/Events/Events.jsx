@@ -5,7 +5,7 @@ import EVentDetails from '../../Components/EVentDetails/EVentDetails'
 const Events = () => {
   return (
     <div>
-        <EventHome/>
+        {/* <EventHome/> */}
         <EVentDetails/>
     </div>
   )
