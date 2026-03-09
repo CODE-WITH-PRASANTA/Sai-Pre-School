@@ -83,6 +83,12 @@ const ClassTime = () => {
       <div className={`${base}__bg`} aria-hidden="true" />
 
       <div className={`${base}__container`}>
+
+          {/* ✅ Heading Added */}
+        <div className={`${base}__heading`}>
+          <h2>Classes</h2>
+        </div>
+        
         <div className={`${base}__grid`}>
           {visibleCards.map((c) => (
             <article className={`${base}__card`} key={c.id}>

@@ -18,8 +18,7 @@ const Contact = () => {
               <FaPhoneAlt className="icon phone" />
               <div>
                 <h4>Phone</h4>
-                <p>(+032) 3456 7890</p>
-                <p>(+032) 3427 7670</p>
+                <p>91786 81922</p>
               </div>
             </div>
 
@@ -27,8 +26,8 @@ const Contact = () => {
               <FaMapMarkerAlt className="icon address" />
               <div>
                 <h4>Address</h4>
-                <p>Spring Store London Oxford Street</p>
-                <p>United Kingdom</p>
+                <p>Plot No.: 526, Haridaspur, Naharkanta,</p>
+                <p>Bhubaneswar</p>
               </div>
             </div>
 
@@ -36,8 +35,7 @@ const Contact = () => {
               <FaEnvelope className="icon email" />
               <div>
                 <h4>Email</h4>
-                <p>example@email.com</p>
-                <p>info@email.com</p>
+                <p>saikidsplayschool@gmail.com</p>
               </div>
             </div>
 
@@ -49,8 +47,7 @@ const Contact = () => {
             <h2>Contact Me</h2>
 
             <p className="contact-desc">
-              Meh synth Schlitz, tempor duis single-origin coffee ea next
-              level ethnic fingerstache fanny pack nostrud.
+              Contact Sai Kids Pre School, a trusted Kids Pre School in Bhubaneswar, offering quality early education and safe Day Care in Bhubaneswar.
             </p>
 
             <form>

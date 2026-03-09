@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../assets/sai-pre-school-logo.png";
+import { Link } from "react-router-dom";
 import {
   FaFacebookF,
   FaGooglePlusG,
@@ -9,17 +10,16 @@ import {
   FaPhoneAlt,
   FaEnvelope,
   FaArrowUp,
-  FaWhatsapp
+  FaWhatsapp,
 } from "react-icons/fa";
 
 const Footer = () => {
-
   const [email, setEmail] = useState("");
 
   const scrollTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth"
+      behavior: "smooth",
     });
   };
 
@@ -34,21 +34,18 @@ const Footer = () => {
 
   return (
     <footer className="relative bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 pt-20">
-
       {/* Footer Content */}
       <div
         data-aos="fade-up"
         className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 px-6 pb-12"
       >
-
-       {/* Logo + Social */}
-<div className="flex flex-col items-center cursor-pointer">
-
-  {/* Logo */}
-  <img
-    src={logo}
-    alt="SAI KIDS Pre School Logo"
-    className="
+        {/* Logo + Social */}
+        <div className="flex flex-col items-center cursor-pointer">
+          {/* Logo */}
+          <img
+            src={logo}
+            alt="SAI KIDS Pre School Logo"
+            className="
       h-16 w-16
       sm:h-18 sm:w-18
       md:h-20 md:w-20
@@ -58,45 +55,68 @@ const Footer = () => {
       object-cover
       shrink-0
     "
-  />
+          />
 
-  {/* Social Icons */}
-  <div className="flex gap-4 mt-4">
+          {/* Social Icons */}
+          <div className="flex gap-4 mt-4">
+            <div className="social-btn">
+              <FaFacebookF />
+            </div>
 
-    <div className="social-btn">
-      <FaFacebookF />
-    </div>
+            <div className="social-btn">
+              <FaGooglePlusG />
+            </div>
 
-    <div className="social-btn">
-      <FaGooglePlusG />
-    </div>
+            <div className="social-btn">
+              <FaLinkedinIn />
+            </div>
 
-    <div className="social-btn">
-      <FaLinkedinIn />
-    </div>
-
-    <div className="social-btn">
-      <FaInstagram />
-    </div>
-
-  </div>
-
-</div>
+            <div className="social-btn">
+              <FaInstagram />
+            </div>
+          </div>
+        </div>
 
         {/* Links */}
         <div>
           <h3 className="footer-title">INFORMATION</h3>
 
           <div className="grid grid-cols-2 gap-y-3 text-gray-700">
-            <p className="footer-link">HOME</p>
-            <p className="footer-link">ABOUT</p>
-            <p className="footer-link">NEWS</p>
-            <p className="footer-link">CLASSES</p>
-            <p className="footer-link">TEACHERS</p>
-            <p className="footer-link">EVENTS</p>
-            <p className="footer-link">GALLERY</p>
-            <p className="footer-link">TESTIMONIALS</p>
-            <p className="footer-link">CONTACT</p>
+            <a href="#home" className="footer-link">
+              HOME
+            </a>
+
+            <a href="#about" className="footer-link">
+              ABOUT
+            </a>
+
+            <a href="#news" className="footer-link">
+              NEWS
+            </a>
+
+            <a href="#classes" className="footer-link">
+              CLASSES
+            </a>
+
+            <a href="#teachers" className="footer-link">
+              TEACHERS
+            </a>
+
+            <a href="#events" className="footer-link">
+              EVENTS
+            </a>
+
+            <a href="#gallery" className="footer-link">
+              GALLERY
+            </a>
+
+            <a href="#testimonials" className="footer-link">
+              TESTIMONIALS
+            </a>
+
+            <a href="#contact" className="footer-link">
+              CONTACT
+            </a>
           </div>
         </div>
 
@@ -105,22 +125,20 @@ const Footer = () => {
           <h3 className="footer-title">CONTACT</h3>
 
           <div className="space-y-4 text-gray-700">
-
             <div className="flex gap-3">
-              <FaMapMarkerAlt className="text-pink-500 mt-1"/>
-              <p>6701 Democracy Blvd, Suite 300</p>
+              <FaMapMarkerAlt className="text-pink-500 mt-1" />
+              <p>Plot No.: 526, Haridaspur, Naharkanta, Bhubaneswar</p>
             </div>
 
             <div className="flex gap-3">
-              <FaPhoneAlt className="text-pink-500"/>
-              <p>001 1234 6789</p>
+              <FaPhoneAlt className="text-pink-500" />
+              <p>91786 81922</p>
             </div>
 
             <div className="flex gap-3">
-              <FaEnvelope className="text-pink-500"/>
-              <p>info@example.com</p>
+              <FaEnvelope className="text-pink-500" />
+              <p>saikidsplayschool@gmail.com</p>
             </div>
-
           </div>
         </div>
 
@@ -129,12 +147,11 @@ const Footer = () => {
           <h3 className="footer-title">SUBSCRIBE</h3>
 
           <div className="backdrop-blur-md bg-white/50 p-2 rounded-lg flex overflow-hidden">
-
             <input
               type="email"
               placeholder="Your Email"
               value={email}
-              onChange={(e)=>setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               className="flex-1 px-3 py-2 bg-transparent outline-none"
             />
 
@@ -144,24 +161,18 @@ const Footer = () => {
             >
               Go
             </button>
-
           </div>
-
         </div>
-
       </div>
 
       {/* Bottom */}
       <div className="border-t border-gray-400 text-center py-4 text-gray-700">
-        Copyright © Umang Academy
+        © 2026 Sai Kids Pre School. All Rights Reserved. Designed By: PRWEBSTOCK
       </div>
 
       {/* Back To Top */}
-      <button
-        onClick={scrollTop}
-        className="floating-btn bottom-6 right-6"
-      >
-        <FaArrowUp/>
+      <button onClick={scrollTop} className="floating-btn bottom-6 right-6">
+        <FaArrowUp />
       </button>
 
       {/* WhatsApp Button */}
@@ -169,9 +180,8 @@ const Footer = () => {
         href="#"
         className="floating-btn bottom-20 right-6 bg-green-500 hover:bg-green-600"
       >
-        <FaWhatsapp/>
+        <FaWhatsapp />
       </a>
-
     </footer>
   );
 };

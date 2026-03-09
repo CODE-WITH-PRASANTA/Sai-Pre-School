@@ -105,8 +105,7 @@ const OurTeacher = () => {
         <div className={`${base}__aboutInner`}>
           <h2 className={`${base}__h2`}>About the Teachers</h2>
           <p className={`${base}__sub`}>
-            We have an excellent teacher to child ratio at our Kindergarten to ensure that
-            each child receives the attention he or she needs
+            At Sai Kids, a trusted Kids Pre School in Bhubaneswar, our experienced and caring teachers guide every child with personal attention. This is why many parents choose us as one of the Best and Top Pre Schools in Bhubaneswar, offering quality learning and safe Day Care in Bhubaneswar.
           </p>
         </div>
       </section>
