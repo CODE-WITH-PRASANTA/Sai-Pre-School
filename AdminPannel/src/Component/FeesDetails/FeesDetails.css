@@ -1,0 +1,189 @@
+.fees-details{
+padding:30px;
+background:#f7f8fc;
+font-family:"Poppins",sans-serif;
+}
+
+/* HEADER */
+
+.fees-details__page-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.fees-details__title{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:22px;
+font-weight:600;
+color:#1c2a4d;
+}
+
+.fees-details__breadcrumb{
+font-size:14px;
+color:#3d5a8a;
+display:flex;
+gap:8px;
+align-items:center;
+}
+
+.fees-details__slash{
+opacity:.5;
+}
+
+
+/* CARD */
+
+.fees-details__card{
+background:white;
+border-radius:16px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+overflow:hidden;
+}
+
+/* CARD HEADER */
+
+.fees-details__card-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 25px;
+border-bottom:1px solid #eee;
+background:#f9f1f4;
+}
+
+.fees-details__card-title{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:18px;
+font-weight:600;
+color:#1c2a4d;
+}
+
+.fees-details__back-btn{
+background:#ff3b57;
+border:none;
+color:white;
+padding:8px 16px;
+border-radius:6px;
+cursor:pointer;
+font-size:14px;
+}
+
+/* CONTENT */
+
+.fees-details__content{
+display:grid;
+grid-template-columns:220px 1fr;
+gap:30px;
+padding:30px;
+}
+
+/* PHOTO */
+
+.fees-details__photo{
+text-align:center;
+}
+
+.fees-details__photo img{
+width:120px;
+height:140px;
+object-fit:cover;
+border-radius:10px;
+border:6px solid #eee;
+margin-bottom:10px;
+}
+
+.fees-details__photo h4{
+font-size:20px;
+color:#1c2a4d;
+}
+
+/* TABLE */
+
+.fees-details__table-box{
+width:100%;
+}
+
+.fees-details__table{
+width:100%;
+border-collapse:collapse;
+font-size:15px;
+}
+
+.fees-details__table td{
+border:1px solid #d8d8e0;
+padding:14px 16px;
+color:#1f2b50;
+}
+
+.fees-details__table tr:nth-child(even){
+background:#eef0f8;
+}
+
+.fees-details__table td:first-child{
+font-weight:600;
+width:180px;
+}
+
+.fees-details__table td:nth-child(3){
+font-weight:600;
+width:200px;
+}
+
+.no{
+color:#ff3b57;
+font-weight:600;
+}
+
+
+/* FOOTER */
+
+.fees-details__footer{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 25px;
+border-top:1px solid #eee;
+background:#fafafa;
+flex-wrap:wrap;
+gap:15px;
+}
+
+.fees-details__date{
+font-size:18px;
+color:#1c2a4d;
+}
+
+/* BUTTONS */
+
+.fees-details__actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.fees-details__btn{
+border:none;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+font-size:14px;
+color:white;
+}
+
+.fees-details__btn.dark{
+background:#1f4a7c;
+}
+
+.fees-details__btn.blue{
+background:#3a8edb;
+}
+
+.fees-details__btn.green{
+background:#1db954;
+}
