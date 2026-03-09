@@ -10,6 +10,10 @@ import Teacher from "./Pages/Teacher/Teacher";
 import OurGallery from "./Pages/OurGallery/OurGallery";
 import FloatingForm from "./Components/FloatingForm/FloatingForm";
 import Contact from "./Components/Contact/Contact";
+import News from "./Pages/News/News";
+import NewsDetails from "./Pages/NewsDetails/NewsDetails";
+
+
 
 function App() {
   return (
@@ -22,7 +26,12 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/teachers" element={<Teacher />} />
         <Route path="/gallery" element={<OurGallery />} />
+        
+        
         <Route path="/contact" element={<Contact/>}/>
+        <Route path="/news" element={<News/>}/>
+        <Route path="/news-details" element={<NewsDetails/>}/>
+        
       </Routes>
       <Footer />
       <FloatingForm /> 

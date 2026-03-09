@@ -12,6 +12,7 @@ import GalleryView from "./Pages/GalleryView/GalleryView";
 import Contact from "./Pages/Contact/Contact";
 import Admission from "./Pages/Admission/Admission";
 import TeacherPost from "./Pages/TeacherPost/TeacherPost";
+import Fees from "./Pages/Fees/Fees";
 
 export default function App() {
   return (
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="/admin/testimonials" element={<Testimonial />} />
           <Route path="/admin/contact" element={<Contact/>}/>
           <Route path="/admin/admission" element={<Admission/>}/>
+          <Route path="/admin/fees" element={<Fees/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
