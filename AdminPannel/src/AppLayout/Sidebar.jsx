@@ -37,6 +37,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
     },
     { name: "Contact", path: "/admin/contact", icon: <FaNewspaper /> },
      { name: "Admission", path: "/admin/admission", icon: <FaNewspaper /> },
+      { name: "Fees", path: "/admin/fees", icon: <FaNewspaper /> },
   ];
 
   const [openMenu, setOpenMenu] = useState(null);

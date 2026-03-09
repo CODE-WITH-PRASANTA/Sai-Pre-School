@@ -7,6 +7,8 @@ import Classes from "../Classes/Classes";
 import Events from "../Events/Events";
 import Teacher from "../Teacher/Teacher";
 import OurGallery from "../OurGallery/OurGallery";
+import Contact from "../../Components/Contact/Contact";
+import News from "../News/News";
 
 const Home = () => {
   return (
@@ -21,9 +23,7 @@ const Home = () => {
       <div id="about">
         <About />
       </div>
-      <div id="testimonials">
-        <Testimonials />
-      </div>
+     
       <div id="teachers">
         <Teacher/>
       </div>
@@ -39,6 +39,18 @@ const Home = () => {
       <div id="gallery">
         <OurGallery/>
       </div>
+
+       <div id="testimonials">
+        <Testimonials />
+      </div>
+
+      <div id="contact">
+        <Contact/>
+      </div>
+      <div id="news">
+        <News/>
+      </div>
+
 
     </>
   );
