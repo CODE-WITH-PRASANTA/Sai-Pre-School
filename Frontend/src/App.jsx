@@ -9,6 +9,7 @@ import Events from "./Pages/Events/Events";
 import Teacher from "./Pages/Teacher/Teacher";
 import OurGallery from "./Pages/OurGallery/OurGallery";
 
+
 function App() {
   return (
     <BrowserRouter>
@@ -20,6 +21,8 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/teachers" element={<Teacher />} />
         <Route path="/gallery" element={<OurGallery />} />
+        
+        
       </Routes>
 
       <Footer />
