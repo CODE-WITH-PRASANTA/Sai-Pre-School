@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import logo from "../../assets/sai-pre-school-logo.png";
 import {
   FaPhoneAlt,
   FaMapMarkerAlt,
@@ -47,15 +48,23 @@ const Navbar = () => {
       {/* Main Navbar */}
       <div className="sticky top-0 z-50 bg-gray-100 shadow-md">
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-6 lg:px-10 py-4">
-          {/* Logo */}
-          <div className="flex items-center gap-2 cursor-pointer">
-            <span className="text-xl md:text-2xl lg:text-3xl font-bold text-pink-500">
-              Umang
-            </span>
-            <span className="text-xl md:text-2xl lg:text-3xl font-bold text-blue-600">
-              Academy
-            </span>
-          </div>
+         {/* Logo */}
+<div className="flex items-center cursor-pointer">
+  <img
+    src={logo}
+    alt="SAI KIDS Pre School Logo"
+    className="
+      h-15 w-15
+      sm:h-15 sm:w-15
+      md:h-16 md:w-16
+      lg:h-20 lg:w-20
+      xl:h-[90px] xl:w-[90px]
+      rounded-full
+      object-cover
+      shrink-0
+    "
+  />
+</div>
 
           {/* Desktop Menu */}
           <ul className="hidden lg:flex items-center gap-6 xl:gap-8 text-sm xl:text-base font-medium">

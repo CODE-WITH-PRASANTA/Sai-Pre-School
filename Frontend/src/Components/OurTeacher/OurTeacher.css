@@ -6,7 +6,7 @@
   opacity:0;
   transform:translateY(10px);
   transition:opacity 520ms ease, transform 520ms ease;
-  margin-top: -380px;
+  /* margin-top: -380px; */
 }
 .our-teacher--in{opacity:1;transform:translateY(0);}
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import logo from "../../assets/sai-pre-school-logo.png";
 import {
   FaFacebookF,
   FaGooglePlusG,
@@ -40,36 +41,47 @@ const Footer = () => {
         className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 px-6 pb-12"
       >
 
-        {/* Logo */}
-        <div>
-          <h2 className="text-3xl font-bold text-pink-500">
-            Umang <span className="text-blue-600">Academy</span>
-          </h2>
+       {/* Logo + Social */}
+<div className="flex flex-col items-center cursor-pointer">
 
-          <p className="mt-6 text-gray-700">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </p>
+  {/* Logo */}
+  <img
+    src={logo}
+    alt="SAI KIDS Pre School Logo"
+    className="
+      h-16 w-16
+      sm:h-18 sm:w-18
+      md:h-20 md:w-20
+      lg:h-24 lg:w-24
+      xl:h-[100px] xl:w-[100px]
+      rounded-full
+      object-cover
+      shrink-0
+    "
+  />
 
-          <div className="flex gap-4 mt-6">
+  {/* Social Icons */}
+  <div className="flex gap-4 mt-4">
 
-            <div className="social-btn">
-              <FaFacebookF />
-            </div>
+    <div className="social-btn">
+      <FaFacebookF />
+    </div>
 
-            <div className="social-btn">
-              <FaGooglePlusG />
-            </div>
+    <div className="social-btn">
+      <FaGooglePlusG />
+    </div>
 
-            <div className="social-btn">
-              <FaLinkedinIn />
-            </div>
+    <div className="social-btn">
+      <FaLinkedinIn />
+    </div>
 
-            <div className="social-btn">
-              <FaInstagram />
-            </div>
+    <div className="social-btn">
+      <FaInstagram />
+    </div>
 
-          </div>
-        </div>
+  </div>
+
+</div>
 
         {/* Links */}
         <div>
@@ -78,11 +90,12 @@ const Footer = () => {
           <div className="grid grid-cols-2 gap-y-3 text-gray-700">
             <p className="footer-link">HOME</p>
             <p className="footer-link">ABOUT</p>
-            <p className="footer-link">FAQ</p>
-            <p className="footer-link">EVENT</p>
-            <p className="footer-link">BLOG</p>
-            <p className="footer-link">GALLERY</p>
+            <p className="footer-link">NEWS</p>
             <p className="footer-link">CLASSES</p>
+            <p className="footer-link">TEACHERS</p>
+            <p className="footer-link">EVENTS</p>
+            <p className="footer-link">GALLERY</p>
+            <p className="footer-link">TESTIMONIALS</p>
             <p className="footer-link">CONTACT</p>
           </div>
         </div>
