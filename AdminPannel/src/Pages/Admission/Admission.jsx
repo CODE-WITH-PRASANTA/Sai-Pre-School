@@ -135,7 +135,7 @@ Custom Field
 
 <div className={`${base}__card-body`}>
 
-<div className={`${base}__single-grid`}>
+<div className={`${base}__custom-grid`}>
 <input placeholder="PEN"/>
 <input placeholder="SR NO"/>
 <input placeholder="APAAR ID"/>
