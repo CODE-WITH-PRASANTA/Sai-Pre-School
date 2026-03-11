@@ -7,6 +7,8 @@ const connectDB = require("./config/db");
 const eventRoutes = require("./routes/eventRoutes");
 const newsRoutes = require("./routes/newsRoutes");
 const contactRoutes = require("./routes/contactRoutes");
+const classesRoutes = require("./routes/classesRoutes");
+const teacherpostRoutes = require("./routes/teacherpostRoutes");
 
 dotenv.config();
 
@@ -24,6 +26,9 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api", newsRoutes);
 app.use("/api", eventRoutes);
 app.use("/api", contactRoutes);
+app.use("/api", classesRoutes);
+// app.use("/api", teacherpostRoutes);
+
 
 
 const PORT = process.env.PORT || 5000;
