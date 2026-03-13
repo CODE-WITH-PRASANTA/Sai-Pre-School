@@ -27,13 +27,13 @@ const Navbar = () => {
           <div className="flex flex-wrap items-center gap-4 md:gap-6">
             <div className="flex items-center gap-2">
               <FaPhoneAlt />
-              <span>001 1234 6789</span>
+              <span>91786 81922</span>
             </div>
 
             <div className="flex items-center gap-2">
               <FaMapMarkerAlt />
               <span className="hidden lg:block">
-                6701 Democracy Blvd, Suite 300, USA
+                Plot No.: 526, Haridaspur, Naharkanta, Bhubaneswar
               </span>
             </div>
           </div>
