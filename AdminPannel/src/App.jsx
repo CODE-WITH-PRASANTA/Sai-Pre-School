@@ -10,6 +10,8 @@ import Testimonial from "./Pages/Testimonial/Testimonial";
 import GalleryPost from "./Pages/GalleryPost/GalleryPost";
 import GalleryView from "./Pages/GalleryView/GalleryView";
 import Contact from "./Pages/Contact/Contact";
+import AdminAdvertisement from "./Pages/AdminAdv/AdminAdv";
+import AdminColdLeads from "./Pages/dminColdLead/Sidebar";
 
 export default function App() {
   return (
@@ -29,6 +31,9 @@ export default function App() {
 
           <Route path="/admin/testimonials" element={<Testimonial />} />
           <Route path="/admin/contact" element={<Contact/>}/>
+          <Route path="/admin/advertisement" element={<AdminAdvertisement/>}/>
+          <Route path="/admin/cold-lead" element={<AdminColdLeads/>}/>
+
         </Route>
       </Routes>
     </BrowserRouter>

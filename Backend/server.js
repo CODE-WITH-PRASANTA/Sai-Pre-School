@@ -3,25 +3,46 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 
 const connectDB = require("./config/db");
+
 const eventRoutes = require("./routes/eventRoutes");
 const newsRoutes = require("./routes/newsRoutes");
-// const eventRoutes = require("./routes/eventRoutes");
-// const testimonialRoutes = require("./routes/testimonialRoutes");
+const galleryRoutes = require("./routes/galleryRoutes");
+const classRoutes = require("./routes/classRoutes");
+const advertisementRoutes = require("./routes/advertisement.routes");
+const enquiryRoutes = require("./routes/enquiry.routes");
+const testimonialRoutes = require("./routes/testimonialRoutes");
 
 dotenv.config();
 connectDB();
 
 const app = express();
 
+/* ================= CORS ================= */
+
 app.use(cors());
+
+/* ================= BODY ================= */
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+/* ================= STATIC ================= */
 
 app.use("/uploads", express.static("uploads"));
 
+/* ================= ROUTES ================= */
+
 app.use("/api", newsRoutes);
 app.use("/api", eventRoutes);
-// app.use("/api/events", eventRoutes);
-// app.use("/api/testimonials", testimonialRoutes);
+app.use("/api", galleryRoutes);
+app.use("/api", classRoutes);
+
+app.use("/api/advertisements", advertisementRoutes);
+app.use("/api/enquiries", enquiryRoutes);
+
+app.use("/api", testimonialRoutes);
+
+/* ================= SERVER ================= */
 
 const PORT = process.env.PORT || 5000;
 

@@ -8,6 +8,7 @@ import Classes from "./Pages/Classes/Classes";
 import Events from "./Pages/Events/Events";
 import Teacher from "./Pages/Teacher/Teacher";
 import OurGallery from "./Pages/OurGallery/OurGallery";
+import FloatingForm from "./Components/FloatingForm/FloatingForm";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       </Routes>
 
       <Footer />
+      <FloatingForm />
     </BrowserRouter>
   );
 }

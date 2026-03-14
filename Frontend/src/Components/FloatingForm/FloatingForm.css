@@ -1,0 +1,267 @@
+/* ===== Overlay ===== */
+
+.floatingform-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .65);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fade .4s ease;
+}
+
+/* ===== Container ===== */
+
+.floatingform-container {
+    width: 420px;
+    max-width: 92%;
+    padding: 35px;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #e3e1e1, #f7f7f7);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, .35);
+    position: relative;
+    animation: popup .4s ease;
+}
+
+/* ===== Close ===== */
+
+.floatingform-close {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 22px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+/* ===== Header ===== */
+
+.floatingform-header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.floatingform-header h2 {
+    font-size: 26px;
+    color: #f6339a;
+    font-weight: 700;
+}
+
+.floatingform-header p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* ===== Info ===== */
+
+.floatingform-info {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* ===== Form ===== */
+
+.floatingform-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.floatingform-form input,
+.floatingform-form textarea {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.floatingform-form input:focus,
+.floatingform-form textarea:focus {
+    outline: none;
+    border-color: #ff7a00;
+}
+
+/* ===== Submit ===== */
+
+.floatingform-submit {
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #fff;
+    background: linear-gradient(135deg, #f6339a, #ffb347,#f6339a);
+    transition: .3s;
+}
+
+.floatingform-submit:hover {
+    transform: translateY(-2px);
+}
+
+/* ===== Divider ===== */
+
+.floatingform-divider {
+    text-align: center;
+    margin: 18px 0;
+    position: relative;
+}
+
+.floatingform-divider span {
+    background: #fff;
+    padding: 0 10px;
+    font-size: 12px;
+    color: #888;
+}
+
+/* ===== Actions ===== */
+
+.floatingform-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.call,
+.whatsapp {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+}
+
+.call {
+    background: #0a58ca;
+}
+
+.whatsapp {
+    background: #25d366;
+}
+
+/* ===== Ads ===== */
+
+.ad-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    z-index: 20000;
+}
+
+.ad-container {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+}
+
+.ad-image {
+    width: 100%;
+    max-height: 75vh;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.ad-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: none;
+    background: red;
+    color: #fff;
+    cursor: pointer;
+}
+
+.ad-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.ad-controls button {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    background: #0a58ca;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.ad-dots {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.ad-dots span {
+    width: 10px;
+    height: 10px;
+    background: #ccc;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 4px;
+    cursor: pointer;
+}
+
+.active-dot {
+    background: #f6339a;
+}
+
+/* ===== Animations ===== */
+
+@keyframes fade {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes popup {
+    from {
+        transform: scale(.8);
+        opacity: 0
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1
+    }
+}
+
+/* ===== Responsive ===== */
+
+@media(max-width:500px) {
+
+    .floatingform-container {
+        padding: 25px;
+    }
+
+    .floatingform-header h2 {
+        font-size: 22px;
+    }
+
+    .ad-controls button {
+        width: 35px;
+        height: 35px;
+    }
+}

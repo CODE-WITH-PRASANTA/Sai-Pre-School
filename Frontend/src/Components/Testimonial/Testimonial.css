@@ -82,6 +82,7 @@
 
 .testimonial-image img {
   width: 320px;
+  height: 40vh;
   max-width: 100%;
   border-left: 5px solid #ec4899;
   border-radius: 10px;

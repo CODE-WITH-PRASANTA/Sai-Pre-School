@@ -1,65 +1,93 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import "./Classes.css";
+import API, { IMAGE_URL } from "../../api/axios";
 
 const Classes = () => {
+
   const base = "classes-page";
 
-  const initialForm = useMemo(
-    () => ({
-      className: "",
-      classTime: "",
-      classSize: "",
-      yearsOld: "",
-      tuitionFees: "",
-    }),
-    []
-  );
+  const initialForm = useMemo(() => ({
+    className: "",
+    classTime: "",
+    classSize: "",
+    yearsOld: "",
+    tuitionFees: "",
+    description: "",
+    image: null,
+    existingImage: ""
+  }), []);
 
   const [form, setForm] = useState(initialForm);
-  const [classesData, setClassesData] = useState([
-    {
-      id: 1,
-      className: "Nursery",
-      classTime: "08:00 AM - 10:00 AM",
-      classSize: "25",
-      yearsOld: "3 - 4",
-      tuitionFees: "1500",
-    },
-    {
-      id: 2,
-      className: "Junior KG",
-      classTime: "10:30 AM - 12:30 PM",
-      classSize: "30",
-      yearsOld: "4 - 5",
-      tuitionFees: "1800",
-    },
-    {
-      id: 3,
-      className: "Senior KG",
-      classTime: "01:00 PM - 03:00 PM",
-      classSize: "28",
-      yearsOld: "5 - 6",
-      tuitionFees: "2200",
-    },
-  ]);
-
+  const [classesData, setClassesData] = useState([]);
   const [editId, setEditId] = useState(null);
   const [openMenuId, setOpenMenuId] = useState(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({
+  /* ================= IMAGE SELECT ================= */
+
+  const handleImage = (e) => {
+
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    setForm(prev => ({
       ...prev,
-      [name]: value,
+      image: file,
+      existingImage: ""
     }));
+
   };
+
+  /* ================= FETCH CLASSES ================= */
+
+  const fetchClasses = async () => {
+
+    try {
+
+      const res = await API.get("/classes");
+
+      setClassesData(res.data.data || []);
+
+    } catch (error) {
+
+      console.error("Fetch classes error:", error);
+
+    }
+
+  };
+
+  useEffect(() => {
+
+    fetchClasses();
+
+  }, []);
+
+  /* ================= FORM CHANGE ================= */
+
+  const handleChange = (e) => {
+
+    const { name, value } = e.target;
+
+    setForm(prev => ({
+      ...prev,
+      [name]: value
+    }));
+
+  };
+
+  /* ================= RESET ================= */
 
   const resetForm = () => {
+
     setForm(initialForm);
     setEditId(null);
+
   };
 
-  const handleSave = (e) => {
+  /* ================= SAVE / UPDATE ================= */
+
+  const handleSave = async (e) => {
+
     e.preventDefault();
 
     if (
@@ -73,57 +101,111 @@ const Classes = () => {
       return;
     }
 
-    if (editId) {
-      setClassesData((prev) =>
-        prev.map((item) =>
-          item.id === editId ? { ...item, ...form, id: editId } : item
-        )
-      );
-    } else {
-      const newClass = {
-        id: Date.now(),
-        ...form,
-      };
-      setClassesData((prev) => [newClass, ...prev]);
+    try {
+
+      const formData = new FormData();
+
+      formData.append("className", form.className);
+      formData.append("classTime", form.classTime);
+      formData.append("classSize", form.classSize);
+      formData.append("yearsOld", form.yearsOld);
+      formData.append("tuitionFees", form.tuitionFees);
+      formData.append("description", form.description);
+
+      if (form.image) {
+        formData.append("image", form.image);
+      }
+
+      if (editId) {
+
+        await API.put(`/classes/${editId}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        });
+
+      } else {
+
+        await API.post("/classes", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        });
+
+      }
+
+      fetchClasses();
+      resetForm();
+
+    } catch (error) {
+
+      console.error("Save class error:", error);
+
     }
 
-    resetForm();
   };
 
+  /* ================= EDIT ================= */
+
   const handleEdit = (item) => {
+
     setForm({
       className: item.className,
       classTime: item.classTime,
       classSize: item.classSize,
       yearsOld: item.yearsOld,
       tuitionFees: item.tuitionFees,
+      description: item.description || "",
+      image: null,
+      existingImage: item.image || ""
     });
-    setEditId(item.id);
+
+    setEditId(item._id);
     setOpenMenuId(null);
+
   };
 
-  const handleDelete = (id) => {
+  /* ================= DELETE ================= */
+
+  const handleDelete = async (id) => {
+
     const confirmDelete = window.confirm("Do you want to delete this class?");
+
     if (!confirmDelete) return;
 
-    setClassesData((prev) => prev.filter((item) => item.id !== id));
+    try {
 
-    if (editId === id) {
-      resetForm();
+      await API.delete(`/classes/${id}`);
+
+      fetchClasses();
+
+      if (editId === id) resetForm();
+
+    } catch (error) {
+
+      console.error("Delete class error:", error);
+
     }
 
     setOpenMenuId(null);
+
   };
 
+  /* ================= DROPDOWN ================= */
+
   const toggleMenu = (id) => {
-    setOpenMenuId((prev) => (prev === id ? null : id));
+
+    setOpenMenuId(prev => prev === id ? null : id);
+
   };
 
   return (
     <section className={base}>
       <div className={`${base}__container`}>
         <div className={`${base}__topGrid`}>
-          {/* LEFT FORM BOX */}
+
+          {/* FORM */}
+
           <div className={`${base}__card`}>
             <div className={`${base}__cardHead`}>
               <h2 className={`${base}__title`}>
@@ -135,6 +217,7 @@ const Classes = () => {
             </div>
 
             <form className={`${base}__form`} onSubmit={handleSave}>
+
               <div className={`${base}__field`}>
                 <label className={`${base}__label`}>Class Name</label>
                 <input
@@ -143,7 +226,6 @@ const Classes = () => {
                   value={form.className}
                   onChange={handleChange}
                   className={`${base}__input`}
-                  placeholder="Enter class name"
                 />
               </div>
 
@@ -155,7 +237,6 @@ const Classes = () => {
                   value={form.classTime}
                   onChange={handleChange}
                   className={`${base}__input`}
-                  placeholder="Enter class time"
                 />
               </div>
 
@@ -167,7 +248,6 @@ const Classes = () => {
                   value={form.classSize}
                   onChange={handleChange}
                   className={`${base}__input`}
-                  placeholder="Enter class size"
                 />
               </div>
 
@@ -179,7 +259,6 @@ const Classes = () => {
                   value={form.yearsOld}
                   onChange={handleChange}
                   className={`${base}__input`}
-                  placeholder="Enter age group"
                 />
               </div>
 
@@ -191,7 +270,26 @@ const Classes = () => {
                   value={form.tuitionFees}
                   onChange={handleChange}
                   className={`${base}__input`}
-                  placeholder="Enter tuition fees"
+                />
+              </div>
+
+              <div className={`${base}__field`}>
+                <label className={`${base}__label`}>Class Image</label>
+                <input
+                  type="file"
+                  onChange={handleImage}
+                  className={`${base}__input`}
+                />
+              </div>
+
+              <div className={`${base}__field`}>
+                <label className={`${base}__label`}>Description</label>
+                <textarea
+                  name="description"
+                  value={form.description}
+                  onChange={handleChange}
+                  className={`${base}__input`}
+                  style={{ height: "100px", paddingTop: "12px" }}
                 />
               </div>
 
@@ -208,10 +306,12 @@ const Classes = () => {
                   Clear
                 </button>
               </div>
+
             </form>
           </div>
 
-          {/* RIGHT LIVE PREVIEW */}
+          {/* LIVE PREVIEW */}
+
           <div className={`${base}__card`}>
             <div className={`${base}__cardHead`}>
               <h2 className={`${base}__title`}>Live Preview</h2>
@@ -223,40 +323,68 @@ const Classes = () => {
             <div className={`${base}__previewTableWrap`}>
               <table className={`${base}__previewTable`}>
                 <tbody>
+
+                  <tr>
+                    <th>Image</th>
+                    <td>
+                      {form.image ? (
+                        <img
+                          src={URL.createObjectURL(form.image)}
+                          style={{ width: "80px", borderRadius: "8px" }}
+                        />
+                      ) : form.existingImage ? (
+                        <img
+                          src={`${IMAGE_URL}${form.existingImage}`}
+                          style={{ width: "80px", borderRadius: "8px" }}
+                        />
+                      ) : "—"}
+                    </td>
+                  </tr>
+
                   <tr>
                     <th>Class Name</th>
                     <td>{form.className || "—"}</td>
                   </tr>
+
                   <tr>
                     <th>Class Time</th>
                     <td>{form.classTime || "—"}</td>
                   </tr>
+
+                  <tr>
+                    <th>Description</th>
+                    <td>{form.description || "—"}</td>
+                  </tr>
+
                   <tr>
                     <th>Class Size</th>
                     <td>{form.classSize || "—"}</td>
                   </tr>
+
                   <tr>
                     <th>Years Old</th>
                     <td>{form.yearsOld || "—"}</td>
                   </tr>
+
                   <tr>
                     <th>Tuition Fees</th>
                     <td>{form.tuitionFees ? `₹${form.tuitionFees}` : "—"}</td>
                   </tr>
+
                 </tbody>
               </table>
             </div>
           </div>
+
         </div>
 
-        {/* BOTTOM TABLE */}
+        {/* TABLE */}
+
         <div className={`${base}__card ${base}__tableCard`}>
+
           <div className={`${base}__cardHead ${base}__cardHead--table`}>
             <div>
               <h2 className={`${base}__title`}>Classes List</h2>
-              <p className={`${base}__subtitle`}>
-                Manage all class records from this table
-              </p>
             </div>
 
             <div className={`${base}__countBadge`}>
@@ -268,35 +396,53 @@ const Classes = () => {
             <table className={`${base}__table`}>
               <thead>
                 <tr>
+                  <th>Image</th>
                   <th>Class Name</th>
                   <th>Class Time</th>
+                  <th>Description</th>
                   <th>Class Size</th>
                   <th>Years Old</th>
                   <th>Tuition Fees</th>
                   <th>Action</th>
                 </tr>
               </thead>
+
               <tbody>
+
                 {classesData.length > 0 ? (
-                  classesData.map((item) => (
-                    <tr key={item.id}>
+                  classesData.map(item => (
+                    <tr key={item._id}>
+
+                      <td>
+                        {item.image ? (
+                          <img
+                            src={`${IMAGE_URL}${item.image}`}
+                            style={{ width: "60px", borderRadius: "6px" }}
+                          />
+                        ) : "—"}
+                      </td>
+
                       <td>{item.className}</td>
                       <td>{item.classTime}</td>
+                      <td>{item.description}</td>
                       <td>{item.classSize}</td>
                       <td>{item.yearsOld}</td>
                       <td>₹{item.tuitionFees}</td>
+
                       <td>
+
                         <div className={`${base}__actionWrap`}>
                           <button
                             type="button"
                             className={`${base}__actionBtn`}
-                            onClick={() => toggleMenu(item.id)}
+                            onClick={() => toggleMenu(item._id)}
                           >
                             Action ▾
                           </button>
 
-                          {openMenuId === item.id && (
+                          {openMenuId === item._id && (
                             <div className={`${base}__dropdown`}>
+
                               <button
                                 type="button"
                                 className={`${base}__dropdownItem`}
@@ -304,30 +450,38 @@ const Classes = () => {
                               >
                                 Edit
                               </button>
+
                               <button
                                 type="button"
                                 className={`${base}__dropdownItem ${base}__dropdownItem--danger`}
-                                onClick={() => handleDelete(item.id)}
+                                onClick={() => handleDelete(item._id)}
                               >
                                 Delete
                               </button>
+
                             </div>
                           )}
+
                         </div>
+
                       </td>
+
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="6" className={`${base}__empty`}>
+                    <td colSpan="8" className={`${base}__empty`}>
                       No class records available.
                     </td>
                   </tr>
                 )}
+
               </tbody>
             </table>
           </div>
+
         </div>
+
       </div>
     </section>
   );

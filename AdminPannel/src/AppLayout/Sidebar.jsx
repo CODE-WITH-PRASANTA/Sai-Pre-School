@@ -10,6 +10,8 @@ import {
   FaChalkboardTeacher,
   FaUserTie,
   FaCommentDots,
+  FaBullhorn,
+  FaUserPlus,
 } from "react-icons/fa";
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
@@ -17,6 +19,17 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
     { name: "Dashboard", path: "/", icon: <FaHome /> },
     { name: "News", path: "/admin/news", icon: <FaNewspaper /> },
 
+    {
+      name: "Advertisements",
+      path: "/admin/advertisement",
+      icon: <FaBullhorn />,
+    },
+
+    {
+      name: "Cold Leads",
+      path: "/admin/cold-lead",
+      icon: <FaUserPlus />,
+    },
     {
       name: "Gallery",
       icon: <FaImages />,
