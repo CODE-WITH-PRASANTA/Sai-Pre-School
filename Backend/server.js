@@ -11,6 +11,7 @@ const classRoutes = require("./routes/classRoutes");
 const advertisementRoutes = require("./routes/advertisement.routes");
 const enquiryRoutes = require("./routes/enquiry.routes");
 const testimonialRoutes = require("./routes/testimonialRoutes");
+const contact = require('./routes/classRoutes')
 
 dotenv.config();
 
@@ -37,11 +38,11 @@ app.use("/api", newsRoutes);
 app.use("/api", eventRoutes);
 app.use("/api", galleryRoutes);
 app.use("/api", classRoutes);
-
 app.use("/api/advertisements", advertisementRoutes);
 app.use("/api/enquiries", enquiryRoutes);
-
 app.use("/api", testimonialRoutes);
+
+app.use("/api",contact)
 
 /* ================= SERVER ================= */
 

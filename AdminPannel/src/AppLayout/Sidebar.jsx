@@ -12,6 +12,9 @@ import {
   FaCommentDots,
   FaBullhorn,
   FaUserPlus,
+  FaPhoneAlt,
+  FaUserGraduate,
+  FaMoneyBillWave
 } from "react-icons/fa";
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {

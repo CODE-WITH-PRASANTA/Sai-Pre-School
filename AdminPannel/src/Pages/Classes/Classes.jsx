@@ -90,21 +90,16 @@ const Classes = () => {
 
     e.preventDefault();
 
-const handleSave = async (e) => {
-  e.preventDefault();
-
-  if (
-    !form.className.trim() ||
-    !form.classTime.trim() ||
-    !form.classSize ||
-    !form.yearsOld.trim() ||
-    !form.tuitionFees
-  ) {
-    alert("Please fill all fields.");
-    return;
-  }
-
-  try {
+    if (
+      !form.className.trim() ||
+      !form.classTime.trim() ||
+      !form.classSize ||
+      !form.yearsOld.trim() ||
+      !form.tuitionFees
+    ) {
+      alert("Please fill all fields.");
+      return;
+    }
 
     try {
 

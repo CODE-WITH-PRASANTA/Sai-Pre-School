@@ -14,6 +14,8 @@ import AdminColdLeads from "./Pages/dminColdLead/Sidebar";
 
 import TeacherPost from "./Pages/TeacherPost/TeacherPost"; // ✅ added
 import Contact from "./Pages/Contact/Contact";
+import Admission from "./Pages/Admission/Admission";
+import Fees from "./Pages/Fees/Fees";
 
 export default function App() {
   return (
@@ -45,6 +47,9 @@ export default function App() {
           <Route path="/admin/advertisement" element={<AdminAdvertisement />} />
 
           <Route path="/admin/cold-lead" element={<AdminColdLeads />} />
+          <Route path="/admin/admission" element={<Admission />} />
+          <Route path="/admin/fees" element={<Fees />} />
+
 
         </Route>
 
