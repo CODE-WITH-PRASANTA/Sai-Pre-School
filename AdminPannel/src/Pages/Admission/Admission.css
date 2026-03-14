@@ -1,0 +1,214 @@
+.admission-ui{
+padding:40px;
+background:#f3f6fb;
+font-family:Inter,sans-serif;
+min-height:100vh;
+}
+
+.admission-ui__container{
+max-width:2000px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:14px;
+box-shadow:0 8px 30px rgba(0,0,0,0.05);
+}
+
+.admission-ui__header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.admission-ui__download{
+background:#2f5bd3;
+color:white;
+border:none;
+padding:10px 18px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.admission-ui__card{
+border:1px solid #e3e8f0;
+border-radius:10px;
+margin-bottom:16px;
+overflow:hidden;
+}
+
+.admission-ui__card-header{
+padding:16px 20px;
+display:flex;
+justify-content:space-between;
+cursor:pointer;
+font-weight:600;
+background:#f8fafc;
+}
+
+.admission-ui__card-body{
+padding:25px;
+}
+
+.admission-ui__form{
+display:flex;
+gap:30px;
+}
+
+.admission-ui__grid{
+flex:1;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px;
+}
+
+.admission-ui__grid input,
+.admission-ui__grid select{
+padding:12px;
+border:1px solid #d6dde8;
+border-radius:8px;
+width:100%;
+}
+
+.admission-ui__custom-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px;
+margin-bottom:16px;
+}
+
+.admission-ui__custom-grid input{
+padding:12px;
+border:1px solid #d6dde8;
+border-radius:8px;
+}
+
+.admission-ui__checkbox{
+display:flex;
+gap:20px;
+margin-top:10px;
+}
+
+.admission-ui__checkbox label{
+display:flex;
+align-items:center;
+gap:6px;
+}
+
+.admission-ui__textarea{
+width:100%;
+min-height:120px;
+padding:12px;
+border-radius:8px;
+border:1px solid #d6dde8;
+margin-bottom:16px;
+}
+
+.admission-ui__photo{
+width:180px;
+height:200px;
+border:2px dashed #3b82f6;
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+overflow:hidden;
+background:#f9fbff;
+}
+
+.admission-ui__photo input{
+display:none;
+}
+
+.admission-ui__photo img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.photo-placeholder{
+display:flex;
+flex-direction:column;
+align-items:center;
+color:#6b7280;
+}
+
+.photo-placeholder span{
+font-size:12px;
+margin-top:6px;
+}
+
+.admission-ui__table{
+width:100%;
+border-collapse:collapse;
+}
+
+.admission-ui__table th{
+background:#f1f5f9;
+padding:14px;
+text-align:left;
+}
+
+.admission-ui__table td{
+padding:14px;
+border-top:1px solid #e5e7eb;
+}
+
+.file-upload{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+background:#f3f6fb;
+border:1px solid #d6dde8;
+padding:10px 18px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.file-upload input{
+display:none;
+}
+
+.admission-ui__submit{
+margin-top:20px;
+background:#2f5bd3;
+color:white;
+border:none;
+padding:12px 24px;
+border-radius:10px;
+cursor:pointer;
+}
+
+@media(max-width:1024px){
+
+.admission-ui__grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.admission-ui__custom-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.admission-ui__form{
+flex-direction:column;
+}
+
+}
+
+@media(max-width:600px){
+
+.admission-ui__grid{
+grid-template-columns:1fr;
+}
+
+.admission-ui__custom-grid{
+grid-template-columns:1fr;
+}
+
+.admission-ui__header{
+flex-direction:column;
+gap:10px;
+}
+
+}

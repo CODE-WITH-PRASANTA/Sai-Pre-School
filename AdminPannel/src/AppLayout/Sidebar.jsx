@@ -48,7 +48,9 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
       path: "/admin/testimonials",
       icon: <FaCommentDots />,
     },
-    { name: "Contact", path: "/admin/contact", icon: <FaNewspaper /> },
+    { name: "Contact", path: "/admin/contact", icon: <FaPhoneAlt /> },
+    { name: "Admission", path: "/admin/admission", icon: <FaUserGraduate /> },
+    { name: "Fees", path: "/admin/fees", icon: <FaMoneyBillWave /> },
   ];
 
   const [openMenu, setOpenMenu] = useState(null);

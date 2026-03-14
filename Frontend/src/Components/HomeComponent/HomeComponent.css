@@ -67,6 +67,23 @@ align-items:center;
 
 .home-hero-content{
 max-width:550px;
+animation: heroFadeUp 0.8s ease;
+}
+
+/* Animation */
+
+@keyframes heroFadeUp{
+
+0%{
+opacity:0;
+transform:translateX(30px);
+}
+
+100%{
+opacity:1;
+transform:translateX(0);
+}
+
 }
 
 /* title */

@@ -86,8 +86,7 @@ const PhotoSection = () => {
           <span className={`${base}__eyebrow`}>Our moments</span>
           <h2 className={`${base}__title`}>Gallery of our classes</h2>
           <p className={`${base}__subtitle`}>
-            We provide three classes with nine to twenty children each aged
-            twelve months to six years of age.
+            Memorable moments from our classrooms at Sai Kids, a popular Play School in Bhubaneswar, where children experience fun learning and creative activities.
           </p>
         </div>
 

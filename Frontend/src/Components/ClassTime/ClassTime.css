@@ -3,7 +3,7 @@
    Base: class-time
 ================================ */
 
-.class-time{
+.class-time {
   position: relative;
   width: 100%;
   background: #ffffff;
@@ -14,7 +14,7 @@
 }
 
 /* ✅ dotted route background (same vibe as reference) */
-.class-time__bg{
+.class-time__bg {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -22,13 +22,23 @@
   z-index: 0;
   overflow: hidden;
   background:
-    radial-gradient(circle at 10% 20%, rgba(0, 170, 255, 0.08) 0 2px, transparent 3px) 0 0/28px 28px,
-    radial-gradient(circle at 90% 40%, rgba(255, 80, 170, 0.08) 0 2px, transparent 3px) 0 0/30px 30px;
+    radial-gradient(
+        circle at 10% 20%,
+        rgba(0, 170, 255, 0.08) 0 2px,
+        transparent 3px
+      )
+      0 0/28px 28px,
+    radial-gradient(
+        circle at 90% 40%,
+        rgba(255, 80, 170, 0.08) 0 2px,
+        transparent 3px
+      )
+      0 0/30px 30px;
 }
 
 /* dashed path lines (SVG) */
 .class-time__bg::before,
-.class-time__bg::after{
+.class-time__bg::after {
   content: "";
   position: absolute;
   background-repeat: no-repeat;
@@ -38,7 +48,7 @@
   pointer-events: none;
 }
 
-.class-time__bg::before{
+.class-time__bg::before {
   left: -6%;
   top: 8%;
   width: 50%;
@@ -46,7 +56,7 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='500' viewBox='0 0 900 500'%3E%3Cpath d='M40 120 C 160 40, 270 220, 380 150 S 610 220, 720 140 S 860 200, 890 120' fill='none' stroke='%2390d7ff' stroke-width='3' stroke-dasharray='10 10' stroke-linecap='round'/%3E%3Cpath d='M70 360 C 170 280, 250 430, 370 350 S 580 420, 690 340 S 840 390, 880 330' fill='none' stroke='%2390d7ff' stroke-width='3' stroke-dasharray='10 10' stroke-linecap='round'/%3E%3C/svg%3E");
 }
 
-.class-time__bg::after{
+.class-time__bg::after {
   right: -8%;
   top: 8%;
   width: 52%;
@@ -55,7 +65,7 @@
 }
 
 /* container */
-.class-time__container{
+.class-time__container {
   position: relative;
   z-index: 1;
   width: min(1280px, calc(100% - 32px));
@@ -63,21 +73,27 @@
 }
 
 /* ✅ grid (3 + 3) */
-.class-time__grid{
+.class-time__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(18px, 2.2vw, 30px);
 }
 
 /* card */
-.class-time__card{
+.class-time__card {
   position: relative;
   background: #fff;
   border-radius: 16px;
-  box-shadow: 0 12px 28px rgba(15, 25, 70, 0.10);
+  box-shadow: 0 12px 28px rgba(15, 25, 70, 0.1);
   overflow: hidden;
   transform: translateY(0);
-  transition: transform 220ms ease, box-shadow 220ms ease;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+.class-time__heading {
+  text-align: center;
+  margin-bottom: 40px;
 }
 .class-time__heading{
 text-align:center;
@@ -99,7 +115,7 @@ font-size:16px;
 line-height:1.6;
 }
 /* ✅ dashed pink border like reference */
-.class-time__card::before{
+.class-time__card::before {
   content: "";
   position: absolute;
   inset: 10px;
@@ -109,18 +125,18 @@ line-height:1.6;
   z-index: 3;
 }
 
-.class-time__card:hover{
+.class-time__card:hover {
   transform: translateY(-4px);
   box-shadow: 0 16px 36px rgba(15, 25, 70, 0.14);
 }
 
-.class-time__media{
+.class-time__media {
   position: relative;
   height: 240px;
   overflow: hidden;
 }
 
-.class-time__img{
+.class-time__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -128,7 +144,7 @@ line-height:1.6;
 }
 
 /* ✅ yellow class time bar */
-.class-time__timeBar{
+.class-time__timeBar {
   position: absolute;
   left: 50%;
   bottom: 12px;
@@ -142,18 +158,18 @@ line-height:1.6;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 }
 
-.class-time__timeText{
+.class-time__timeText {
   font-size: 14px;
   font-weight: 800;
   color: #111;
 }
 
 /* body */
-.class-time__body{
+.class-time__body {
   padding: 18px 18px 20px;
 }
 
-.class-time__title{
+.class-time__title {
   margin: 8px 0 10px;
   font-size: 22px;
   font-weight: 800;
@@ -161,7 +177,7 @@ line-height:1.6;
   line-height: 1.15;
 }
 
-.class-time__desc{
+.class-time__desc {
   margin: 0 0 18px;
   color: #6b6f7a;
   font-size: 15px;
@@ -169,39 +185,45 @@ line-height:1.6;
 }
 
 /* stats row */
-.class-time__stats{
+.class-time__stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
 
-.class-time__stat{
+.class-time__stat {
   border-radius: 8px;
   padding: 12px 12px;
   color: #fff;
   font-weight: 800;
 }
 
-.class-time__statLabel{
+.class-time__statLabel {
   font-size: 12px;
   opacity: 0.95;
   margin-bottom: 4px;
 }
 
-.class-time__statValue{
+.class-time__statValue {
   font-size: 18px;
   letter-spacing: 0.2px;
 }
 
-.class-time__stat--blue{ background: #67b9e9; }
-.class-time__stat--green{ background: #68c85e; }
-.class-time__stat--orange{ background: #ffa63a; }
+.class-time__stat--blue {
+  background: #67b9e9;
+}
+.class-time__stat--green {
+  background: #68c85e;
+}
+.class-time__stat--orange {
+  background: #ffa63a;
+}
 
 /* ===============================
    ✅ Pagination
 ================================ */
 
-.class-time__pagination{
+.class-time__pagination {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -209,7 +231,7 @@ line-height:1.6;
   margin-top: clamp(18px, 2.4vw, 28px);
 }
 
-.class-time__pageBtn{
+.class-time__pageBtn {
   appearance: none;
   border: 0;
   cursor: pointer;
@@ -218,27 +240,30 @@ line-height:1.6;
   font-weight: 900;
   color: #111;
   background: rgba(255, 80, 170, 0.14);
-  box-shadow: 0 8px 18px rgba(15, 25, 70, 0.10);
-  transition: transform 180ms ease, background 180ms ease, opacity 180ms ease;
+  box-shadow: 0 8px 18px rgba(15, 25, 70, 0.1);
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    opacity 180ms ease;
 }
 
-.class-time__pageBtn:hover{
+.class-time__pageBtn:hover {
   transform: translateY(-1px);
-  background: rgba(255, 80, 170, 0.20);
+  background: rgba(255, 80, 170, 0.2);
 }
 
-.class-time__pageBtn:disabled{
+.class-time__pageBtn:disabled {
   cursor: not-allowed;
   opacity: 0.45;
   transform: none;
 }
 
-.class-time__pageNums{
+.class-time__pageNums {
   display: inline-flex;
   gap: 10px;
 }
 
-.class-time__pageNum{
+.class-time__pageNum {
   width: 40px;
   height: 40px;
   border-radius: 12px;
@@ -247,16 +272,18 @@ line-height:1.6;
   font-weight: 900;
   color: #111;
   background: #ffffff;
-  box-shadow: 0 8px 18px rgba(15, 25, 70, 0.10);
-  transition: transform 180ms ease, background 180ms ease;
+  box-shadow: 0 8px 18px rgba(15, 25, 70, 0.1);
+  transition:
+    transform 180ms ease,
+    background 180ms ease;
 }
 
-.class-time__pageNum:hover{
+.class-time__pageNum:hover {
   transform: translateY(-1px);
-  background: rgba(0, 170, 255, 0.10);
+  background: rgba(0, 170, 255, 0.1);
 }
 
-.class-time__pageNum--active{
+.class-time__pageNum--active {
   background: #ff4fa6;
   color: #ffffff;
 }
@@ -265,67 +292,67 @@ line-height:1.6;
    Responsive
 ================================ */
 
-@media (max-width: 1024px){
-  .class-time{
+@media (max-width: 1024px) {
+  .class-time {
     margin-bottom: 32px;
   }
 
-  .class-time__grid{
+  .class-time__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .class-time__media{
+  .class-time__media {
     height: 230px;
   }
 
-  .class-time__bg::before{
+  .class-time__bg::before {
     width: 58%;
     height: 74%;
     left: -10%;
   }
 
-  .class-time__bg::after{
+  .class-time__bg::after {
     width: 58%;
     height: 74%;
     right: -10%;
   }
 }
 
-@media (max-width: 640px){
-  .class-time{
+@media (max-width: 640px) {
+  .class-time {
     margin-bottom: 24px;
   }
 
-  .class-time__grid{
+  .class-time__grid {
     grid-template-columns: 1fr;
   }
 
-  .class-time__media{
+  .class-time__media {
     height: 220px;
   }
 
-  .class-time__timeBar{
+  .class-time__timeBar {
     width: calc(100% - 54px);
   }
 
-  .class-time__pagination{
+  .class-time__pagination {
     gap: 10px;
     flex-wrap: wrap;
   }
 
   .class-time__bg::before,
-  .class-time__bg::after{
+  .class-time__bg::after {
     opacity: 0.35;
     width: 72%;
     height: 60%;
     top: 10%;
   }
 
-  .class-time__bg::before{
+  .class-time__bg::before {
     left: -18%;
   }
 
-  .class-time__bg::after{
+  .class-time__bg::after {
     right: -18%;
   }
 }

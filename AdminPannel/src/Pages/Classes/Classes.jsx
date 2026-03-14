@@ -90,16 +90,21 @@ const Classes = () => {
 
     e.preventDefault();
 
-    if (
-      !form.className.trim() ||
-      !form.classTime.trim() ||
-      !form.classSize.trim() ||
-      !form.yearsOld.trim() ||
-      !form.tuitionFees.trim()
-    ) {
-      alert("Please fill all fields.");
-      return;
-    }
+const handleSave = async (e) => {
+  e.preventDefault();
+
+  if (
+    !form.className.trim() ||
+    !form.classTime.trim() ||
+    !form.classSize ||
+    !form.yearsOld.trim() ||
+    !form.tuitionFees
+  ) {
+    alert("Please fill all fields.");
+    return;
+  }
+
+  try {
 
     try {
 
@@ -202,11 +207,13 @@ const Classes = () => {
   return (
     <section className={base}>
       <div className={`${base}__container`}>
+
+        {/* TOP GRID */}
         <div className={`${base}__topGrid`}>
 
           {/* FORM */}
-
           <div className={`${base}__card`}>
+
             <div className={`${base}__cardHead`}>
               <h2 className={`${base}__title`}>
                 {editId ? "Update Class" : "Add New Class"}
@@ -313,6 +320,7 @@ const Classes = () => {
           {/* LIVE PREVIEW */}
 
           <div className={`${base}__card`}>
+
             <div className={`${base}__cardHead`}>
               <h2 className={`${base}__title`}>Live Preview</h2>
               <p className={`${base}__subtitle`}>
@@ -374,6 +382,7 @@ const Classes = () => {
                 </tbody>
               </table>
             </div>
+
           </div>
 
         </div>
@@ -393,7 +402,9 @@ const Classes = () => {
           </div>
 
           <div className={`${base}__tableWrap`}>
+
             <table className={`${base}__table`}>
+
               <thead>
                 <tr>
                   <th>Image</th>
@@ -432,6 +443,7 @@ const Classes = () => {
                       <td>
 
                         <div className={`${base}__actionWrap`}>
+
                           <button
                             type="button"
                             className={`${base}__actionBtn`}
@@ -444,7 +456,6 @@ const Classes = () => {
                             <div className={`${base}__dropdown`}>
 
                               <button
-                                type="button"
                                 className={`${base}__dropdownItem`}
                                 onClick={() => handleEdit(item)}
                               >
@@ -452,7 +463,6 @@ const Classes = () => {
                               </button>
 
                               <button
-                                type="button"
                                 className={`${base}__dropdownItem ${base}__dropdownItem--danger`}
                                 onClick={() => handleDelete(item._id)}
                               >
@@ -460,6 +470,7 @@ const Classes = () => {
                               </button>
 
                             </div>
+
                           )}
 
                         </div>
@@ -467,17 +478,23 @@ const Classes = () => {
                       </td>
 
                     </tr>
+
                   ))
+
                 ) : (
+
                   <tr>
                     <td colSpan="8" className={`${base}__empty`}>
                       No class records available.
                     </td>
                   </tr>
+
                 )}
 
               </tbody>
+
             </table>
+
           </div>
 
         </div>

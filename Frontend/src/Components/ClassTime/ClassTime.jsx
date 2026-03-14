@@ -57,19 +57,11 @@ const ClassTime = () => {
 
       <div className={`${base}__container`}>
 
-        {/* ================= HEADING ================= */}
-
+          {/* ✅ Heading Added */}
         <div className={`${base}__heading`}>
-          <h2 className={`${base}__headingTitle`}>Our Classes</h2>
-          <p className={`${base}__headingText`}>
-            We provide a nurturing learning environment where children grow,
-            explore, and develop essential skills through engaging activities
-            and personalized attention.
-          </p>
+          <h2>Classes</h2>
         </div>
-
-        {/* ================= GRID ================= */}
-
+        
         <div className={`${base}__grid`}>
           {visibleCards.map((c) => (
             <article className={`${base}__card`} key={c.id}>

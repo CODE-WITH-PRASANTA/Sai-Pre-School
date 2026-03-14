@@ -13,6 +13,7 @@ const enquiryRoutes = require("./routes/enquiry.routes");
 const testimonialRoutes = require("./routes/testimonialRoutes");
 
 dotenv.config();
+
 connectDB();
 
 const app = express();

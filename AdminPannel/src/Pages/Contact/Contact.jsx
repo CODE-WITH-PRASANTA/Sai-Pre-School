@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./Contact.css";
+import API from "../../api/axios";
 
 const Contact = () => {
   const base = "contact-page";
 
   const initialForm = useMemo(
     () => ({
-      academyTitle: "Umang Academy",
+      academyTitle: "Sai Pre School",
       phone: "",
       alternatePhone: "",
       email: "",
@@ -23,115 +24,120 @@ const Contact = () => {
   );
 
   const [form, setForm] = useState(initialForm);
-  const [contactList, setContactList] = useState([
-    {
-      id: 1,
-      academyTitle: "Umang Academy",
-      phone: "+91 9876543210",
-      alternatePhone: "+91 9123456780",
-      email: "info@umangacademy.com",
-      address: "Mumbai, Maharashtra",
-      facebook: "facebook.com/umangacademy",
-      instagram: "instagram.com/umangacademy",
-      linkedin: "linkedin.com/company/umangacademy",
-      youtube: "youtube.com/@umangacademy",
-      subscribeTitle: "Subscribe For Updates",
-      subscribeEmail: "subscribe@umangacademy.com",
-      description:
-        "Umang Academy provides quality education with a modern, caring, and inspiring learning environment for every student.",
-    },
-  ]);
-
+  const [contactList, setContactList] = useState([]);
   const [editId, setEditId] = useState(null);
   const [openMenuId, setOpenMenuId] = useState(null);
-  const actionRef = useRef(null);
+
+  const wrapperRef = useRef(null);
+
+  /* ================= FETCH CONTACTS ================= */
+
+  const fetchContacts = async () => {
+    try {
+      const res = await API.get("/contact");
+      setContactList(res.data?.data || []);
+    } catch (error) {
+      console.error("Error fetching contacts:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchContacts();
+  }, []);
+
+  /* ================= CLOSE DROPDOWN ON OUTSIDE CLICK ================= */
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
-      if (actionRef.current && !actionRef.current.contains(e.target)) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
         setOpenMenuId(null);
       }
     };
 
     document.addEventListener("mousedown", handleOutsideClick);
+
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
 
+  /* ================= INPUT CHANGE ================= */
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setForm((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
+  /* ================= RESET FORM ================= */
+
   const resetForm = () => {
     setForm(initialForm);
     setEditId(null);
   };
 
-  const handleSave = (e) => {
+  /* ================= SAVE / UPDATE ================= */
+
+  const handleSave = async (e) => {
     e.preventDefault();
 
-    if (
-      !form.academyTitle.trim() ||
-      !form.phone.trim() ||
-      !form.email.trim() ||
-      !form.address.trim() ||
-      !form.description.trim()
-    ) {
-      alert("Please fill all required fields.");
-      return;
-    }
+    try {
+      if (editId) {
+        await API.put(`/contact/${editId}`, form);
+        alert("Contact updated successfully");
+      } else {
+        await API.post("/contact", form);
+        alert("Contact created successfully");
+      }
 
-    if (editId) {
-      setContactList((prev) =>
-        prev.map((item) =>
-          item.id === editId ? { ...item, ...form, id: editId } : item
-        )
-      );
-    } else {
-      const newItem = {
-        id: Date.now(),
-        ...form,
-      };
-      setContactList((prev) => [newItem, ...prev]);
+      fetchContacts();
+      resetForm();
+    } catch (error) {
+      console.error("Error saving contact:", error);
+      alert("Something went wrong");
     }
-
-    resetForm();
   };
+
+  /* ================= EDIT ================= */
 
   const handleEdit = (item) => {
     setForm({
-      academyTitle: item.academyTitle,
-      phone: item.phone,
-      alternatePhone: item.alternatePhone,
-      email: item.email,
-      address: item.address,
-      facebook: item.facebook,
-      instagram: item.instagram,
-      linkedin: item.linkedin,
-      youtube: item.youtube,
-      subscribeTitle: item.subscribeTitle,
-      subscribeEmail: item.subscribeEmail,
-      description: item.description,
+      academyTitle: item.academyTitle || "",
+      phone: item.phone || "",
+      alternatePhone: item.alternatePhone || "",
+      email: item.email || "",
+      address: item.address || "",
+      facebook: item.facebook || "",
+      instagram: item.instagram || "",
+      linkedin: item.linkedin || "",
+      youtube: item.youtube || "",
+      subscribeTitle: item.subscribeTitle || "",
+      subscribeEmail: item.subscribeEmail || "",
+      description: item.description || "",
     });
-    setEditId(item.id);
+
+    setEditId(item._id);
     setOpenMenuId(null);
   };
 
-  const handleDelete = (id) => {
+  /* ================= DELETE ================= */
+
+  const handleDelete = async (id) => {
     const confirmDelete = window.confirm("Do you want to delete this contact?");
     if (!confirmDelete) return;
 
-    setContactList((prev) => prev.filter((item) => item.id !== id));
-
-    if (editId === id) {
-      resetForm();
+    try {
+      await API.delete(`/contact/${id}`);
+      fetchContacts();
+      setOpenMenuId(null);
+      alert("Contact deleted successfully");
+    } catch (error) {
+      console.error("Error deleting contact:", error);
     }
-
-    setOpenMenuId(null);
   };
+
+  /* ================= TOGGLE DROPDOWN ================= */
 
   const toggleMenu = (id) => {
     setOpenMenuId((prev) => (prev === id ? null : id));
@@ -139,12 +145,17 @@ const Contact = () => {
 
   return (
     <section className={base}>
-      <div className={`${base}__container`}>
+      <div className={`${base}__container`} ref={wrapperRef}>
         <div className={`${base}__topGrid`}>
-          {/* LEFT FORM BOX */}
+
+          {/* ================= FORM ================= */}
+
           <div className={`${base}__card`}>
             <form className={`${base}__form`} onSubmit={handleSave}>
-              <div className={`${base}__sectionTitle`}>Academy Title</div>
+              <div className={`${base}__sectionTitle`}>
+                Contact Info Fields
+              </div>
+
               <div className={`${base}__field`}>
                 <label className={`${base}__label`}>Academy Title</label>
                 <input
@@ -157,7 +168,6 @@ const Contact = () => {
                 />
               </div>
 
-              <div className={`${base}__sectionTitle`}>Contact Info Fields</div>
               <div className={`${base}__gridTwo`}>
                 <div className={`${base}__field`}>
                   <label className={`${base}__label`}>Phone Number</label>
@@ -167,7 +177,6 @@ const Contact = () => {
                     value={form.phone}
                     onChange={handleChange}
                     className={`${base}__input`}
-                    placeholder="Enter phone number"
                   />
                 </div>
 
@@ -179,7 +188,6 @@ const Contact = () => {
                     value={form.alternatePhone}
                     onChange={handleChange}
                     className={`${base}__input`}
-                    placeholder="Enter alternate phone"
                   />
                 </div>
               </div>
@@ -193,7 +201,6 @@ const Contact = () => {
                     value={form.email}
                     onChange={handleChange}
                     className={`${base}__input`}
-                    placeholder="Enter email"
                   />
                 </div>
 
@@ -205,12 +212,14 @@ const Contact = () => {
                     value={form.address}
                     onChange={handleChange}
                     className={`${base}__input`}
-                    placeholder="Enter address"
                   />
                 </div>
               </div>
 
+              {/* ================= SOCIAL LINKS ================= */}
+
               <div className={`${base}__sectionTitle`}>Social Link Fields</div>
+
               <div className={`${base}__gridTwo`}>
                 <div className={`${base}__field`}>
                   <label className={`${base}__label`}>Facebook</label>
@@ -220,7 +229,6 @@ const Contact = () => {
                     value={form.facebook}
                     onChange={handleChange}
                     className={`${base}__input`}
-                    placeholder="Enter Facebook link"
                   />
                 </div>
 
@@ -232,7 +240,6 @@ const Contact = () => {
                     value={form.instagram}
                     onChange={handleChange}
                     className={`${base}__input`}
-                    placeholder="Enter Instagram link"
                   />
                 </div>
               </div>
@@ -246,7 +253,6 @@ const Contact = () => {
                     value={form.linkedin}
                     onChange={handleChange}
                     className={`${base}__input`}
-                    placeholder="Enter LinkedIn link"
                   />
                 </div>
 
@@ -258,14 +264,16 @@ const Contact = () => {
                     value={form.youtube}
                     onChange={handleChange}
                     className={`${base}__input`}
-                    placeholder="Enter YouTube link"
                   />
                 </div>
               </div>
 
+              {/* ================= SUBSCRIBE ================= */}
+
               <div className={`${base}__sectionTitle`}>
                 Subscribe / Email Section
               </div>
+
               <div className={`${base}__gridTwo`}>
                 <div className={`${base}__field`}>
                   <label className={`${base}__label`}>Subscribe Title</label>
@@ -275,7 +283,6 @@ const Contact = () => {
                     value={form.subscribeTitle}
                     onChange={handleChange}
                     className={`${base}__input`}
-                    placeholder="Enter subscribe title"
                   />
                 </div>
 
@@ -287,14 +294,16 @@ const Contact = () => {
                     value={form.subscribeEmail}
                     onChange={handleChange}
                     className={`${base}__input`}
-                    placeholder="Enter subscribe email"
                   />
                 </div>
               </div>
 
+              {/* ================= DESCRIPTION ================= */}
+
               <div className={`${base}__sectionTitle`}>
                 Contact Description Box
               </div>
+
               <div className={`${base}__field`}>
                 <label className={`${base}__label`}>Description</label>
                 <textarea
@@ -302,7 +311,6 @@ const Contact = () => {
                   value={form.description}
                   onChange={handleChange}
                   className={`${base}__textarea`}
-                  placeholder="Enter contact description"
                 />
               </div>
 
@@ -310,6 +318,7 @@ const Contact = () => {
                 <button type="submit" className={`${base}__saveBtn`}>
                   {editId ? "Update Contact" : "Save"}
                 </button>
+
                 <button
                   type="button"
                   className={`${base}__clearBtn`}
@@ -321,92 +330,31 @@ const Contact = () => {
             </form>
           </div>
 
-          {/* RIGHT LIVE PREVIEW BOX */}
+          {/* ================= LIVE PREVIEW ================= */}
+
           <div className={`${base}__card`}>
             <div className={`${base}__cardHead`}>
               <h2 className={`${base}__title`}>Live Preview</h2>
-              <p className={`${base}__subtitle`}>
-                Preview the contact box before saving
-              </p>
             </div>
 
             <div className={`${base}__preview`}>
-              <div className={`${base}__previewHead`}>
-                <h3 className={`${base}__previewTitle`}>
-                  {form.academyTitle || "Umang Academy"}
-                </h3>
-                <p className={`${base}__previewText`}>
-                  {form.description ||
-                    "Contact description preview will appear here."}
-                </p>
-              </div>
+              <h3 className={`${base}__previewTitle`}>
+                {form.academyTitle || "Sai Pre School"}
+              </h3>
 
-              <div className={`${base}__previewBlock`}>
-                <div className={`${base}__previewLabel`}>Contact Info</div>
-                <ul className={`${base}__previewList`}>
-                  <li>
-                    <span>Phone:</span> {form.phone || "—"}
-                  </li>
-                  <li>
-                    <span>Alternate:</span> {form.alternatePhone || "—"}
-                  </li>
-                  <li>
-                    <span>Email:</span> {form.email || "—"}
-                  </li>
-                  <li>
-                    <span>Address:</span> {form.address || "—"}
-                  </li>
-                </ul>
-              </div>
-
-              <div className={`${base}__previewBlock`}>
-                <div className={`${base}__previewLabel`}>Social Links</div>
-                <ul className={`${base}__previewList`}>
-                  <li>
-                    <span>Facebook:</span> {form.facebook || "—"}
-                  </li>
-                  <li>
-                    <span>Instagram:</span> {form.instagram || "—"}
-                  </li>
-                  <li>
-                    <span>LinkedIn:</span> {form.linkedin || "—"}
-                  </li>
-                  <li>
-                    <span>YouTube:</span> {form.youtube || "—"}
-                  </li>
-                </ul>
-              </div>
-
-              <div className={`${base}__previewBlock`}>
-                <div className={`${base}__previewLabel`}>
-                  Subscribe / Email Section
-                </div>
-                <ul className={`${base}__previewList`}>
-                  <li>
-                    <span>Title:</span> {form.subscribeTitle || "—"}
-                  </li>
-                  <li>
-                    <span>Email:</span> {form.subscribeEmail || "—"}
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* CONTACT LIST */}
-        <div className={`${base}__card`}>
-          <div className={`${base}__cardHead ${base}__cardHead--table`}>
-            <div>
-              <h2 className={`${base}__title`}>Contact List</h2>
-              <p className={`${base}__subtitle`}>
-                Manage saved contact boxes here
+              <p className={`${base}__previewText`}>
+                {form.description || "Contact description preview"}
               </p>
             </div>
+          </div>
 
-            <div className={`${base}__badge`}>
-              Total Records: {contactList.length}
-            </div>
+        </div>
+
+        {/* ================= CONTACT LIST ================= */}
+
+        <div className={`${base}__card`}>
+          <div className={`${base}__cardHead`}>
+            <h2 className={`${base}__title`}>Contact List</h2>
           </div>
 
           <div className={`${base}__tableWrap`}>
@@ -425,57 +373,32 @@ const Contact = () => {
               <tbody>
                 {contactList.length > 0 ? (
                   contactList.map((item) => (
-                    <tr key={item.id}>
+                    <tr key={item._id}>
                       <td>{item.academyTitle}</td>
                       <td>{item.phone}</td>
                       <td>{item.email}</td>
                       <td>{item.address}</td>
                       <td>{item.subscribeEmail || "—"}</td>
+
                       <td>
-                        <div className={`${base}__actionWrap`} ref={actionRef}>
-                          <button
-                            type="button"
-                            className={`${base}__actionBtn`}
-                            onClick={() => toggleMenu(item.id)}
-                          >
-                            Action
-                            <span className={`${base}__actionCaret`}>▾</span>
-                          </button>
-
-                          {openMenuId === item.id && (
-                            <div className={`${base}__dropdown`}>
-                              <button
-                                type="button"
-                                className={`${base}__dropdownItem`}
-                                onClick={() => handleEdit(item)}
-                              >
-                                Edit
-                              </button>
-
-                              <button
-                                type="button"
-                                className={`${base}__dropdownItem} ${base}__dropdownItem--danger`}
-                                onClick={() => handleDelete(item.id)}
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          )}
-                        </div>
+                        <button onClick={() => handleEdit(item)}>Edit</button>
+                        <button onClick={() => handleDelete(item._id)}>
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="6" className={`${base}__empty`}>
-                      No contact data available.
-                    </td>
+                    <td colSpan="6">No contact data available.</td>
                   </tr>
                 )}
               </tbody>
             </table>
           </div>
+
         </div>
+
       </div>
     </section>
   );

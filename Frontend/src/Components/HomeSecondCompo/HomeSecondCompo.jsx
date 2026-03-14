@@ -63,12 +63,11 @@ const HomeSecondCompo = () => {
       <div className="home2-content">
 
         <h2 className="home2-title">
-          Welcome to Kids Center
+          Welcome to Sai Kids Pre School
         </h2>
 
         <p className="home2-text">
-          Lorem Ipsum is simply dummy text of the printing and
-          typesetting industry.
+          Sai Kids is a trusted Kids Pre School in Bhubaneswar, known as one of the Best Pre Schools in Bhubaneswar, offering fun learning and safe Day Care in Bhubaneswar.
         </p>
 
         {/* cloud */}
@@ -79,14 +78,15 @@ const HomeSecondCompo = () => {
 
         {/* icon grid */}
 
-        <div className="home2-icons">
+ <div className="home2-icons">
 
   <div className="home2-item">
     <div className="home2-img-wrap">
       <img src={starBlue} className="home2-star" />
       <img src={icon1} className="home2-icon" />
     </div>
-    <p>To Think Creatively and Create</p>
+    <h3>Preschool</h3>
+    <p>Sai Kids is a trusted Kids Pre School in Bhubaneswar where children learn and grow through fun activities.</p>
   </div>
 
   <div className="home2-item">
@@ -94,7 +94,8 @@ const HomeSecondCompo = () => {
       <img src={starPink} className="home2-star" />
       <img src={icon2} className="home2-icon" />
     </div>
-    <p>To Feel Fine and to Understand Emotions</p>
+    <h3>Nursery</h3>
+    <p>Our nursery program builds communication and social skills at one of the Best Pre Schools in Bhubaneswar.</p>
   </div>
 
   <div className="home2-item">
@@ -102,7 +103,8 @@ const HomeSecondCompo = () => {
       <img src={starBlue} className="home2-star" />
       <img src={icon3} className="home2-icon" />
     </div>
-    <p>To be Independent and Active</p>
+    <h3>LKG</h3>
+    <p>The LKG program encourages independence and early learning at a Top Pre School in Bhubaneswar.</p>
   </div>
 
   <div className="home2-item">
@@ -110,7 +112,17 @@ const HomeSecondCompo = () => {
       <img src={starLight} className="home2-star" />
       <img src={icon4} className="home2-icon" />
     </div>
-    <p>To Apply Knowledge in Life</p>
+    <h3>UKG</h3>
+    <p>UKG prepares children for primary school at a trusted Play School in Bhubaneswar.</p>
+  </div>
+
+  <div className="home2-item">
+    <div className="home2-img-wrap">
+      <img src={starBlue} className="home2-star" />
+      <img src={icon1} className="home2-icon" />
+    </div>
+    <h3>Day Care</h3>
+    <p>We offer safe and caring Day Care in Bhubaneswar for working parents.</p>
   </div>
 
 </div>

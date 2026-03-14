@@ -25,7 +25,9 @@
   background: #fff;
   box-shadow: 0 18px 40px rgba(16, 24, 40, 0.08);
   transform: translateY(0);
-  transition: transform 220ms ease, box-shadow 220ms ease;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease;
 }
 
 .event-details__card:hover {
@@ -67,6 +69,21 @@
   display: grid;
   place-items: center;
   box-shadow: 0 14px 30px rgba(47, 83, 255, 0.35);
+}
+
+.event-details__heading {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.event-details__heading h2 {
+  margin: 0;
+  font-size: clamp(34px, 3.6vw, 56px);
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: #2c47ff;
+  font-family: "Georgia", "Times New Roman", serif;
 }
 
 .event-details__date::after {
@@ -164,7 +181,9 @@ line-height:1.6;
   color: #fff;
   font-weight: 800;
   cursor: pointer;
-  transition: transform 150ms ease, opacity 150ms ease;
+  transition:
+    transform 150ms ease,
+    opacity 150ms ease;
 }
 
 .event-details__pgBtn:hover {
@@ -190,7 +209,10 @@ line-height:1.6;
   background: #fff;
   font-weight: 900;
   cursor: pointer;
-  transition: transform 150ms ease, background 150ms ease, color 150ms ease,
+  transition:
+    transform 150ms ease,
+    background 150ms ease,
+    color 150ms ease,
     border-color 150ms ease;
 }
 
