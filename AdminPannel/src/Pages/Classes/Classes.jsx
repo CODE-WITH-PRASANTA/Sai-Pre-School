@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import API from "../../api/axios";
 import "./Classes.css";
 
 const Classes = () => {
@@ -16,79 +17,79 @@ const Classes = () => {
   );
 
   const [form, setForm] = useState(initialForm);
-  const [classesData, setClassesData] = useState([
-    {
-      id: 1,
-      className: "Nursery",
-      classTime: "08:00 AM - 10:00 AM",
-      classSize: "25",
-      yearsOld: "3 - 4",
-      tuitionFees: "1500",
-    },
-    {
-      id: 2,
-      className: "Junior KG",
-      classTime: "10:30 AM - 12:30 PM",
-      classSize: "30",
-      yearsOld: "4 - 5",
-      tuitionFees: "1800",
-    },
-    {
-      id: 3,
-      className: "Senior KG",
-      classTime: "01:00 PM - 03:00 PM",
-      classSize: "28",
-      yearsOld: "5 - 6",
-      tuitionFees: "2200",
-    },
-  ]);
-
+  const [classesData, setClassesData] = useState([]);
   const [editId, setEditId] = useState(null);
   const [openMenuId, setOpenMenuId] = useState(null);
 
+  /* ================= FETCH CLASSES ================= */
+
+  const fetchClasses = async () => {
+  try {
+    const res = await API.get("/classes");
+    setClassesData(res.data.data);
+  } catch (error) {
+    console.error(error);
+    alert("Failed to load classes");
+  }
+};
+
+  useEffect(() => {
+    fetchClasses();
+  }, []);
+
+  /* ================= HANDLE INPUT ================= */
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setForm((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
+  /* ================= RESET FORM ================= */
+
   const resetForm = () => {
     setForm(initialForm);
     setEditId(null);
   };
 
-  const handleSave = (e) => {
-    e.preventDefault();
+  /* ================= SAVE CLASS ================= */
 
-    if (
-      !form.className.trim() ||
-      !form.classTime.trim() ||
-      !form.classSize.trim() ||
-      !form.yearsOld.trim() ||
-      !form.tuitionFees.trim()
-    ) {
-      alert("Please fill all fields.");
-      return;
-    }
+const handleSave = async (e) => {
+  e.preventDefault();
+
+  if (
+    !form.className.trim() ||
+    !form.classTime.trim() ||
+    !form.classSize ||
+    !form.yearsOld.trim() ||
+    !form.tuitionFees
+  ) {
+    alert("Please fill all fields.");
+    return;
+  }
+
+  try {
 
     if (editId) {
-      setClassesData((prev) =>
-        prev.map((item) =>
-          item.id === editId ? { ...item, ...form, id: editId } : item
-        )
-      );
-    } else {
-      const newClass = {
-        id: Date.now(),
-        ...form,
-      };
-      setClassesData((prev) => [newClass, ...prev]);
+      await API.put(`/classes/${editId}`, form);
+    } 
+    else {
+      await API.post("/classes", form);
     }
 
+    fetchClasses();
     resetForm();
-  };
+
+  } catch (error) {
+    console.error(error);
+    alert("Something went wrong");
+  }
+};
+
+  /* ================= EDIT CLASS ================= */
 
   const handleEdit = (item) => {
     setForm({
@@ -98,22 +99,40 @@ const Classes = () => {
       yearsOld: item.yearsOld,
       tuitionFees: item.tuitionFees,
     });
-    setEditId(item.id);
+
+    setEditId(item._id);
     setOpenMenuId(null);
   };
 
-  const handleDelete = (id) => {
-    const confirmDelete = window.confirm("Do you want to delete this class?");
-    if (!confirmDelete) return;
+  /* ================= DELETE CLASS ================= */
 
-    setClassesData((prev) => prev.filter((item) => item.id !== id));
+const handleDelete = async (id) => {
+
+  const confirmDelete = window.confirm(
+    "Do you want to delete this class?"
+  );
+
+  if (!confirmDelete) return;
+
+  try {
+
+    await API.delete(`/classes/${id}`);
+
+    fetchClasses();
 
     if (editId === id) {
       resetForm();
     }
 
-    setOpenMenuId(null);
-  };
+  } catch (error) {
+    console.error(error);
+    alert("Delete failed");
+  }
+
+  setOpenMenuId(null);
+};
+
+  /* ================= ACTION MENU ================= */
 
   const toggleMenu = (id) => {
     setOpenMenuId((prev) => (prev === id ? null : id));
@@ -122,9 +141,13 @@ const Classes = () => {
   return (
     <section className={base}>
       <div className={`${base}__container`}>
+
+        {/* TOP GRID */}
         <div className={`${base}__topGrid`}>
-          {/* LEFT FORM BOX */}
+
+          {/* FORM */}
           <div className={`${base}__card`}>
+
             <div className={`${base}__cardHead`}>
               <h2 className={`${base}__title`}>
                 {editId ? "Update Class" : "Add New Class"}
@@ -135,6 +158,7 @@ const Classes = () => {
             </div>
 
             <form className={`${base}__form`} onSubmit={handleSave}>
+
               <div className={`${base}__field`}>
                 <label className={`${base}__label`}>Class Name</label>
                 <input
@@ -208,11 +232,14 @@ const Classes = () => {
                   Clear
                 </button>
               </div>
+
             </form>
           </div>
 
-          {/* RIGHT LIVE PREVIEW */}
+          {/* LIVE PREVIEW */}
+
           <div className={`${base}__card`}>
+
             <div className={`${base}__cardHead`}>
               <h2 className={`${base}__title`}>Live Preview</h2>
               <p className={`${base}__subtitle`}>
@@ -227,18 +254,22 @@ const Classes = () => {
                     <th>Class Name</th>
                     <td>{form.className || "—"}</td>
                   </tr>
+
                   <tr>
                     <th>Class Time</th>
                     <td>{form.classTime || "—"}</td>
                   </tr>
+
                   <tr>
                     <th>Class Size</th>
                     <td>{form.classSize || "—"}</td>
                   </tr>
+
                   <tr>
                     <th>Years Old</th>
                     <td>{form.yearsOld || "—"}</td>
                   </tr>
+
                   <tr>
                     <th>Tuition Fees</th>
                     <td>{form.tuitionFees ? `₹${form.tuitionFees}` : "—"}</td>
@@ -246,16 +277,19 @@ const Classes = () => {
                 </tbody>
               </table>
             </div>
+
           </div>
         </div>
 
-        {/* BOTTOM TABLE */}
+        {/* TABLE */}
+
         <div className={`${base}__card ${base}__tableCard`}>
+
           <div className={`${base}__cardHead ${base}__cardHead--table`}>
             <div>
               <h2 className={`${base}__title`}>Classes List</h2>
               <p className={`${base}__subtitle`}>
-                Manage all class records from this table
+                Manage all class records
               </p>
             </div>
 
@@ -265,7 +299,9 @@ const Classes = () => {
           </div>
 
           <div className={`${base}__tableWrap`}>
+
             <table className={`${base}__table`}>
+
               <thead>
                 <tr>
                   <th>Class Name</th>
@@ -276,58 +312,77 @@ const Classes = () => {
                   <th>Action</th>
                 </tr>
               </thead>
+
               <tbody>
+
                 {classesData.length > 0 ? (
+
                   classesData.map((item) => (
-                    <tr key={item.id}>
+
+                    <tr key={item._id}>
                       <td>{item.className}</td>
                       <td>{item.classTime}</td>
                       <td>{item.classSize}</td>
                       <td>{item.yearsOld}</td>
                       <td>₹{item.tuitionFees}</td>
+
                       <td>
                         <div className={`${base}__actionWrap`}>
+
                           <button
                             type="button"
                             className={`${base}__actionBtn`}
-                            onClick={() => toggleMenu(item.id)}
+                            onClick={() => toggleMenu(item._id)}
                           >
                             Action ▾
                           </button>
 
-                          {openMenuId === item.id && (
+                          {openMenuId === item._id && (
+
                             <div className={`${base}__dropdown`}>
+
                               <button
-                                type="button"
                                 className={`${base}__dropdownItem`}
                                 onClick={() => handleEdit(item)}
                               >
                                 Edit
                               </button>
+
                               <button
-                                type="button"
                                 className={`${base}__dropdownItem ${base}__dropdownItem--danger`}
-                                onClick={() => handleDelete(item.id)}
+                                onClick={() => handleDelete(item._id)}
                               >
                                 Delete
                               </button>
+
                             </div>
+
                           )}
+
                         </div>
                       </td>
                     </tr>
+
                   ))
+
                 ) : (
+
                   <tr>
                     <td colSpan="6" className={`${base}__empty`}>
                       No class records available.
                     </td>
                   </tr>
+
                 )}
+
               </tbody>
+
             </table>
+
           </div>
+
         </div>
+
       </div>
     </section>
   );

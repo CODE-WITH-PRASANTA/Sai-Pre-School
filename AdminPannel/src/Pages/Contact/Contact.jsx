@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./Contact.css";
-
+import API from "../../api/axios";
 const Contact = () => {
   const base = "contact-page";
 
   const initialForm = useMemo(
     () => ({
-      academyTitle: "Umang Academy",
+      academyTitle: "Sai Pre School",
       phone: "",
       alternatePhone: "",
       email: "",
@@ -19,32 +19,27 @@ const Contact = () => {
       subscribeEmail: "",
       description: "",
     }),
-    []
+    [],
   );
 
   const [form, setForm] = useState(initialForm);
-  const [contactList, setContactList] = useState([
-    {
-      id: 1,
-      academyTitle: "Umang Academy",
-      phone: "+91 9876543210",
-      alternatePhone: "+91 9123456780",
-      email: "info@umangacademy.com",
-      address: "Mumbai, Maharashtra",
-      facebook: "facebook.com/umangacademy",
-      instagram: "instagram.com/umangacademy",
-      linkedin: "linkedin.com/company/umangacademy",
-      youtube: "youtube.com/@umangacademy",
-      subscribeTitle: "Subscribe For Updates",
-      subscribeEmail: "subscribe@umangacademy.com",
-      description:
-        "Umang Academy provides quality education with a modern, caring, and inspiring learning environment for every student.",
-    },
-  ]);
+  const [contactList, setContactList] = useState([]);
 
   const [editId, setEditId] = useState(null);
   const [openMenuId, setOpenMenuId] = useState(null);
   const wrapperRef = useRef(null);
+
+const fetchContacts = async () => {
+  try {
+    const res = await API.get("/contact");
+
+    if (res.data.success) {
+      setContactList(res.data.data);
+    }
+  } catch (error) {
+    console.error("Error fetching contacts:", error);
+  }
+};
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
@@ -57,6 +52,11 @@ const Contact = () => {
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
 
+  useEffect(() => {
+    fetchContacts();
+  }, []);
+
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({
@@ -70,70 +70,77 @@ const Contact = () => {
     setEditId(null);
   };
 
-  const handleSave = (e) => {
-    e.preventDefault();
+const handleSave = async (e) => {
+  e.preventDefault();
 
-    if (
-      !form.academyTitle.trim() ||
-      !form.phone.trim() ||
-      !form.email.trim() ||
-      !form.address.trim() ||
-      !form.description.trim()
-    ) {
-      alert("Please fill all required fields.");
-      return;
-    }
-
+  try {
     if (editId) {
-      setContactList((prev) =>
-        prev.map((item) =>
-          item.id === editId ? { ...item, ...form, id: editId } : item
-        )
-      );
+      await API.put(`/contact/${editId}`, form);
+      alert("Contact updated successfully");
     } else {
-      const newItem = {
-        id: Date.now(),
-        ...form,
-      };
-      setContactList((prev) => [newItem, ...prev]);
+      await API.post("/contact", form);
+      alert("Contact created successfully");
     }
 
+    fetchContacts();
     resetForm();
-  };
+  } catch (error) {
+    console.error("Error saving contact:", error);
+    alert("Something went wrong");
+  }
+};
+ 
+  //   const confirmDelete = window.confirm("Do you want to delete this contact?");
+  //   if (!confirmDelete) return;
+
+  //   setContactList((prev) => prev.filter((item) => item.id !== id));
+
+  //   if (editId === id) {
+  //     resetForm();
+  //   }
+
+  //   setOpenMenuId(null);
+  // };
 
   const handleEdit = (item) => {
-    setForm({
-      academyTitle: item.academyTitle,
-      phone: item.phone,
-      alternatePhone: item.alternatePhone,
-      email: item.email,
-      address: item.address,
-      facebook: item.facebook,
-      instagram: item.instagram,
-      linkedin: item.linkedin,
-      youtube: item.youtube,
-      subscribeTitle: item.subscribeTitle,
-      subscribeEmail: item.subscribeEmail,
-      description: item.description,
-    });
-    setEditId(item.id);
+  setForm({
+    academyTitle: item.academyTitle || "",
+    phone: item.phone || "",
+    alternatePhone: item.alternatePhone || "",
+    email: item.email || "",
+    address: item.address || "",
+    facebook: item.facebook || "",
+    instagram: item.instagram || "",
+    linkedin: item.linkedin || "",
+    youtube: item.youtube || "",
+    subscribeTitle: item.subscribeTitle || "",
+    subscribeEmail: item.subscribeEmail || "",
+    description: item.description || "",
+  });
+
+  setEditId(item._id);
+  setOpenMenuId(null);
+};
+const handleDelete = async (id) => {
+  const confirmDelete = window.confirm(
+    "Do you want to delete this contact?"
+  );
+
+  if (!confirmDelete) return;
+
+  try {
+    await API.delete(`/contact/${id}`);
+
+    fetchContacts();
     setOpenMenuId(null);
-  };
 
-  const handleDelete = (id) => {
-    const confirmDelete = window.confirm("Do you want to delete this contact?");
-    if (!confirmDelete) return;
+    alert("Contact deleted successfully");
+  } catch (error) {
+    console.error("Error deleting contact:", error);
+  }
+};
 
-    setContactList((prev) => prev.filter((item) => item.id !== id));
-
-    if (editId === id) {
-      resetForm();
-    }
-
-    setOpenMenuId(null);
-  };
-
-  const toggleMenu = (id) => {
+const toggleMenu = (id) => {
     setOpenMenuId((prev) => (prev === id ? null : id));
   };
 
@@ -425,7 +432,7 @@ const Contact = () => {
               <tbody>
                 {contactList.length > 0 ? (
                   contactList.map((item) => (
-                    <tr key={item.id}>
+                    <tr key={item._id}>
                       <td>{item.academyTitle}</td>
                       <td>{item.phone}</td>
                       <td>{item.email}</td>
@@ -436,13 +443,13 @@ const Contact = () => {
                           <button
                             type="button"
                             className={`${base}__actionBtn`}
-                            onClick={() => toggleMenu(item.id)}
+                            onClick={() => toggleMenu(item._id)}
                           >
                             Action
                             <span className={`${base}__actionCaret`}>▾</span>
                           </button>
 
-                          {openMenuId === item.id && (
+                          {openMenuId === item._id && (
                             <div className={`${base}__dropdown`}>
                               <button
                                 type="button"
@@ -455,7 +462,7 @@ const Contact = () => {
                               <button
                                 type="button"
                                 className={`${base}__dropdownItem ${base}__dropdownItem--danger`}
-                                onClick={() => handleDelete(item.id)}
+                                onClick={() => handleDelete(item._id)}
                               >
                                 Delete
                               </button>
