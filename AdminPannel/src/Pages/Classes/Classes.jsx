@@ -1,141 +1,202 @@
-import React, { useEffect, useMemo, useState } from "react";
-import API from "../../api/axios";
+import React, { useMemo, useState, useEffect } from "react";
 import "./Classes.css";
+import API, { IMAGE_URL } from "../../api/axios";
 
 const Classes = () => {
+
   const base = "classes-page";
 
-  const initialForm = useMemo(
-    () => ({
-      className: "",
-      classTime: "",
-      classSize: "",
-      yearsOld: "",
-      tuitionFees: "",
-    }),
-    []
-  );
+  const initialForm = useMemo(() => ({
+    className: "",
+    classTime: "",
+    classSize: "",
+    yearsOld: "",
+    tuitionFees: "",
+    description: "",
+    image: null,
+    existingImage: ""
+  }), []);
 
   const [form, setForm] = useState(initialForm);
   const [classesData, setClassesData] = useState([]);
   const [editId, setEditId] = useState(null);
   const [openMenuId, setOpenMenuId] = useState(null);
 
+  /* ================= IMAGE SELECT ================= */
+
+  const handleImage = (e) => {
+
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    setForm(prev => ({
+      ...prev,
+      image: file,
+      existingImage: ""
+    }));
+
+  };
+
   /* ================= FETCH CLASSES ================= */
 
   const fetchClasses = async () => {
-  try {
-    const res = await API.get("/classes");
-    setClassesData(res.data.data);
-  } catch (error) {
-    console.error(error);
-    alert("Failed to load classes");
-  }
-};
 
-  useEffect(() => {
-    fetchClasses();
-  }, []);
+    try {
 
-  /* ================= HANDLE INPUT ================= */
+      const res = await API.get("/classes");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+      setClassesData(res.data.data || []);
 
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+    } catch (error) {
 
-  /* ================= RESET FORM ================= */
+      console.error("Fetch classes error:", error);
 
-  const resetForm = () => {
-    setForm(initialForm);
-    setEditId(null);
-  };
-
-  /* ================= SAVE CLASS ================= */
-
-const handleSave = async (e) => {
-  e.preventDefault();
-
-  if (
-    !form.className.trim() ||
-    !form.classTime.trim() ||
-    !form.classSize ||
-    !form.yearsOld.trim() ||
-    !form.tuitionFees
-  ) {
-    alert("Please fill all fields.");
-    return;
-  }
-
-  try {
-
-    if (editId) {
-      await API.put(`/classes/${editId}`, form);
-    } 
-    else {
-      await API.post("/classes", form);
     }
 
+  };
+
+  useEffect(() => {
+
     fetchClasses();
-    resetForm();
 
-  } catch (error) {
-    console.error(error);
-    alert("Something went wrong");
-  }
-};
+  }, []);
 
-  /* ================= EDIT CLASS ================= */
+  /* ================= FORM CHANGE ================= */
+
+  const handleChange = (e) => {
+
+    const { name, value } = e.target;
+
+    setForm(prev => ({
+      ...prev,
+      [name]: value
+    }));
+
+  };
+
+  /* ================= RESET ================= */
+
+  const resetForm = () => {
+
+    setForm(initialForm);
+    setEditId(null);
+
+  };
+
+  /* ================= SAVE / UPDATE ================= */
+
+  const handleSave = async (e) => {
+
+    e.preventDefault();
+
+    if (
+      !form.className.trim() ||
+      !form.classTime.trim() ||
+      !form.classSize ||
+      !form.yearsOld.trim() ||
+      !form.tuitionFees
+    ) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    try {
+
+      const formData = new FormData();
+
+      formData.append("className", form.className);
+      formData.append("classTime", form.classTime);
+      formData.append("classSize", form.classSize);
+      formData.append("yearsOld", form.yearsOld);
+      formData.append("tuitionFees", form.tuitionFees);
+      formData.append("description", form.description);
+
+      if (form.image) {
+        formData.append("image", form.image);
+      }
+
+      if (editId) {
+
+        await API.put(`/classes/${editId}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        });
+
+      } else {
+
+        await API.post("/classes", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        });
+
+      }
+
+      fetchClasses();
+      resetForm();
+
+    } catch (error) {
+
+      console.error("Save class error:", error);
+
+    }
+
+  };
+
+  /* ================= EDIT ================= */
 
   const handleEdit = (item) => {
+
     setForm({
       className: item.className,
       classTime: item.classTime,
       classSize: item.classSize,
       yearsOld: item.yearsOld,
       tuitionFees: item.tuitionFees,
+      description: item.description || "",
+      image: null,
+      existingImage: item.image || ""
     });
 
     setEditId(item._id);
     setOpenMenuId(null);
+
   };
 
-  /* ================= DELETE CLASS ================= */
+  /* ================= DELETE ================= */
 
-const handleDelete = async (id) => {
+  const handleDelete = async (id) => {
 
-  const confirmDelete = window.confirm(
-    "Do you want to delete this class?"
-  );
+    const confirmDelete = window.confirm("Do you want to delete this class?");
 
-  if (!confirmDelete) return;
+    if (!confirmDelete) return;
 
-  try {
+    try {
 
-    await API.delete(`/classes/${id}`);
+      await API.delete(`/classes/${id}`);
 
-    fetchClasses();
+      fetchClasses();
 
-    if (editId === id) {
-      resetForm();
+      if (editId === id) resetForm();
+
+    } catch (error) {
+
+      console.error("Delete class error:", error);
+
     }
 
-  } catch (error) {
-    console.error(error);
-    alert("Delete failed");
-  }
+    setOpenMenuId(null);
 
-  setOpenMenuId(null);
-};
+  };
 
-  /* ================= ACTION MENU ================= */
+  /* ================= DROPDOWN ================= */
 
   const toggleMenu = (id) => {
-    setOpenMenuId((prev) => (prev === id ? null : id));
+
+    setOpenMenuId(prev => prev === id ? null : id);
+
   };
 
   return (
@@ -167,7 +228,6 @@ const handleDelete = async (id) => {
                   value={form.className}
                   onChange={handleChange}
                   className={`${base}__input`}
-                  placeholder="Enter class name"
                 />
               </div>
 
@@ -179,7 +239,6 @@ const handleDelete = async (id) => {
                   value={form.classTime}
                   onChange={handleChange}
                   className={`${base}__input`}
-                  placeholder="Enter class time"
                 />
               </div>
 
@@ -191,7 +250,6 @@ const handleDelete = async (id) => {
                   value={form.classSize}
                   onChange={handleChange}
                   className={`${base}__input`}
-                  placeholder="Enter class size"
                 />
               </div>
 
@@ -203,7 +261,6 @@ const handleDelete = async (id) => {
                   value={form.yearsOld}
                   onChange={handleChange}
                   className={`${base}__input`}
-                  placeholder="Enter age group"
                 />
               </div>
 
@@ -215,7 +272,26 @@ const handleDelete = async (id) => {
                   value={form.tuitionFees}
                   onChange={handleChange}
                   className={`${base}__input`}
-                  placeholder="Enter tuition fees"
+                />
+              </div>
+
+              <div className={`${base}__field`}>
+                <label className={`${base}__label`}>Class Image</label>
+                <input
+                  type="file"
+                  onChange={handleImage}
+                  className={`${base}__input`}
+                />
+              </div>
+
+              <div className={`${base}__field`}>
+                <label className={`${base}__label`}>Description</label>
+                <textarea
+                  name="description"
+                  value={form.description}
+                  onChange={handleChange}
+                  className={`${base}__input`}
+                  style={{ height: "100px", paddingTop: "12px" }}
                 />
               </div>
 
@@ -250,6 +326,24 @@ const handleDelete = async (id) => {
             <div className={`${base}__previewTableWrap`}>
               <table className={`${base}__previewTable`}>
                 <tbody>
+
+                  <tr>
+                    <th>Image</th>
+                    <td>
+                      {form.image ? (
+                        <img
+                          src={URL.createObjectURL(form.image)}
+                          style={{ width: "80px", borderRadius: "8px" }}
+                        />
+                      ) : form.existingImage ? (
+                        <img
+                          src={`${IMAGE_URL}${form.existingImage}`}
+                          style={{ width: "80px", borderRadius: "8px" }}
+                        />
+                      ) : "—"}
+                    </td>
+                  </tr>
+
                   <tr>
                     <th>Class Name</th>
                     <td>{form.className || "—"}</td>
@@ -258,6 +352,11 @@ const handleDelete = async (id) => {
                   <tr>
                     <th>Class Time</th>
                     <td>{form.classTime || "—"}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Description</th>
+                    <td>{form.description || "—"}</td>
                   </tr>
 
                   <tr>
@@ -274,11 +373,13 @@ const handleDelete = async (id) => {
                     <th>Tuition Fees</th>
                     <td>{form.tuitionFees ? `₹${form.tuitionFees}` : "—"}</td>
                   </tr>
+
                 </tbody>
               </table>
             </div>
 
           </div>
+
         </div>
 
         {/* TABLE */}
@@ -288,9 +389,6 @@ const handleDelete = async (id) => {
           <div className={`${base}__cardHead ${base}__cardHead--table`}>
             <div>
               <h2 className={`${base}__title`}>Classes List</h2>
-              <p className={`${base}__subtitle`}>
-                Manage all class records
-              </p>
             </div>
 
             <div className={`${base}__countBadge`}>
@@ -304,8 +402,10 @@ const handleDelete = async (id) => {
 
               <thead>
                 <tr>
+                  <th>Image</th>
                   <th>Class Name</th>
                   <th>Class Time</th>
+                  <th>Description</th>
                   <th>Class Size</th>
                   <th>Years Old</th>
                   <th>Tuition Fees</th>
@@ -316,17 +416,27 @@ const handleDelete = async (id) => {
               <tbody>
 
                 {classesData.length > 0 ? (
-
-                  classesData.map((item) => (
-
+                  classesData.map(item => (
                     <tr key={item._id}>
+
+                      <td>
+                        {item.image ? (
+                          <img
+                            src={`${IMAGE_URL}${item.image}`}
+                            style={{ width: "60px", borderRadius: "6px" }}
+                          />
+                        ) : "—"}
+                      </td>
+
                       <td>{item.className}</td>
                       <td>{item.classTime}</td>
+                      <td>{item.description}</td>
                       <td>{item.classSize}</td>
                       <td>{item.yearsOld}</td>
                       <td>₹{item.tuitionFees}</td>
 
                       <td>
+
                         <div className={`${base}__actionWrap`}>
 
                           <button
@@ -338,7 +448,6 @@ const handleDelete = async (id) => {
                           </button>
 
                           {openMenuId === item._id && (
-
                             <div className={`${base}__dropdown`}>
 
                               <button
@@ -360,7 +469,9 @@ const handleDelete = async (id) => {
                           )}
 
                         </div>
+
                       </td>
+
                     </tr>
 
                   ))
@@ -368,7 +479,7 @@ const handleDelete = async (id) => {
                 ) : (
 
                   <tr>
-                    <td colSpan="6" className={`${base}__empty`}>
+                    <td colSpan="8" className={`${base}__empty`}>
                       No class records available.
                     </td>
                   </tr>

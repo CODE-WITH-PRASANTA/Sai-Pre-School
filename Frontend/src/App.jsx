@@ -13,8 +13,6 @@ import Contact from "./Components/Contact/Contact";
 import News from "./Pages/News/News";
 import NewsDetails from "./Pages/NewsDetails/NewsDetails";
 
-
-
 function App() {
   return (
     <BrowserRouter>
@@ -30,11 +28,11 @@ function App() {
         
         <Route path="/contact" element={<Contact/>}/>
         <Route path="/news" element={<News/>}/>
-        <Route path="/news-details" element={<NewsDetails/>}/>
+        <Route path="/news-details" element={<NewsDetails />}/>
         
       </Routes>
       <Footer />
-      <FloatingForm /> 
+      <FloatingForm />
     </BrowserRouter>
   );
 }

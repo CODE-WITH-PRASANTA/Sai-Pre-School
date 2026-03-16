@@ -1,5 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { FaTrash, FaEdit } from "react-icons/fa";
+import API, { IMAGE_URL } from "../../api/axios";
 
 export default function GalleryPost() {
   const [image, setImage] = useState(null);
@@ -11,6 +12,23 @@ export default function GalleryPost() {
   const rowsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
 
+  /* ================= FETCH GALLERY ================= */
+
+  const fetchGallery = async () => {
+    try {
+      const res = await API.get("/photo-gallery");
+      setGallery(res.data.data || []);
+    } catch (error) {
+      console.error("Fetch gallery error:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGallery();
+  }, []);
+
+  /* ================= IMAGE PREVIEW ================= */
+
   const handleImage = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -18,44 +36,57 @@ export default function GalleryPost() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  /* ================= CREATE / UPDATE ================= */
 
-    if (!image) return;
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
+  const file = fileInputRef.current.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append("image", file);
+
+  try {
     if (editId) {
-      setGallery(
-        gallery.map((item) =>
-          item.id === editId ? { ...item, img: image } : item,
-        ),
-      );
+      await API.put(`/photo-gallery/${editId}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       setEditId(null);
     } else {
-      const newData = {
-        id: Date.now(),
-        img: image,
-      };
-
-      setGallery([...gallery, newData]);
+      await API.post("/photo-gallery", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
     }
+
+    fetchGallery();
 
     setImage(null);
+    fileInputRef.current.value = "";
 
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+  } catch (error) {
+    console.error("Upload error:", error.response?.data || error);
+  }
+};
+  /* ================= DELETE ================= */
+
+  const handleDelete = async (id) => {
+    try {
+      await API.delete(`/photo-gallery/${id}`);
+      fetchGallery();
+    } catch (error) {
+      console.error("Delete error:", error);
     }
   };
 
-  const handleDelete = (id) => {
-    setGallery(gallery.filter((item) => item.id !== id));
-  };
+  /* ================= EDIT ================= */
 
   const handleEdit = (item) => {
-    setImage(item.img);
-    setEditId(item.id);
+    setEditId(item._id);
+    setImage(`${IMAGE_URL}${item.image}`);
   };
 
-  /* Pagination */
+  /* ================= PAGINATION ================= */
 
   const indexOfLast = currentPage * rowsPerPage;
   const indexOfFirst = indexOfLast - rowsPerPage;
@@ -67,6 +98,7 @@ export default function GalleryPost() {
       <h1 className="text-2xl font-bold mb-6">Gallery Post</h1>
 
       <div className="grid lg:grid-cols-3 gap-6 items-start">
+
         {/* LEFT FORM */}
 
         <div className="bg-white shadow-lg rounded-xl p-6 lg:col-span-1 self-start">
@@ -104,6 +136,7 @@ export default function GalleryPost() {
 
           <div className="overflow-x-auto">
             <table className="w-full text-sm border">
+
               <thead className="bg-gray-100">
                 <tr>
                   <th className="p-3 border">Sl No</th>
@@ -113,6 +146,7 @@ export default function GalleryPost() {
               </thead>
 
               <tbody>
+
                 {currentRows.length === 0 ? (
                   <tr>
                     <td colSpan="3" className="text-center p-4">
@@ -121,17 +155,21 @@ export default function GalleryPost() {
                   </tr>
                 ) : (
                   currentRows.map((item, index) => (
-                    <tr key={item.id} className="text-center">
-                      <td className="border p-2">{indexOfFirst + index + 1}</td>
+                    <tr key={item._id} className="text-center">
+
+                      <td className="border p-2">
+                        {indexOfFirst + index + 1}
+                      </td>
 
                       <td className="border p-2">
                         <img
-                          src={item.img}
+                          src={`${IMAGE_URL}${item.image}`}
                           className="w-20 h-12 object-cover mx-auto rounded"
                         />
                       </td>
 
                       <td className="p-2 border">
+
                         <div className="flex flex-col items-center gap-2">
 
                           <button
@@ -143,7 +181,7 @@ export default function GalleryPost() {
                           </button>
 
                           <button
-                            onClick={() => handleDelete(item.id)}
+                            onClick={() => handleDelete(item._id)}
                             className="flex items-center justify-center gap-2 w-28 bg-red-500 hover:bg-red-600 text-white text-sm py-1.5 rounded-md"
                           >
                             <FaTrash size={13} />
@@ -151,11 +189,15 @@ export default function GalleryPost() {
                           </button>
 
                         </div>
+
                       </td>
+
                     </tr>
                   ))
                 )}
+
               </tbody>
+
             </table>
           </div>
 
@@ -163,6 +205,7 @@ export default function GalleryPost() {
 
           {totalPages > 1 && (
             <div className="flex justify-center items-center mt-6 gap-2 flex-wrap">
+
               <button
                 onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                 className="px-3 py-1 border rounded hover:bg-gray-200"
@@ -193,8 +236,10 @@ export default function GalleryPost() {
               >
                 Next
               </button>
+
             </div>
           )}
+
         </div>
       </div>
     </div>

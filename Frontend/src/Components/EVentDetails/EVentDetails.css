@@ -117,6 +117,25 @@
   font-weight: 900;
   color: #111;
 }
+.event-details__heading{
+text-align:center;
+margin-bottom:50px;
+}
+
+.event-details__headingTitle{
+font-size:36px;
+font-weight:700;
+color:#333;
+margin-bottom:10px;
+}
+
+.event-details__headingText{
+max-width:700px;
+margin:auto;
+color:#666;
+font-size:16px;
+line-height:1.6;
+}
 
 .event-details__place {
   margin-top: 8px;

@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPhoneAlt, FaWhatsapp } from "react-icons/fa";
+import API, { IMAGE_URL } from "../../api/axios";
 import "./FloatingForm.css";
 
 const FloatingForm = () => {
-  const [showForm, setShowForm] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [showAd, setShowAd] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [currentAd, setCurrentAd] = useState(0);
+  const [ads, setAds] = useState([]);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -13,156 +17,238 @@ const FloatingForm = () => {
     message: "",
   });
 
-  /* Auto open after 5 seconds */
+  const fetchAds = async () => {
+    try {
+      const res = await API.get("/advertisements/all");
+
+      if (res.data.success) {
+        const activeAds = res.data.data.filter((ad) => ad.active);
+        setAds(activeAds);
+      }
+    } catch (error) {
+      console.error("Failed to load ads");
+    }
+  };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowForm(true);
-    }, 2000);
+    fetchAds();
+  }, []);
 
+  useEffect(() => {
+    if (currentAd >= ads.length) setCurrentAd(0);
+  }, [ads]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowForm(true), 3000);
     return () => clearTimeout(timer);
   }, []);
 
-  /* Close form */
+  useEffect(() => {
+    if (!showAd || ads.length === 0) return;
+
+    const interval = setInterval(() => {
+      setCurrentAd((prev) =>
+        prev === ads.length - 1 ? 0 : prev + 1
+      );
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [showAd, ads]);
 
   const closeForm = () => {
     setShowForm(false);
-    localStorage.setItem("saiFormClosed", "true");
-  };
-
-  /* Input change */
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  /* Form submit */
-
-  const floatingformSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
 
     setTimeout(() => {
-      alert("Enquiry Submitted Successfully!");
-
-      setLoading(false);
-
-      setFormData({
-        name: "",
-        address: "",
-        phone: "",
-        message: "",
-      });
-
-      closeForm();
-    }, 1200);
+      setCurrentAd(0);
+      setShowAd(true);
+    }, 300);
   };
 
-  if (!showForm) return null;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "phone" && !/^\d*$/.test(value)) return;
+
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const floatingformSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+
+      const res = await API.post("/enquiries", formData);
+
+      if (res.data.success) {
+        alert("Thank you! Our admission team will contact you shortly.");
+
+        setFormData({
+          name: "",
+          address: "",
+          phone: "",
+          message: "",
+        });
+
+        closeForm();
+      }
+    } catch (error) {
+      alert("Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="sai-floating-overlay">
-      <div className="sai-floating-container">
-        {/* Close Button */}
+    <>
+      {/* FORM */}
 
-        <button className="sai-floating-close" onClick={closeForm}>
-          ×
-        </button>
+      {showForm && (
+        <div className="floatingform-overlay">
+          <div className="floatingform-container">
 
-        {/* Header */}
+            <button className="floatingform-close" onClick={closeForm}>
+              ✕
+            </button>
 
-        <div className="sai-floating-header">
-          <h2>Sai Pre School</h2>
-          <span>Admission & Enquiry Form</span>
+            <div className="floatingform-header">
+              <h2>Sai Pre School</h2>
+              <p>Admission Enquiry Form</p>
+            </div>
+
+            <p className="floatingform-info">
+              Give your child the best start in life.
+              Fill out the form and our team will contact you shortly.
+            </p>
+
+            <form className="floatingform-form" onSubmit={floatingformSubmit}>
+
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Parent / Student Name"
+                required
+              />
+
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                placeholder="Address / City"
+                required
+              />
+
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Phone Number"
+                maxLength="10"
+                required
+              />
+
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Message"
+                rows="3"
+                required
+              />
+
+              <button
+                type="submit"
+                className="floatingform-submit"
+                disabled={loading}
+              >
+                {loading ? "Submitting..." : "Submit Enquiry"}
+              </button>
+
+            </form>
+
+            <div className="floatingform-divider">
+              <span>OR</span>
+            </div>
+
+            <div className="floatingform-actions">
+
+              <a href="tel:7014627894" className="call">
+                <FaPhoneAlt /> Call Us
+              </a>
+
+              <a
+                href="https://wa.me/919887868746"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="whatsapp"
+              >
+                <FaWhatsapp /> WhatsApp
+              </a>
+
+            </div>
+
+          </div>
         </div>
+      )}
 
-        <p className="sai-floating-info">
-          Give your child the best start in life. Fill the form and our team
-          will contact you shortly.
-        </p>
+      {/* ADS */}
 
-        {/* Form */}
+      {showAd && ads.length > 0 && (
+        <div className="ad-overlay">
+          <div className="ad-container">
 
-        <form className="sai-floating-form" onSubmit={floatingformSubmit}>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Parent / Student Name"
-            className="sai-floating-input"
-            required
-          />
+            <button className="ad-close" onClick={() => setShowAd(false)}>
+              ✕
+            </button>
 
-          <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            placeholder="Address / City"
-            className="sai-floating-input"
-            required
-          />
+            <img
+              src={`${IMAGE_URL}/${ads[currentAd]?.image?.replace(/^\/+/, "")}`}
+              alt="Advertisement"
+              className="ad-image"
+            />
 
-          <input
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="Phone Number"
-            maxLength="10"
-            className="sai-floating-input"
-            required
-          />
+            <div className="ad-controls">
 
-          <textarea
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            placeholder="Message"
-            rows="3"
-            className="sai-floating-textarea"
-            required
-          />
+              <button
+                onClick={() =>
+                  setCurrentAd((prev) =>
+                    prev === 0 ? ads.length - 1 : prev - 1
+                  )
+                }
+              >
+                ❮
+              </button>
 
-          <button
-            type="submit"
-            className="sai-floating-submit"
-            disabled={loading}
-          >
-            {loading ? "Submitting..." : "Submit Enquiry"}
-          </button>
-        </form>
+              <button
+                onClick={() =>
+                  setCurrentAd((prev) =>
+                    prev === ads.length - 1 ? 0 : prev + 1
+                  )
+                }
+              >
+                ❯
+              </button>
 
-        {/* Divider */}
+            </div>
 
-        <div className="sai-floating-divider">
-          <span>OR</span>
+            <div className="ad-dots">
+              {ads.map((_, index) => (
+                <span
+                  key={index}
+                  className={index === currentAd ? "active-dot" : ""}
+                  onClick={() => setCurrentAd(index)}
+                />
+              ))}
+            </div>
+
+          </div>
         </div>
-
-        {/* Contact Buttons */}
-
-        <div className="sai-floating-actions">
-          <a href="tel:7014627894" className="sai-floating-btn call">
-            <FaPhoneAlt />
-            Call Us
-          </a>
-
-          <a
-            href="https://wa.me/919887868746"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="sai-floating-btn whatsapp"
-          >
-            <FaWhatsapp />
-            WhatsApp
-          </a>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
