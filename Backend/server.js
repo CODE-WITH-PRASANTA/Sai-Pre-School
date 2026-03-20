@@ -6,6 +6,7 @@ const connectDB = require("./config/db");
 
 const eventRoutes = require("./routes/eventRoutes");
 const newsRoutes = require("./routes/newsRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 const galleryRoutes = require("./routes/galleryRoutes");
 const classRoutes = require("./routes/classRoutes");
 const advertisementRoutes = require("./routes/advertisement.routes");
@@ -36,6 +37,8 @@ app.use("/uploads", express.static("uploads"));
 
 app.use("/api", newsRoutes);
 app.use("/api", eventRoutes);
+app.use("/api", contactRoutes);
+app.use("/api",testimonialRoutes);
 app.use("/api", galleryRoutes);
 app.use("/api", classRoutes);
 app.use("/api/advertisements", advertisementRoutes);

@@ -6,11 +6,12 @@ const {
   getTestimonials,
   updateTestimonial,
   deleteTestimonial,
-  toggleStatus
+  toggleStatus,
 } = require("../controllers/testimonialController");
 
 const { upload, convertToWebp } = require("../middlewares/uploads");
 
+// CREATE
 router.post(
   "/testimonials",
   upload.single("image"),
@@ -18,8 +19,10 @@ router.post(
   createTestimonial
 );
 
+// GET ALL
 router.get("/testimonials", getTestimonials);
 
+// UPDATE
 router.put(
   "/testimonials/:id",
   upload.single("image"),
@@ -27,8 +30,10 @@ router.put(
   updateTestimonial
 );
 
+// DELETE
 router.delete("/testimonials/:id", deleteTestimonial);
 
+// STATUS (Publish / Unpublish)
 router.patch("/testimonials/status/:id", toggleStatus);
 
 module.exports = router;

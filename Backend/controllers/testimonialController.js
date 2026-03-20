@@ -2,10 +2,8 @@ const Testimonial = require("../models/testimonialModel");
 const { deleteImageFile } = require("../middlewares/uploads");
 
 /* ================= CREATE ================= */
-
 exports.createTestimonial = async (req, res) => {
   try {
-
     if (!req.file) {
       return res.status(400).json({
         success: false,
@@ -26,11 +24,8 @@ exports.createTestimonial = async (req, res) => {
       success: true,
       data: testimonial,
     });
-
   } catch (error) {
-
-    console.log("CREATE TESTIMONIAL ERROR:", error);
-
+    console.log("CREATE ERROR:", error);
     res.status(500).json({
       success: false,
       message: error.message,
@@ -38,43 +33,32 @@ exports.createTestimonial = async (req, res) => {
   }
 };
 
-
 /* ================= GET ================= */
-
 exports.getTestimonials = async (req, res) => {
-
   try {
-
     const testimonials = await Testimonial.find().sort({ createdAt: -1 });
 
     res.json({
       success: true,
       data: testimonials,
     });
-
   } catch (error) {
-
     res.status(500).json({
       success: false,
       message: error.message,
     });
-
   }
 };
 
-
 /* ================= UPDATE ================= */
-
 exports.updateTestimonial = async (req, res) => {
-
   try {
-
     const testimonial = await Testimonial.findById(req.params.id);
 
     if (!testimonial) {
       return res.status(404).json({
         success: false,
-        message: "Not found",
+        message: "Testimonial not found",
       });
     }
 
@@ -84,11 +68,8 @@ exports.updateTestimonial = async (req, res) => {
     testimonial.rating = req.body.rating;
 
     if (req.file) {
-
       deleteImageFile(testimonial.image);
-
       testimonial.image = req.file.path;
-
     }
 
     await testimonial.save();
@@ -97,30 +78,24 @@ exports.updateTestimonial = async (req, res) => {
       success: true,
       data: testimonial,
     });
-
   } catch (error) {
-
+    console.log("UPDATE ERROR:", error);
     res.status(500).json({
       success: false,
       message: error.message,
     });
-
   }
 };
 
-
 /* ================= DELETE ================= */
-
 exports.deleteTestimonial = async (req, res) => {
-
   try {
-
     const testimonial = await Testimonial.findById(req.params.id);
 
     if (!testimonial) {
       return res.status(404).json({
         success: false,
-        message: "Not found",
+        message: "Testimonial not found",
       });
     }
 
@@ -132,25 +107,26 @@ exports.deleteTestimonial = async (req, res) => {
       success: true,
       message: "Deleted successfully",
     });
-
   } catch (error) {
-
+    console.log("DELETE ERROR:", error);
     res.status(500).json({
       success: false,
       message: error.message,
     });
-
   }
 };
 
-
 /* ================= STATUS ================= */
-
 exports.toggleStatus = async (req, res) => {
-
   try {
-
     const testimonial = await Testimonial.findById(req.params.id);
+
+    if (!testimonial) {
+      return res.status(404).json({
+        success: false,
+        message: "Testimonial not found",
+      });
+    }
 
     testimonial.status =
       testimonial.status === "Published"
@@ -163,13 +139,11 @@ exports.toggleStatus = async (req, res) => {
       success: true,
       data: testimonial,
     });
-
   } catch (error) {
-
+    console.log("STATUS ERROR:", error);
     res.status(500).json({
       success: false,
       message: error.message,
     });
-
   }
 };
