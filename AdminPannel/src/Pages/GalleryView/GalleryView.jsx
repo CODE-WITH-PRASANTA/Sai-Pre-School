@@ -1,23 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaThLarge, FaList } from "react-icons/fa";
+import API, { IMAGE_URL } from "../../api/axios";
 
 export default function GalleryView() {
 
   const [viewMode, setViewMode] = useState("grid");
+  const [galleryImages, setGalleryImages] = useState([]);
 
-  /* Dummy Images */
+  /* ================= FETCH GALLERY ================= */
 
-  const galleryImages = [
-    { id: 1, img: "https://picsum.photos/400/300?1" },
-    { id: 2, img: "https://picsum.photos/400/300?2" },
-    { id: 3, img: "https://picsum.photos/400/300?3" },
-    { id: 4, img: "https://picsum.photos/400/300?4" },
-    { id: 5, img: "https://picsum.photos/400/300?5" },
-    { id: 6, img: "https://picsum.photos/400/300?6" },
-    { id: 7, img: "https://picsum.photos/400/300?7" },
-    { id: 8, img: "https://picsum.photos/400/300?8" },
-    { id: 9, img: "https://picsum.photos/400/300?9" },
-  ];
+  const fetchGallery = async () => {
+    try {
+
+      const res = await API.get("/photo-gallery");
+
+      const images = (res.data.data || []).map((item) => ({
+        id: item._id,
+        img: `${IMAGE_URL}${item.image}`,
+      }));
+
+      setGalleryImages(images);
+
+    } catch (error) {
+      console.error("Gallery fetch error:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGallery();
+  }, []);
 
   return (
     <div className="p-4 md:p-8 bg-gray-100 min-h-screen">
@@ -110,9 +121,9 @@ export default function GalleryView() {
               />
 
               <div>
-                <p className="font-medium">
+                {/* <p className="font-medium">
                   Image #{item.id}
-                </p>
+                </p> */}
                 <p className="text-sm text-gray-500">
                   Gallery Image Preview
                 </p>

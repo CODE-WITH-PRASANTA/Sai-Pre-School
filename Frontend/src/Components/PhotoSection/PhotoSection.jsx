@@ -1,40 +1,39 @@
 import React, { useEffect, useState } from "react";
 import "./PhotoSection.css";
-
-import img1 from "../../assets/pic11.webp";
-import img2 from "../../assets/pic12.webp";
-import img3 from "../../assets/pic13.webp";
-import img4 from "../../assets/pic14.webp";
-import img5 from "../../assets/pic15.webp";
-import img6 from "../../assets/pic16.webp";
-
-import img7 from "../../assets/pic11.webp";
-import img8 from "../../assets/pic12.webp";
-import img9 from "../../assets/pic13.webp";
-import img10 from "../../assets/pic14.webp";
-import img11 from "../../assets/pic15.webp";
-import img12 from "../../assets/pic16.webp";
+import API, { IMAGE_URL } from "../../api/axios";
 
 const PhotoSection = () => {
   const base = "photo-section";
 
-  const galleryImages = [
-    { id: 1, img: img1, alt: "Children in classroom activity" },
-    { id: 2, img: img2, alt: "Teacher and children playing with blocks" },
-    { id: 3, img: img3, alt: "Teacher guiding kids in learning class" },
-    { id: 4, img: img4, alt: "Toddler playing with colorful toys" },
-    { id: 5, img: img5, alt: "Children painting eggs in activity room" },
-    { id: 6, img: img6, alt: "Teacher helping children draw artwork" },
-    { id: 7, img: img7, alt: "Kids enjoying classroom time" },
-    { id: 8, img: img8, alt: "Children building blocks together" },
-    { id: 9, img: img9, alt: "Kids and teacher creative learning time" },
-    { id: 10, img: img10, alt: "Playful toddler in kindergarten" },
-    { id: 11, img: img11, alt: "Painting and creative activity" },
-    { id: 12, img: img12, alt: "Teacher and children study time" },
-  ];
+  const [galleryImages, setGalleryImages] = useState([]);
 
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(0);
+
+  /* ================= FETCH GALLERY ================= */
+
+  const fetchGallery = async () => {
+    try {
+      const res = await API.get("/photo-gallery");
+
+      const images = (res.data.data || []).map((item, index) => ({
+        id: item._id,
+        img: `${IMAGE_URL}${item.image}`,
+        alt: `Gallery image ${index + 1}`,
+      }));
+
+      setGalleryImages(images);
+
+    } catch (error) {
+      console.error("Gallery fetch error:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGallery();
+  }, []);
+
+  /* ================= RESPONSIVE ITEMS ================= */
 
   useEffect(() => {
     const handleResize = () => {
@@ -55,12 +54,11 @@ const PhotoSection = () => {
     };
   }, []);
 
-  useEffect(() => {
-    //setCurrentPage(0);//
-  }, [itemsPerPage]);
+  /* ================= PAGINATION ================= */
 
   const totalPages = Math.ceil(galleryImages.length / itemsPerPage);
   const startIndex = currentPage * itemsPerPage;
+
   const visibleImages = galleryImages.slice(
     startIndex,
     startIndex + itemsPerPage

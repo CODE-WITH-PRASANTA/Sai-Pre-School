@@ -1,37 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaQuoteLeft, FaStar, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import "./Testimonial.css";
 
 import cloudYellow from "../../Assets/ylw_cld.png";
 import cloudBlue from "../../Assets/blue_cld.png";
 
-const testimonials = [
-  {
-    id: 1,
-    name: "John Doe",
-    role: "Client",
-    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
-    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-  },
-  {
-    id: 2,
-    name: "Sarah Smith",
-    role: "Parent",
-    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
-    text: "The teachers are amazing and my child loves the learning environment.",
-  },
-];
+import API, { IMAGE_URL } from "../../api/axios";
 
 const Testimonials = () => {
+
+  const [testimonials, setTestimonials] = useState([]);
   const [index, setIndex] = useState(0);
 
+  /* ================= FETCH TESTIMONIALS ================= */
+
+  const fetchTestimonials = async () => {
+    try {
+
+      const res = await API.get("/testimonials");
+
+     
+      setTestimonials(res.data.data || []);
+
+    } catch (error) {
+
+      console.error("Fetch testimonials error:", error);
+
+    }
+  };
+
+  useEffect(() => {
+    fetchTestimonials();
+  }, []);
+
+  /* ================= SLIDER ================= */
+
   const next = () => {
+
+    if (testimonials.length === 0) return;
+
     setIndex((prev) => (prev + 1) % testimonials.length);
+
   };
 
   const prev = () => {
+
+    if (testimonials.length === 0) return;
+
     setIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+
   };
+
+  if (testimonials.length === 0) return null;
 
   const data = testimonials[index];
 
@@ -39,10 +59,12 @@ const Testimonials = () => {
     <section className="testimonials">
 
       {/* Clouds */}
+
       <img src={cloudYellow} className="cloud cloud-yellow" alt="" />
       <img src={cloudBlue} className="cloud cloud-blue" alt="" />
 
       {/* Title */}
+
       <div className="testimonial-title">
         <h2>Testimonials about center</h2>
         <p>
@@ -51,31 +73,46 @@ const Testimonials = () => {
       </div>
 
       {/* Card */}
+
       <div className="testimonial-card">
 
         {/* Image */}
+
         <div className="testimonial-image">
-          <img src={data.img} alt={data.name} />
+
+          <img
+            src={`${IMAGE_URL}${data.image}`}
+            alt={data.name}
+          />
+
         </div>
 
         {/* Text */}
+
         <div className="testimonial-text">
 
           <FaQuoteLeft className="quote-icon" />
 
           <p className="testimonial-message">
-            {data.text}
+            {data.description}
           </p>
 
           <div className="testimonial-footer">
 
             <div>
+
               <h4>{data.name}</h4>
-              <p>{data.role}</p>
+
+              <p>{data.designation}</p>
+
             </div>
 
             <div className="stars">
-              <FaStar /><FaStar /><FaStar /><FaStar /><FaStar />
+
+              {[...Array(data.rating || 5)].map((_, i) => (
+                <FaStar key={i} />
+              ))}
+
             </div>
 
           </div>
@@ -85,7 +122,9 @@ const Testimonials = () => {
       </div>
 
       {/* Mobile arrows */}
+
       <div className="mobile-arrows">
+
         <button onClick={prev}>
           <FaArrowLeft />
         </button>
@@ -93,9 +132,11 @@ const Testimonials = () => {
         <button onClick={next}>
           <FaArrowRight />
         </button>
+
       </div>
 
       {/* Desktop arrows */}
+
       <button className="desktop-arrow left" onClick={prev}>
         <FaArrowLeft />
       </button>

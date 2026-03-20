@@ -21,30 +21,7 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Top Bar */}
-      <div className="bg-pink-500 text-white text-xs md:text-sm hidden md:block">
-        <div className="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-6 lg:px-10 py-2">
-          <div className="flex flex-wrap items-center gap-4 md:gap-6">
-            <div className="flex items-center gap-2">
-              <FaPhoneAlt />
-              <span>91786 81922</span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <FaMapMarkerAlt />
-              <span className="hidden lg:block">
-                Plot No.: 526, Haridaspur, Naharkanta, Bhubaneswar
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <FaClock />
-            <span>9:30am - 5:30pm</span>
-          </div>
-        </div>
-      </div>
-
+    
       {/* Main Navbar */}
       <div className="sticky top-0 z-50 bg-gray-100 shadow-md">
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-6 lg:px-10 py-4">

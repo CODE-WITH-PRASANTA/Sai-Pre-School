@@ -12,13 +12,15 @@ import FloatingForm from "./Components/FloatingForm/FloatingForm";
 import Contact from "./Components/Contact/Contact";
 import News from "./Pages/News/News";
 import NewsDetails from "./Pages/NewsDetails/NewsDetails";
-
-
+import Topbar from "./Pages/Topbar/Topbar";
+import RunningNews from "./Components/RunningNews/RunningNews";
 
 function App() {
   return (
     <BrowserRouter>
+     <Topbar />
       <Navbar />
+      <RunningNews />
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -30,11 +32,11 @@ function App() {
         
         <Route path="/contact" element={<Contact/>}/>
         <Route path="/news" element={<News/>}/>
-        <Route path="/news-details" element={<NewsDetails/>}/>
+        <Route path="/news-details" element={<NewsDetails />}/>
         
       </Routes>
       <Footer />
-      <FloatingForm /> 
+      <FloatingForm />
     </BrowserRouter>
   );
 }

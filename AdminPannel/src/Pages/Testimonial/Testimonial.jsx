@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Star, Pencil, Trash2 } from "lucide-react";
+import API, { IMAGE_URL } from "../../api/axios";
 
 const Testimonial = () => {
   const [formData, setFormData] = useState({
-    image: "",
+    image: null,
     name: "",
     designation: "",
     description: "",
@@ -14,47 +15,62 @@ const Testimonial = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [editId, setEditId] = useState(null);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  /* ================= FETCH ================= */
+
+  const fetchTestimonials = async () => {
+    try {
+      const res = await API.get("/testimonials");
+
+      setTestimonials(res.data.data || []);
+    } catch (error) {
+      console.error("Fetch testimonials error:", error);
+    }
   };
+
+  useEffect(() => {
+    fetchTestimonials();
+  }, []);
+
+  /* ================= INPUT ================= */
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  /* ================= IMAGE ================= */
 
   const handleImage = (e) => {
     const file = e.target.files[0];
-    const imageURL = URL.createObjectURL(file);
-    setPreviewImage(imageURL);
 
-    setFormData({
-      ...formData,
-      image: imageURL,
-    });
+    if (!file) return;
+
+    setPreviewImage(URL.createObjectURL(file));
+
+    setFormData((prev) => ({
+      ...prev,
+      image: file,
+    }));
   };
+
+  /* ================= RATING ================= */
 
   const handleRating = (value) => {
-    setFormData({ ...formData, rating: value });
+    setFormData((prev) => ({
+      ...prev,
+      rating: value,
+    }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  /* ================= RESET ================= */
 
-    if (editId) {
-      setTestimonials(
-        testimonials.map((item) =>
-          item.id === editId ? { ...formData, id: editId, status: item.status } : item
-        )
-      );
-      setEditId(null);
-    } else {
-      const newData = {
-        ...formData,
-        id: Date.now(),
-        status: "Unpublished",
-      };
-
-      setTestimonials([...testimonials, newData]);
-    }
-
+  const resetForm = () => {
     setFormData({
-      image: "",
+      image: null,
       name: "",
       designation: "",
       description: "",
@@ -62,51 +78,114 @@ const Testimonial = () => {
     });
 
     setPreviewImage(null);
+    setEditId(null);
   };
 
-  const togglePublish = (id) => {
-    setTestimonials(
-      testimonials.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              status:
-                item.status === "Published" ? "Unpublished" : "Published",
-            }
-          : item
-      )
-    );
+  /* ================= SUBMIT ================= */
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!editId && !formData.image) {
+      alert("Image is required");
+      return;
+    }
+
+    try {
+      const form = new FormData();
+
+      form.append("name", formData.name);
+      form.append("designation", formData.designation);
+      form.append("description", formData.description);
+      form.append("rating", formData.rating);
+
+      if (formData.image instanceof File) {
+        form.append("image", formData.image);
+      }
+
+      if (editId) {
+        await API.put(`/testimonials/${editId}`, form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      } else {
+        await API.post("/testimonials", form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      }
+
+      fetchTestimonials();
+      resetForm();
+    } catch (error) {
+      console.error("Submit testimonial error:", error.response?.data || error);
+    }
+  };
+  /* ================= STATUS ================= */
+
+  const togglePublish = async (id) => {
+    try {
+      await API.patch(`/testimonials/status/${id}`);
+
+      fetchTestimonials();
+    } catch (error) {
+      console.error("Status update error:", error);
+    }
   };
 
-  const handleDelete = (id) => {
-    setTestimonials(testimonials.filter((item) => item.id !== id));
+  /* ================= DELETE ================= */
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Delete this testimonial?");
+
+    if (!confirmDelete) return;
+
+    try {
+      await API.delete(`/testimonials/${id}`);
+
+      fetchTestimonials();
+
+      if (editId === id) {
+        resetForm();
+      }
+    } catch (error) {
+      console.error("Delete testimonial error:", error);
+    }
   };
+
+  /* ================= EDIT ================= */
 
   const handleEdit = (item) => {
-    setFormData(item);
-    setPreviewImage(item.image);
-    setEditId(item.id);
+    setFormData({
+      name: item.name,
+      designation: item.designation,
+      description: item.description,
+      rating: item.rating,
+      image: null,
+    });
+
+    setPreviewImage(item.image ? `${IMAGE_URL}${item.image}` : null);
+
+    setEditId(item._id);
   };
 
   return (
     <div className="p-4 md:p-8 bg-gray-100 min-h-screen">
-
-      <h1 className="text-2xl font-bold mb-6">
-        Testimonial Management
-      </h1>
+      <h1 className="text-2xl font-bold mb-6">Testimonial Management</h1>
 
       {/* FORM + PREVIEW */}
-      <div className="grid lg:grid-cols-2 gap-6">
 
+      <div className="grid lg:grid-cols-2 gap-6">
         {/* FORM */}
+
         <div className="bg-white shadow rounded-xl p-6">
           <h2 className="text-lg font-semibold mb-4">
             {editId ? "Edit Testimonial" : "Add Testimonial"}
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-
-            {/* Image */}
             <div>
               <label className="text-sm font-medium">Upload Image</label>
               <input
@@ -116,7 +195,6 @@ const Testimonial = () => {
               />
             </div>
 
-            {/* Name */}
             <div>
               <label className="text-sm font-medium">Name</label>
               <input
@@ -128,7 +206,6 @@ const Testimonial = () => {
               />
             </div>
 
-            {/* Designation */}
             <div>
               <label className="text-sm font-medium">Designation</label>
               <input
@@ -140,7 +217,6 @@ const Testimonial = () => {
               />
             </div>
 
-            {/* Description */}
             <div>
               <label className="text-sm font-medium">Description</label>
               <textarea
@@ -152,15 +228,14 @@ const Testimonial = () => {
               ></textarea>
             </div>
 
-            {/* Rating */}
             <div>
               <label className="text-sm font-medium">Rating</label>
 
               <div className="flex gap-2 mt-1">
-                {[1,2,3,4,5].map((star)=>(
+                {[1, 2, 3, 4, 5].map((star) => (
                   <Star
                     key={star}
-                    onClick={()=>handleRating(star)}
+                    onClick={() => handleRating(star)}
                     className={`cursor-pointer ${
                       formData.rating >= star
                         ? "fill-yellow-400 text-yellow-400"
@@ -177,21 +252,16 @@ const Testimonial = () => {
             >
               {editId ? "Update Testimonial" : "Submit Testimonial"}
             </button>
-
           </form>
         </div>
 
-        {/* LIVE PREVIEW */}
+        {/* PREVIEW */}
+
         <div className="bg-white shadow rounded-xl p-6 flex items-center justify-center">
-
           <div className="max-w-sm text-center">
-
-            <h2 className="text-lg font-semibold mb-4">
-              Live Preview
-            </h2>
+            <h2 className="text-lg font-semibold mb-4">Live Preview</h2>
 
             <div className="border rounded-xl p-6 shadow">
-
               {previewImage ? (
                 <img
                   src={previewImage}
@@ -210,7 +280,7 @@ const Testimonial = () => {
               </p>
 
               <div className="flex justify-center my-2">
-                {[1,2,3,4,5].map((star)=>(
+                {[1, 2, 3, 4, 5].map((star) => (
                   <Star
                     key={star}
                     className={`w-4 h-4 ${
@@ -226,26 +296,17 @@ const Testimonial = () => {
                 {formData.description ||
                   "Customer testimonial preview will appear here."}
               </p>
-
             </div>
-
           </div>
-
         </div>
       </div>
 
       {/* TABLE */}
-
       <div className="mt-10 bg-white shadow rounded-xl p-6">
-
-        <h2 className="text-lg font-semibold mb-4">
-          Testimonial List
-        </h2>
+        <h2 className="text-lg font-semibold mb-4">Testimonial List</h2>
 
         <div className="overflow-x-auto">
-
           <table className="w-full border text-sm">
-
             <thead className="bg-gray-100">
               <tr>
                 <th className="p-3 border">Image</th>
@@ -253,37 +314,32 @@ const Testimonial = () => {
                 <th className="p-3 border">Designation</th>
                 <th className="p-3 border">Description</th>
                 <th className="p-3 border">Rating</th>
-                <th className="p-3 border">Status</th>
+                {/* <th className="p-3 border">Status</th> */}
                 <th className="p-3 border">Action</th>
               </tr>
             </thead>
 
             <tbody>
               {testimonials.map((item) => (
-                <tr key={item.id} className="text-center">
-
+                <tr key={item._id} className="text-center">
                   <td className="border p-2">
                     <img
-                      src={item.image}
+                      src={`${IMAGE_URL}${item.image}`}
                       className="w-10 h-10 rounded-full mx-auto"
                     />
                   </td>
 
                   <td className="border p-2">{item.name}</td>
 
-                  <td className="border p-2">
-                    {item.designation}
-                  </td>
+                  <td className="border p-2">{item.designation}</td>
 
                   <td className="border p-2 max-w-xs truncate">
                     {item.description}
                   </td>
 
-                  <td className="border p-2">
-                    ⭐ {item.rating}
-                  </td>
+                  <td className="border p-2">⭐ {item.rating}</td>
 
-                  <td className="border p-2">
+                  {/* <td className="border p-2">
                     <span
                       className={`px-2 py-1 text-xs rounded text-white ${
                         item.status === "Published"
@@ -293,24 +349,19 @@ const Testimonial = () => {
                     >
                       {item.status}
                     </span>
-                  </td>
-
-                  {/* ACTION COLUMN */}
+                  </td> */}
 
                   <td className="border p-2 space-y-2">
-
-                    <button
-                      onClick={() => togglePublish(item.id)}
+                    {/* <button
+                      onClick={() => togglePublish(item._id)}
                       className={`w-full text-xs py-1 rounded text-white ${
                         item.status === "Published"
                           ? "bg-red-500"
                           : "bg-blue-500"
                       }`}
                     >
-                      {item.status === "Published"
-                        ? "Unpublish"
-                        : "Publish"}
-                    </button>
+                      {item.status === "Published" ? "Unpublish" : "Publish"}
+                    </button> */}
 
                     <button
                       onClick={() => handleEdit(item)}
@@ -320,22 +371,17 @@ const Testimonial = () => {
                     </button>
 
                     <button
-                      onClick={() => handleDelete(item.id)}
+                      onClick={() => handleDelete(item._id)}
                       className="w-full bg-red-600 text-white text-xs py-1 rounded flex items-center justify-center gap-1"
                     >
                       <Trash2 size={14} /> Delete
                     </button>
-
                   </td>
-
                 </tr>
               ))}
             </tbody>
-
           </table>
-
         </div>
-
       </div>
     </div>
   );

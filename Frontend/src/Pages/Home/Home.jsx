@@ -9,6 +9,7 @@ import Teacher from "../Teacher/Teacher";
 import OurGallery from "../OurGallery/OurGallery";
 import Contact from "../../Components/Contact/Contact";
 import News from "../News/News";
+import ClubsSection from "../../Components/ClubSection/ClubSection";
 
 const Home = () => {
   return (
@@ -35,6 +36,7 @@ const Home = () => {
       <div id="events">
         <Events/>
       </div>
+      <ClubsSection />
 
       <div id="gallery">
         <OurGallery/>

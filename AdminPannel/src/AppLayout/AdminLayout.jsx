@@ -4,33 +4,31 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 
 export default function AdminLayout() {
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
-    <div className="flex w-full">
-
+    <div className="min-h-screen bg-slate-100">
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
       />
 
       <div
-        className={`flex-1 transition-all duration-300 w-full
-        ${sidebarOpen ? "lg:ml-64" : "lg:ml-20"}`}
+        className={`min-h-screen transition-all duration-300 ${
+          sidebarOpen ? "lg:ml-72" : "lg:ml-0"
+        }`}
       >
-
         <Navbar
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
         />
 
-        <main className="p-6 bg-gray-100 min-h-screen w-full">
-          <Outlet />
+        <main className="bg-slate-100 p-4 sm:p-6">
+          <div className="min-h-[calc(100vh-74px-32px)] rounded-3xl bg-white p-4 shadow-sm sm:p-6">
+            <Outlet />
+          </div>
         </main>
-
       </div>
-
     </div>
   );
 }
