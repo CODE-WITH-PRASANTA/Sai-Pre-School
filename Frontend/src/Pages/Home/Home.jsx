@@ -19,8 +19,6 @@ const Home = () => {
       </div>
 
       <HomeSecondCompo />
-
-      
       <div id="about">
         <About />
       </div>
@@ -52,8 +50,6 @@ const Home = () => {
       <div id="news">
         <News/>
       </div>
-
-
     </>
   );
 };

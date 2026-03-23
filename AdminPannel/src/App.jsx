@@ -10,12 +10,13 @@ import Testimonial from "./Pages/Testimonial/Testimonial";
 import GalleryPost from "./Pages/GalleryPost/GalleryPost";
 import GalleryView from "./Pages/GalleryView/GalleryView";
 import AdminAdvertisement from "./Pages/AdminAdv/AdminAdv";
-import AdminColdLeads from "./Pages/dminColdLead/Sidebar";
+import AdminColdLeads from "./Pages/AdminColdLead/Sidebar";
 
 import TeacherPost from "./Pages/TeacherPost/TeacherPost"; // ✅ added
 import Contact from "./Pages/Contact/Contact";
 import Admission from "./Pages/Admission/Admission";
 import Fees from "./Pages/Fees/Fees";
+import BlogPosting from "./Component/BlogPosting/BlogPosting";
 
 export default function App() {
   return (
@@ -28,7 +29,7 @@ export default function App() {
 
           <Route path="/" element={<Dashboard />} />
 
-          <Route path="/admin/news" element={<AdminNewsPost />} />
+          <Route path="/admin/news" element={<BlogPosting />} />
 
           <Route path="/admin/event" element={<AdminEventPost />} />
 

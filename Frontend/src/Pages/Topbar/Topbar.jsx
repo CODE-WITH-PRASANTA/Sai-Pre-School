@@ -33,7 +33,7 @@ const Topbar = () => {
         <div className="topbar-left">
           <div className="topbar-item">
             <FaEnvelope />
-            <span>saikidsplayschool@gmail.com</span>
+            <span>preschoolsaikids@gmail.com</span>
           </div>
 
           <div className="topbar-item">
@@ -133,7 +133,7 @@ const Topbar = () => {
                 <FaEnvelope />
               </div>
 
-              <span>Email:saikidsplayschool@gmail.com</span>
+              <span>Email:preschoolsaikids@gmail.com</span>
             </div>
 
             <div className="topbar-contactItem">

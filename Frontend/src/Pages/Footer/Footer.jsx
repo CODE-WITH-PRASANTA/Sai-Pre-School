@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../../assets/sai-pre-school-logo.png";
+import logo from "../../assets/logo.webp";
 import { Link } from "react-router-dom";
 import {
   FaFacebookF,
@@ -32,6 +32,12 @@ const Footer = () => {
     setEmail("");
   };
 
+  // ✅ WhatsApp number (with country code)
+  const whatsappNumber = "919178681922";
+
+  // ✅ WhatsApp URL
+  const whatsappLink = `https://wa.me/${whatsappNumber}`;
+
   return (
     <footer className="relative bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 pt-20">
       {/* Footer Content */}
@@ -41,20 +47,19 @@ const Footer = () => {
       >
         {/* Logo + Social */}
         <div className="flex flex-col items-center cursor-pointer">
-          {/* Logo */}
           <img
             src={logo}
             alt="SAI KIDS Pre School Logo"
             className="
-      h-16 w-16
-      sm:h-18 sm:w-18
-      md:h-20 md:w-20
-      lg:h-24 lg:w-24
-      xl:h-[100px] xl:w-[100px]
-      rounded-full
-      object-cover
-      shrink-0
-    "
+              h-16 w-16
+              sm:h-18 sm:w-18
+              md:h-20 md:w-20
+              lg:h-24 lg:w-24
+              xl:h-[100px] xl:w-[100px]
+              rounded-full
+              object-cover
+              shrink-0
+            "
           />
 
           {/* Social Icons */}
@@ -82,41 +87,15 @@ const Footer = () => {
           <h3 className="footer-title">INFORMATION</h3>
 
           <div className="grid grid-cols-2 gap-y-3 text-gray-700">
-            <a href="#home" className="footer-link">
-              HOME
-            </a>
-
-            <a href="#about" className="footer-link">
-              ABOUT
-            </a>
-
-            <a href="#news" className="footer-link">
-              NEWS
-            </a>
-
-            <a href="#classes" className="footer-link">
-              CLASSES
-            </a>
-
-            <a href="#teachers" className="footer-link">
-              TEACHERS
-            </a>
-
-            <a href="#events" className="footer-link">
-              EVENTS
-            </a>
-
-            <a href="#gallery" className="footer-link">
-              GALLERY
-            </a>
-
-            <a href="#testimonials" className="footer-link">
-              TESTIMONIALS
-            </a>
-
-            <a href="#contact" className="footer-link">
-              CONTACT
-            </a>
+            <a href="#home" className="footer-link">HOME</a>
+            <a href="#about" className="footer-link">ABOUT</a>
+            <a href="#news" className="footer-link">NEWS</a>
+            <a href="#classes" className="footer-link">CLASSES</a>
+            <a href="#teachers" className="footer-link">TEACHERS</a>
+            <a href="#events" className="footer-link">EVENTS</a>
+            <a href="#gallery" className="footer-link">GALLERY</a>
+            <a href="#testimonials" className="footer-link">TESTIMONIALS</a>
+            <a href="#contact" className="footer-link">CONTACT</a>
           </div>
         </div>
 
@@ -137,7 +116,7 @@ const Footer = () => {
 
             <div className="flex gap-3">
               <FaEnvelope className="text-pink-500" />
-              <p>saikidsplayschool@gmail.com</p>
+              <p>preschoolsaikids@gmail.com</p>
             </div>
           </div>
         </div>
@@ -175,9 +154,11 @@ const Footer = () => {
         <FaArrowUp />
       </button>
 
-      {/* WhatsApp Button */}
+      {/* ✅ WhatsApp Button (UPDATED) */}
       <a
-        href="#"
+        href={whatsappLink}
+        target="_blank"
+        rel="noopener noreferrer"
         className="floating-btn bottom-20 right-6 bg-green-500 hover:bg-green-600"
       >
         <FaWhatsapp />
