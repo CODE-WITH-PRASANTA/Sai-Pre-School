@@ -6,6 +6,9 @@ import {
   FaInstagram,
   FaEdit,
   FaTrash,
+  FaImage,
+  FaUserTie,
+  FaGlobe,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
@@ -40,7 +43,7 @@ export default function TeacherPost() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!form.name) return;
+    if (!form.name.trim()) return;
 
     if (editId) {
       setTeachers(
@@ -72,261 +75,349 @@ export default function TeacherPost() {
   const handleEdit = (teacher) => {
     setForm(teacher);
     setEditId(teacher.id);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleClear = () => {
+    setForm({
+      image: "",
+      name: "",
+      designation: "",
+      facebook: "",
+      google: "",
+      linkedin: "",
+      instagram: "",
+      twitter: "",
+    });
+    setEditId(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const socialButtons = [
+    { icon: <FaFacebookF />, link: form.facebook, label: "Facebook" },
+    { icon: <FaGooglePlusG />, link: form.google, label: "Google" },
+    { icon: <FaLinkedinIn />, link: form.linkedin, label: "LinkedIn" },
+    { icon: <FaInstagram />, link: form.instagram, label: "Instagram" },
+    { icon: <FaXTwitter />, link: form.twitter, label: "Twitter" },
+  ];
+
   return (
-    <div className="p-4 md:p-8 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-bold mb-6">Teacher Post</h1>
-
-      {/* FORM + PREVIEW */}
-
-      <div className="grid lg:grid-cols-2 gap-6 items-start">
-
-        {/* FORM */}
-
-        <div className="bg-white shadow-lg rounded-xl p-6">
-          <form onSubmit={handleSubmit} className="space-y-4">
-
-            {/* Image Upload */}
-
-            <div className="space-y-1">
-              <label className="text-sm font-medium text-gray-700">
-                Teacher Image
-              </label>
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleImage}
-                className="w-full border border-gray-300 rounded-lg p-2"
-              />
-            </div>
-
-            {/* Name */}
-
-            <div className="space-y-1">
-              <label className="text-sm font-medium text-gray-700">
-                Teacher Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                placeholder="Enter teacher name"
-                className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            {/* Designation */}
-
-            <div className="space-y-1">
-              <label className="text-sm font-medium text-gray-700">
-                Designation
-              </label>
-              <input
-                type="text"
-                name="designation"
-                value={form.designation}
-                onChange={handleChange}
-                placeholder="Enter designation"
-                className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            {/* Social Links */}
-
-            <input
-              type="url"
-              name="facebook"
-              value={form.facebook}
-              onChange={handleChange}
-              placeholder="Facebook URL"
-              className="w-full border p-2 rounded"
-            />
-
-            <input
-              type="url"
-              name="google"
-              value={form.google}
-              onChange={handleChange}
-              placeholder="Google+ URL"
-              className="w-full border p-2 rounded"
-            />
-
-            <input
-              type="url"
-              name="linkedin"
-              value={form.linkedin}
-              onChange={handleChange}
-              placeholder="LinkedIn URL"
-              className="w-full border p-2 rounded"
-            />
-
-            <input
-              type="url"
-              name="instagram"
-              value={form.instagram}
-              onChange={handleChange}
-              placeholder="Instagram URL"
-              className="w-full border p-2 rounded"
-            />
-
-            <input
-              type="url"
-              name="twitter"
-              value={form.twitter}
-              onChange={handleChange}
-              placeholder="X / Twitter URL"
-              className="w-full border p-2 rounded"
-            />
-
-            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
-              {editId ? "Update Teacher" : "Submit Teacher"}
-            </button>
-
-          </form>
-        </div>
-
-        {/* LIVE PREVIEW */}
-
-        <div className="bg-white shadow-lg rounded-xl p-6 flex justify-center">
-
-          <div className="relative w-72">
-
-            {form.image ? (
-              <img
-                src={form.image}
-                alt=""
-                className="w-full h-64 object-cover rounded-xl"
-              />
-            ) : (
-              <div className="w-full h-64 bg-gray-200 rounded-xl"></div>
-            )}
-
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white rounded-2xl shadow-lg p-4 w-64 text-center">
-
-              <h3 className="font-bold text-pink-500 uppercase">
-                {form.name || "Teacher Name"}
-              </h3>
-
-              <p className="text-gray-600 text-sm mb-3">
-                {form.designation || "Designation"}
-              </p>
-
-              <div className="flex justify-center gap-3 text-white">
-
-                <a className="bg-pink-500 p-2 rounded-full"><FaFacebookF /></a>
-                <a className="bg-pink-500 p-2 rounded-full"><FaGooglePlusG /></a>
-                <a className="bg-pink-500 p-2 rounded-full"><FaLinkedinIn /></a>
-                <a className="bg-pink-500 p-2 rounded-full"><FaInstagram /></a>
-                <a className="bg-pink-500 p-2 rounded-full"><FaXTwitter /></a>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      {/* TEACHER TABLE */}
-
-      <div className="mt-10 bg-white rounded-2xl shadow-lg p-6">
-
-        <div className="flex justify-between items-center mb-4">
-
+    <div className="min-h-screen bg-slate-100 px-3 py-3 md:px-4 md:py-4">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-5 flex flex-col gap-3 rounded-[24px] bg-white px-4 py-4 shadow-sm md:flex-row md:items-center md:justify-between md:px-5 md:py-5">
           <div>
-            <h2 className="text-xl font-semibold">Teacher List</h2>
-            <p className="text-gray-500 text-sm">
-              Manage teacher records
+            <span className="mb-2 inline-flex rounded-full bg-blue-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-700">
+              Teacher Management
+            </span>
+            <h1 className="text-xl font-extrabold tracking-tight text-slate-900 md:text-2xl">
+              Teacher Post Dashboard
+            </h1>
+            <p className="mt-1 max-w-2xl text-sm text-slate-500">
+              Create teacher cards, preview them live, and manage all profiles
+              in one clean admin panel.
             </p>
           </div>
 
-          <div className="bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-sm">
+          <div className="inline-flex w-fit items-center rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white">
             Total Teachers : {teachers.length}
           </div>
-
         </div>
 
-        <div className="overflow-x-auto">
+        <div className="grid gap-5 xl:grid-cols-[1.08fr_0.92fr]">
+          <div className="rounded-[24px] bg-white px-4 py-4 shadow-sm md:px-5 md:py-5">
+            <div className="mb-5 flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+                <FaUserTie className="text-base" />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-slate-900">
+                  {editId ? "Update Teacher" : "Add New Teacher"}
+                </h2>
+                <p className="text-sm text-slate-500">
+                  Fill the form and generate teacher card
+                </p>
+              </div>
+            </div>
 
-          <table className="w-full text-sm">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2 md:col-span-2">
+                  <label className="text-sm font-semibold text-slate-700">
+                    Teacher Image
+                  </label>
 
-            <thead className="bg-gradient-to-r from-gray-900 to-gray-700 text-white">
-
-              <tr>
-                <th className="p-3 text-left">Image</th>
-                <th className="p-3 text-left">Teacher Name</th>
-                <th className="p-3 text-left">Designation</th>
-                <th className="p-3 text-left">Action</th>
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              {teachers.length === 0 && (
-                <tr>
-                  <td colSpan="4" className="text-center p-6 text-gray-400">
-                    No Teachers Added
-                  </td>
-                </tr>
-              )}
-
-              {teachers.map((t) => (
-
-                <tr key={t.id} className="border-b hover:bg-gray-50">
-
-                  <td className="p-3">
-                    <img
-                      src={t.image}
-                      alt=""
-                      className="w-16 h-12 object-cover rounded"
+                  <label className="flex min-h-[120px] cursor-pointer flex-col items-center justify-center rounded-[22px] border border-dashed border-slate-300 bg-slate-50 px-4 py-5 text-center transition hover:border-blue-400 hover:bg-blue-50">
+                    <FaImage className="mb-2 text-2xl text-blue-500" />
+                    <span className="text-sm font-semibold text-slate-700">
+                      Upload Teacher Image
+                    </span>
+                    <span className="mt-1 text-xs text-slate-500">
+                      PNG, JPG or WEBP supported
+                    </span>
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleImage}
+                      className="hidden"
                     />
-                  </td>
+                  </label>
+                </div>
 
-                  <td className="p-3 font-medium">{t.name}</td>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700">
+                    Teacher Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    placeholder="Enter teacher name"
+                    className="h-11 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-blue-500 focus:bg-white"
+                  />
+                </div>
 
-                  <td className="p-3 text-gray-600">
-                    {t.designation}
-                  </td>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700">
+                    Designation
+                  </label>
+                  <input
+                    type="text"
+                    name="designation"
+                    value={form.designation}
+                    onChange={handleChange}
+                    placeholder="Enter designation"
+                    className="h-11 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm outline-none transition focus:border-blue-500 focus:bg-white"
+                  />
+                </div>
+              </div>
 
-                  <td className="p-3">
+              <div className="rounded-[22px] border border-slate-200 bg-slate-50 px-4 py-4">
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-100 text-orange-600">
+                    <FaGlobe />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-900">
+                      Social Media Links
+                    </h3>
+                    <p className="text-xs text-slate-500">
+                      Add teacher social profile links
+                    </p>
+                  </div>
+                </div>
 
-                    <div className="flex gap-2">
+                <div className="grid gap-3 md:grid-cols-2">
+                  <input
+                    type="url"
+                    name="facebook"
+                    value={form.facebook}
+                    onChange={handleChange}
+                    placeholder="Facebook URL"
+                    className="h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-pink-500"
+                  />
 
-                      <button
-                        onClick={() => handleEdit(t)}
-                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded flex items-center gap-1 text-sm"
-                      >
-                        <FaEdit /> Edit
-                      </button>
+                  <input
+                    type="url"
+                    name="google"
+                    value={form.google}
+                    onChange={handleChange}
+                    placeholder="Google+ URL"
+                    className="h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-pink-500"
+                  />
 
-                      <button
-                        onClick={() => handleDelete(t.id)}
-                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded flex items-center gap-1 text-sm"
-                      >
-                        <FaTrash /> Delete
-                      </button>
+                  <input
+                    type="url"
+                    name="linkedin"
+                    value={form.linkedin}
+                    onChange={handleChange}
+                    placeholder="LinkedIn URL"
+                    className="h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-pink-500"
+                  />
 
+                  <input
+                    type="url"
+                    name="instagram"
+                    value={form.instagram}
+                    onChange={handleChange}
+                    placeholder="Instagram URL"
+                    className="h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-pink-500"
+                  />
+
+                  <input
+                    type="url"
+                    name="twitter"
+                    value={form.twitter}
+                    onChange={handleChange}
+                    placeholder="X / Twitter URL"
+                    className="h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-pink-500 md:col-span-2"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <button className="inline-flex h-11 items-center justify-center rounded-2xl bg-blue-600 px-5 text-sm font-semibold text-white transition hover:bg-blue-700">
+                  {editId ? "Update Teacher" : "Submit Teacher"}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleClear}
+                  className="inline-flex h-11 items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                >
+                  Clear Form
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div className="rounded-[24px] bg-white px-4 py-4 shadow-sm md:px-5 md:py-5">
+            <div className="mb-4 flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-bold text-slate-900">
+                  Live Preview
+                </h2>
+                <p className="text-sm text-slate-500">Teacher card preview</p>
+              </div>
+
+              <span className="rounded-full bg-pink-50 px-3 py-1 text-xs font-semibold text-pink-600">
+                Preview
+              </span>
+            </div>
+
+            <div className="flex justify-center">
+              <div className="relative w-full max-w-[320px]">
+                <div className="overflow-hidden rounded-[28px] bg-slate-200 shadow-md">
+                  {form.image ? (
+                    <img
+                      src={form.image}
+                      alt={form.name || "Teacher preview"}
+                      className="h-[360px] w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-[360px] w-full items-center justify-center bg-slate-100 text-slate-400">
+                      <div className="text-center">
+                        <FaImage className="mx-auto mb-2 text-3xl" />
+                        <p className="text-sm font-medium">Teacher Image Preview</p>
+                      </div>
                     </div>
+                  )}
+                </div>
 
-                  </td>
+                <div className="relative z-10 mx-auto -mt-14 w-[88%] rounded-[24px] bg-white px-4 py-4 text-center shadow-md">
+                  <h3 className="text-lg font-extrabold uppercase tracking-wide text-pink-500">
+                    {form.name || "Teacher Name"}
+                  </h3>
 
-                </tr>
+                  <p className="mt-1 text-sm font-medium text-slate-500">
+                    {form.designation || "Designation"}
+                  </p>
 
-              ))}
-
-            </tbody>
-
-          </table>
-
+                  <div className="mt-4 flex flex-wrap justify-center gap-2.5">
+                    {socialButtons.map((item, index) => (
+                      <a
+                        key={index}
+                        href={item.link || "#"}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={item.label}
+                        className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-r from-pink-500 to-orange-400 text-sm text-white transition hover:-translate-y-0.5"
+                      >
+                        {item.icon}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-      </div>
+        <div className="mt-5 rounded-[24px] bg-white px-4 py-4 shadow-sm md:px-5 md:py-5">
+          <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h2 className="text-lg font-bold text-slate-900">Teacher List</h2>
+              <p className="text-sm text-slate-500">
+                Manage teacher records with edit and delete actions
+              </p>
+            </div>
 
+            <div className="inline-flex w-fit items-center rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700">
+              Total Teachers : {teachers.length}
+            </div>
+          </div>
+
+          <div className="overflow-x-auto rounded-[20px] border border-slate-200">
+            <table className="min-w-full text-sm">
+              <thead className="bg-slate-900 text-white">
+                <tr>
+                  <th className="px-4 py-3 text-left font-semibold">Image</th>
+                  <th className="px-4 py-3 text-left font-semibold">Teacher Name</th>
+                  <th className="px-4 py-3 text-left font-semibold">Designation</th>
+                  <th className="px-4 py-3 text-left font-semibold">Action</th>
+                </tr>
+              </thead>
+
+              <tbody className="bg-white">
+                {teachers.length === 0 && (
+                  <tr>
+                    <td colSpan="4" className="px-4 py-8 text-center text-slate-400">
+                      No Teachers Added
+                    </td>
+                  </tr>
+                )}
+
+                {teachers.map((t) => (
+                  <tr
+                    key={t.id}
+                    className="border-t border-slate-100 transition hover:bg-slate-50"
+                  >
+                    <td className="px-4 py-3">
+                      {t.image ? (
+                        <img
+                          src={t.image}
+                          alt={t.name}
+                          className="h-14 w-20 rounded-xl object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-14 w-20 items-center justify-center rounded-xl bg-slate-100 text-slate-400">
+                          <FaImage />
+                        </div>
+                      )}
+                    </td>
+
+                    <td className="px-4 py-3 font-semibold text-slate-800">
+                      {t.name}
+                    </td>
+
+                    <td className="px-4 py-3 text-slate-500">
+                      {t.designation}
+                    </td>
+
+                    <td className="px-4 py-3">
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          onClick={() => handleEdit(t)}
+                          className="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-3 py-2 text-xs font-semibold text-white transition hover:bg-amber-600"
+                        >
+                          <FaEdit /> Edit
+                        </button>
+
+                        <button
+                          onClick={() => handleDelete(t.id)}
+                          className="inline-flex items-center gap-2 rounded-xl bg-red-500 px-3 py-2 text-xs font-semibold text-white transition hover:bg-red-600"
+                        >
+                          <FaTrash /> Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
