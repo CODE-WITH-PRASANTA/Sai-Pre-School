@@ -1,0 +1,562 @@
+.dashboardSection {
+  --bg: #f4f7fb;
+  --white: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --line: #e5e7eb;
+  --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  --shadow-soft: 0 10px 28px rgba(15, 23, 42, 0.05);
+  --radius-xl: 22px;
+  --radius-lg: 16px;
+  --green: #22c55e;
+  --green-dark: #1db87b;
+  --blue: #3b82f6;
+  --yellow: #eab308;
+  --red: #ef4444;
+  --facebook: #6278b3;
+  --twitter: #5a96c8;
+  --google: #ff1c1c;
+  --linkedin: #316cb3;
+
+  width: 100%;
+  padding: 0 10px 10px;
+  background: linear-gradient(180deg, #f8fbff 0%, #f3f6fb 100%);
+  box-sizing: border-box;
+}
+
+.dashboardSection * {
+  box-sizing: border-box;
+}
+
+.dashboardSection__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.dashboardSection__card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #dfe7f1;
+  border-radius: 18px;
+  box-shadow: var(--shadow-soft);
+  padding: 16px 18px;
+  min-height: 408px;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease;
+}
+
+.dashboardSection__card:hover,
+.dashboardSection__socialCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.dashboardSection__cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.dashboardSection__cardHeader h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #10254d;
+}
+
+.dashboardSection__menuWrap {
+  position: relative;
+}
+
+.dashboardSection__menuBtn {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  color: #475569;
+  border-radius: 10px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.dashboardSection__menuBtn:hover {
+  background: #eef4ff;
+  color: #0f172a;
+}
+
+.dashboardSection__dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 150px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
+  border-radius: 16px;
+  padding: 8px;
+  z-index: 20;
+  animation: dashboardSectionDropdown 0.18s ease;
+}
+
+@keyframes dashboardSectionDropdown {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dashboardSection__dropdown button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-align: left;
+  font-size: 0.94rem;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.dashboardSection__dropdown button:hover {
+  background: #f4f7fb;
+  color: #0f172a;
+}
+
+.dashboardSection__box--editing {
+  outline: 2px dashed #8fb5ff;
+  outline-offset: 6px;
+  border-radius: 14px;
+}
+
+.dashboardSection__card--refreshing {
+  opacity: 0.8;
+}
+
+.dashboardSection__spin {
+  animation: dashboardSectionSpin 0.8s linear infinite;
+}
+
+@keyframes dashboardSectionSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* calendar */
+.dashboardSection__calendarTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.dashboardSection__calendarTop h4 {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #10254d;
+}
+
+.dashboardSection__calendarNav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashboardSection__calendarNav button {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: #10254d;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.dashboardSection__calendarWeek {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.dashboardSection__calendarWeek span {
+  text-align: center;
+  color: #64748b;
+  font-size: 0.88rem;
+}
+
+.dashboardSection__calendarDates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px 10px;
+}
+
+.dashboardSection__dateBtn {
+  border: none;
+  background: transparent;
+  height: 42px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  color: #10254d;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease, color 0.25s ease;
+}
+
+.dashboardSection__dateBtn:hover {
+  background: #f8f3d6;
+}
+
+.dashboardSection__dateBtn--active {
+  background: #fbefb8;
+  color: #10254d;
+  font-weight: 700;
+}
+
+/* traffic */
+.dashboardSection__traffic h2 {
+  margin: 0 0 12px;
+  font-size: 2rem;
+  line-height: 1;
+  color: #10254d;
+  font-weight: 900;
+}
+
+.dashboardSection__trafficBar {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  overflow: hidden;
+  display: flex;
+  margin-bottom: 16px;
+  background: #e8eef7;
+}
+
+.dashboardSection__trafficBarPart {
+  height: 100%;
+  display: block;
+}
+
+.dashboardSection__trafficBarPart--green {
+  width: 53%;
+  background: #1db87b;
+}
+
+.dashboardSection__trafficBarPart--blue {
+  width: 28%;
+  background: #3b82f6;
+}
+
+.dashboardSection__trafficBarPart--yellow {
+  width: 12%;
+  background: #eab308;
+}
+
+.dashboardSection__trafficBarPart--red {
+  width: 7%;
+  background: #ef4444;
+}
+
+.dashboardSection__trafficList {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboardSection__trafficRow {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px dashed #d9e2ee;
+}
+
+.dashboardSection__trafficRow:last-child {
+  border-bottom: none;
+}
+
+.dashboardSection__trafficLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dashboardSection__trafficLeft p {
+  margin: 0;
+  color: #10254d;
+  font-size: 0.95rem;
+}
+
+.dashboardSection__trafficRow strong {
+  color: #10254d;
+  font-size: 0.98rem;
+}
+
+.dashboardSection__trafficRow span:last-child {
+  color: #10254d;
+  font-size: 0.94rem;
+}
+
+.dashboardSection__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dashboardSection__dot--green {
+  background: #1db87b;
+}
+
+.dashboardSection__dot--blue {
+  background: #3b82f6;
+}
+
+.dashboardSection__dot--yellow {
+  background: #eab308;
+}
+
+.dashboardSection__dot--red {
+  background: #ef4444;
+}
+
+/* notice */
+.dashboardSection__noticeBoard {
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.dashboardSection__noticeBoard::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dashboardSection__noticeBoard::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+.dashboardSection__noticeItem {
+  padding: 0 0 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.dashboardSection__noticeItem:last-child {
+  margin-bottom: 0;
+}
+
+.dashboardSection__noticeDate {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 12px;
+  background: #1db87b;
+  color: #fff;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.dashboardSection__noticeTitle {
+  margin: 0 0 10px;
+  color: #334155;
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
+.dashboardSection__noticeMeta {
+  margin: 0;
+  color: #475569;
+  font-size: 0.92rem;
+}
+
+/* bottom cards */
+.dashboardSection__socialGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.dashboardSection__socialCard {
+  border-radius: 10px;
+  min-height: 122px;
+  padding: 18px 18px 16px;
+  color: #ffffff;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.dashboardSection__socialCard--facebook {
+  background: #6179b3;
+}
+
+.dashboardSection__socialCard--twitter {
+  background: #5b97c8;
+}
+
+.dashboardSection__socialCard--google {
+  background: #ff1b1b;
+}
+
+.dashboardSection__socialCard--linkedin {
+  background: #316cb3;
+}
+
+.dashboardSection__socialIcon {
+  width: 28px;
+  height: 28px;
+  margin: 0 auto 10px;
+  display: grid;
+  place-items: center;
+  font-size: 1.3rem;
+}
+
+.dashboardSection__socialCard p {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.dashboardSection__socialCard h4 {
+  margin: 0;
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.dashboardSection__empty {
+  margin-top: 18px;
+  background: #fff;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  padding: 28px 18px;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+}
+
+.dashboardSection__empty h3 {
+  margin: 0 0 8px;
+  color: #10254d;
+}
+
+.dashboardSection__empty p {
+  margin: 0;
+  color: #64748b;
+}
+
+@media (max-width: 1199px) {
+  .dashboardSection {
+    padding: 0 10px 10px;
+  }
+
+  .dashboardSection__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dashboardSection__card--notice {
+    grid-column: span 2;
+    min-height: 320px;
+  }
+
+  .dashboardSection__socialGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .dashboardSection {
+    padding: 0 8px 8px;
+  }
+
+  .dashboardSection__grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .dashboardSection__card--notice {
+    grid-column: span 1;
+  }
+
+  .dashboardSection__card {
+    min-height: auto;
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .dashboardSection__cardHeader h3 {
+    font-size: 1rem;
+  }
+
+  .dashboardSection__traffic h2 {
+    font-size: 1.8rem;
+  }
+
+  .dashboardSection__trafficRow {
+    grid-template-columns: 1fr;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .dashboardSection__calendarDates {
+    gap: 8px;
+  }
+
+  .dashboardSection__dateBtn {
+    height: 38px;
+    font-size: 0.88rem;
+  }
+
+  .dashboardSection__socialGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .dashboardSection__socialCard {
+    min-height: 110px;
+  }
+
+  .dashboardSection__socialCard h4 {
+    font-size: 1.35rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboardSection__calendarWeek span {
+    font-size: 0.78rem;
+  }
+
+  .dashboardSection__dateBtn {
+    height: 34px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+  }
+
+  .dashboardSection__traffic h2 {
+    font-size: 1.55rem;
+  }
+
+  .dashboardSection__noticeTitle,
+  .dashboardSection__noticeMeta,
+  .dashboardSection__trafficLeft p {
+    font-size: 0.9rem;
+  }
+}
