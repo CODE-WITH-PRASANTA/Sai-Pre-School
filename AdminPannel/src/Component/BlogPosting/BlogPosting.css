@@ -1,0 +1,144 @@
+/* MAIN */
+.blogAdmin {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  height: 100vh;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+/* LEFT FORM */
+.blogAdmin-form {
+  width: 50%;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  overflow-y: auto; /* vertical scroll */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.blogAdmin-form h2 {
+  margin-bottom: 15px;
+}
+
+.blogAdmin-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.blogAdmin-form input,
+.blogAdmin-form textarea {
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  outline: none;
+}
+
+.blogAdmin-form button {
+  background: #3b82f6;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.preview-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* RIGHT TABLE */
+.blogAdmin-table {
+  width: 50%;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.blogAdmin-table h2 {
+  margin-bottom: 15px;
+}
+
+/* HORIZONTAL SCROLL */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+th {
+  background: #f3f4f6;
+}
+
+/* IMAGE */
+.table-img {
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* DESCRIPTION */
+.desc {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* BUTTONS */
+.edit-btn {
+  background: #10b981;
+  color: #fff;
+  border: none;
+  padding: 5px 8px;
+  margin-right: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  padding: 5px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* NO DATA */
+.no-data {
+  text-align: center;
+  padding: 20px;
+  color: #9ca3af;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .blogAdmin {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .blogAdmin-form,
+  .blogAdmin-table {
+    width: 100%;
+  }
+}

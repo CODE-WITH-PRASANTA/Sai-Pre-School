@@ -35,7 +35,7 @@ const Contact = () => {
               <FaEnvelope className="icon email" />
               <div>
                 <h4>Email</h4>
-                <p>saikidsplayschool@gmail.com</p>
+                <p>preschoolsaikids@gmail.com</p>
               </div>
             </div>
 
@@ -77,10 +77,10 @@ const Contact = () => {
         <div className="contact-right">
 
           <iframe
-            title="map"
-            src="https://maps.google.com/maps?q=jaipur&t=&z=13&ie=UTF8&iwloc=&output=embed"
-            loading="lazy"
-          ></iframe>
+  title="map"
+  src="https://maps.google.com/maps?q=Plot%20No.%20526,%20Haridaspur,%20Naharkanta,%20Bhubaneswar&t=&z=15&ie=UTF8&iwloc=&output=embed"
+  loading="lazy"
+></iframe>
 
         </div>
 
