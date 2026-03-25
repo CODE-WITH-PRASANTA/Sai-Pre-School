@@ -18,7 +18,7 @@ router.post("/register", registerAdmin);
 router.post("/login", loginAdmin);
 
 // Logout (PROTECTED)
-router.post("/logout", protect, logoutAdmin);
+router.post("/logout", logoutAdmin);
 
 // Protected test route (check login working or not)
 router.get("/profile", protect, (req, res) => {
