@@ -1,5 +1,6 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import API from "../api/axios";
 import {
   FaTimes,
   FaHome,
@@ -16,10 +17,13 @@ import {
   FaMoneyBillWave,
   FaChevronDown,
   FaRegGem,
+  FaSignOutAlt,
 } from "react-icons/fa";
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
-  const menu = [
+  const navigate = useNavigate();
+
+ const menu = [
     { name: "Dashboard", path: "/", icon: <FaHome /> },
     { name: "Teacher Post", path: "/admin/teachers", icon: <FaUserTie /> },
     { name: "Blog Posting", path: "/admin/news", icon: <FaNewspaper /> },
@@ -59,6 +63,17 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
   const toggleMenu = (name) => {
     setOpenMenu(openMenu === name ? null : name);
+  };
+
+  // 🔥 LOGOUT FUNCTION
+  const handleLogout = async () => {
+    try {
+      await API.post("/auth/logout");
+      localStorage.removeItem("admin");
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -246,6 +261,19 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
             })}
           </nav>
         </div>
+
+        {/* 🔥 LOGOUT BUTTON (BOTTOM) */}
+        <div className="mt-auto p-4 border-t border-white/10">
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl 
+            bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-all duration-300"
+          >
+            <FaSignOutAlt />
+            <span className="font-medium">Logout</span>
+          </button>
+        </div>
+
       </aside>
     </>
   );
