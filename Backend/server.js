@@ -15,6 +15,11 @@ const enquiryRoutes = require("./routes/enquiry.routes");
 const testimonialRoutes = require("./routes/testimonialRoutes");
 const contact = require('./routes/classRoutes')
 const authRoutes = require("./routes/adminAuth.routes");
+const teacherRoutes = require("./routes/teacher.routes");
+
+
+
+
 
 dotenv.config();
 
@@ -54,6 +59,7 @@ app.use("/api/enquiries", enquiryRoutes);
 app.use("/api", testimonialRoutes);
 app.use("/api",contact)
 app.use("/api/auth", authRoutes);
+app.use("/api", teacherRoutes);
 
 
 

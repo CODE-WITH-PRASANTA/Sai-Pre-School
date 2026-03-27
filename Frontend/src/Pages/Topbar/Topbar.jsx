@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./Topbar.css";
+import API, { IMAGE_URL } from "../../api/axios";
+import { useEffect } from "react";
 
 import { FiMenu, FiX } from "react-icons/fi";
 import {
@@ -10,17 +12,34 @@ import {
 } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
 
-import img1 from "../../assets/photo1.webp";
-import img2 from "../../assets/photo2.webp";
-import img3 from "../../assets/photo3.webp";
-
-import news1 from "../../assets/photo4.webp";
-import news2 from "../../Assets/photo5.webp";
-import news3 from "../../Assets/photo6.webp";
-
 const Topbar = () => {
   const [topbarSidebar, setTopbarSidebar] = useState(false);
   const [selectedImg, setSelectedImg] = useState(null);
+  const [gallery, setGallery] = useState([]);
+  const [news, setNews] = useState([]);
+
+  const fetchGallery = async () => {
+    try {
+      const res = await API.get("/photo-gallery");
+      setGallery(res.data.data || []);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchNews = async () => {
+    try {
+      const res = await API.get("/news");
+      setNews(res.data.data || []);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchGallery();
+    fetchNews();
+  }, []);
 
   const toggleTopbarSidebar = () => {
     setTopbarSidebar(!topbarSidebar);
@@ -67,9 +86,7 @@ const Topbar = () => {
       <div className={`topbar-sidebar ${topbarSidebar ? "active" : ""}`}>
         {/* Sidebar Header */}
         <div className="topbar-sidebarHeader">
-          <h2>
-            Best School in Bhubaneswar – Sai Pre School
-          </h2>
+          <h2>Best School in Bhubaneswar – Sai Pre School</h2>
 
           <div className="topbar-closeIcon" onClick={toggleTopbarSidebar}>
             <FiX />
@@ -82,9 +99,8 @@ const Topbar = () => {
             <FaMapMarkerAlt className="topbar-locationIcon" />
 
             <p>
-             Plot No.: 526, Haridaspur, <br />
-              Naharkanta, Bhubaneswar 
-              
+              Plot No.: 526, Haridaspur, <br />
+              Naharkanta, Bhubaneswar
             </p>
           </div>
 
