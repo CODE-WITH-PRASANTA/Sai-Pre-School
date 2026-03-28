@@ -106,17 +106,13 @@ const Topbar = () => {
 
           {/* GALLERY */}
           <div className="topbar-gallery">
-            <div className="topbar-galleryItem">
-              <img src={img1} alt="" onClick={() => setSelectedImg(img1)} />
-            </div>
-
-            <div className="topbar-galleryItem">
-              <img src={img2} alt="" onClick={() => setSelectedImg(img2)} />
-            </div>
-
-            <div className="topbar-galleryItem">
-              <img src={img3} alt="" onClick={() => setSelectedImg(img3)} />
-            </div>
+            {gallery
+              .slice(0, 3) // ✅ only 3 items
+              .map((item, index) => (
+                <div className="topbar-galleryItem" key={index}>
+                  <img src={`${IMAGE_URL}${item.image}`} alt="gallery" />
+                </div>
+              ))}
           </div>
 
           {/* MODAL */}
@@ -165,41 +161,22 @@ const Topbar = () => {
           <div className="topbar-news">
             <h3>Latest News</h3>
 
-            <div className="topbar-newsItem">
-              <img src={news1} alt="news" />
+            {news
+              .slice(0, 3) // ✅ only 3 items
+              .map((item, index) => (
+                <div className="topbar-newsItem" key={index}>
+                  <img src={`${IMAGE_URL}${item.image}`} alt="news" />
 
-              <div>
-                <span className="topbar-newsDate">
-                  <FaCalendarAlt /> 26 September 2023
-                </span>
+                  <div>
+                    <span className="topbar-newsDate">
+                      <FaCalendarAlt />{" "}
+                      {new Date(item.createdAt).toDateString()}
+                    </span>
 
-                <p>How to Keep Children Safe Online In</p>
-              </div>
-            </div>
-
-            <div className="topbar-newsItem">
-              <img src={news2} alt="news" />
-
-              <div>
-                <span className="topbar-newsDate">
-                  <FaCalendarAlt /> 09 August 2023
-                </span>
-
-                <p>Baby school and other secrets is yourfamily</p>
-              </div>
-            </div>
-
-            <div className="topbar-newsItem">
-              <img src={news3} alt="news" />
-
-              <div>
-                <span className="topbar-newsDate">
-                  <FaCalendarAlt /> 09 August 2023
-                </span>
-
-                <p>Easy steps for choosing to the learning</p>
-              </div>
-            </div>
+                    <p>{item.title}</p>
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
       </div>
