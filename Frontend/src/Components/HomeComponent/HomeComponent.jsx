@@ -90,7 +90,14 @@ parents: "100+ Trusted Parents",
           <p className="home-hero-text">{heroContent[currentSlide].text}</p>
 
           <div className="home-hero-buttons">
-            <button className="home-btn-join">Contact us</button>
+          <a
+              href="https://wa.me/919178681922?text=Hello%20Sai%20Kids%20Pre%20School,%20I%20am%20interested%20in%20admission."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="home-btn-join"
+            >
+              Contact Us
+            </a>
 
             <div className="home-watch-video">
               <div className="home-play-icon">▶</div>
