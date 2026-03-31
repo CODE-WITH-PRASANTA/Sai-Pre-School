@@ -24,37 +24,21 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        {/* <Route path="/login" element={<Login />} /> */}
 
-
-        <Route
-          element={
-            <ProtectedRoute>
-              <AdminLayout />
-            </ProtectedRoute>
-          }
-        >
+        <Route element={<AdminLayout />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
 
           <Route path="/admin/news" element={<BlogPosting />} />
-
           <Route path="/admin/event" element={<AdminEventPost />} />
-
           <Route path="/admin/gallery-post" element={<GalleryPost />} />
-
           <Route path="/admin/gallery-view" element={<GalleryView />} />
-
           <Route path="/admin/classes" element={<Classes />} />
-
           <Route path="/admin/teachers" element={<TeacherPost />} />
-
           <Route path="/admin/testimonials" element={<Testimonial />} />
-
           <Route path="/admin/contact" element={<Contact />} />
-
           <Route path="/admin/advertisement" element={<AdminAdvertisement />} />
-
           <Route path="/admin/cold-lead" element={<AdminColdLeads />} />
           <Route path="/admin/admission" element={<Admission />} />
           <Route path="/admin/fees" element={<Fees />} />
