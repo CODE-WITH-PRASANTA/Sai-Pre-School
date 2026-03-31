@@ -35,6 +35,7 @@ export default function App() {
           }
         >
           <Route path="/" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
 
           <Route path="/admin/news" element={<BlogPosting />} />
 

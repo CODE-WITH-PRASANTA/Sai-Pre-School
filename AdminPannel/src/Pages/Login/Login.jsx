@@ -1,143 +1,203 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import API from "../../api/axios";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import Swal from "sweetalert2";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [showPass, setShowPass] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
+  // ✅ ADD NAME
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // ================= LOGIN =================
-  const handleLogin = async (e) => {
+  const from = location.state?.from?.pathname || "/";
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
 
     try {
-      const res = await API.post("/auth/login", {
-        email,
-        password,
-      });
+      if (isLogin) {
+        // ✅ LOGIN
+        const res = await API.post("/auth/login", { email, password });
 
-      if (res.status === 200) {
-        localStorage.setItem("admin", JSON.stringify(res.data.admin));
-        navigate("/");
+        if (res.status === 200) {
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("isAdmin", "true");
+          localStorage.setItem("admin", JSON.stringify(res.data.admin));
+
+          // ✅ SUCCESS ALERT
+          Swal.fire({
+            title: "Login Successful 🎉",
+            text: "Welcome back!",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false,
+          });
+
+          navigate(from, { replace: true });
+        }
+      } else {
+        // ✅ REGISTER
+        const res = await API.post("/auth/register", {
+          name,
+          email,
+          password,
+        });
+
+        if (res.status === 201) {
+          // ✅ SUCCESS ALERT
+          Swal.fire({
+            title: "Registered Successfully 🎉",
+            text: "Admin account created",
+            icon: "success",
+            confirmButtonColor: "#6366f1",
+          });
+
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("isAdmin", "true");
+          localStorage.setItem("admin", JSON.stringify(res.data.admin));
+
+          navigate(from, { replace: true });
+
+          setIsLogin(true);
+          setName("");
+          setEmail("");
+          setPassword("");
+        }
       }
-    } catch (error) {
-      alert(error.response?.data?.message || "Login failed");
-    }
-  };
-
-  // ================= REGISTER =================
-  const handleRegister = async (e) => {
-    e.preventDefault();
-
-    try {
-      const res = await API.post("/auth/register", {
-        name,
-        email,
-        password,
-      });
-
-      if (res.status === 201) {
-        alert("Registration successful 🎉");
-        setIsLogin(true); // switch to login
-      }
-    } catch (error) {
-      alert(error.response?.data?.message || "Registration failed");
+    } catch (err) {
+      // ❌ ERROR ALERT
+      Swal.fire(
+        "Error ❌",
+        err.response?.data?.message || "Something went wrong",
+        "error",
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black px-4">
-
-      <div className="w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl p-8">
-
-        {/* Title */}
-        <h2 className="text-3xl font-bold text-center text-white mb-2">
-          {isLogin ? "Admin Login" : "Admin Register"}
+    <div
+      className="min-h-screen flex items-center justify-center 
+    bg-gradient-to-br from-black via-gray-900 to-gray-950 
+    px-4 relative overflow-hidden"
+    >
+      <div
+        className="relative w-full max-w-md
+        bg-white/10 backdrop-blur-2xl border border-white/20 
+        rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] 
+        p-6"
+      >
+        <h2 className="text-2xl font-bold text-center text-white mb-2">
+          {isLogin ? "Admin Login 🔐" : "Admin Register 📝"}
         </h2>
 
-        <p className="text-center text-gray-300 mb-6">
-          {isLogin ? "Welcome back! Please login" : "Create your account"}
-        </p>
+        {/* ERROR */}
+        {error && (
+          <p className="text-red-400 text-sm text-center mb-3">{error}</p>
+        )}
 
-        {/* Form */}
-        <form
-          onSubmit={isLogin ? handleLogin : handleRegister}
-          className="space-y-5"
-        >
-
-          {/* Name (Register only) */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* ✅ NAME ONLY IN REGISTER */}
           {!isLogin && (
-            <div>
-              <label className="text-sm text-gray-300">Name</label>
-              <input
-                type="text"
-                placeholder="Enter name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full mt-1 px-4 py-2 rounded-lg bg-white/20 text-white placeholder-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
+            <input
+              type="text"
+              placeholder="Admin Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="inputPremium"
+              required
+            />
           )}
 
-          {/* Email */}
-          <div>
-            <label className="text-sm text-gray-300">Email</label>
-            <input
-              type="email"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full mt-1 px-4 py-2 rounded-lg bg-white/20 text-white placeholder-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
+          {/* EMAIL */}
+          <input
+            type="email"
+            placeholder="Email Address"
+            value={email}
+            autoComplete="off"
+            onChange={(e) => setEmail(e.target.value)}
+            className="inputPremium"
+            required
+          />
 
-          {/* Password */}
-          <div>
-            <label className="text-sm text-gray-300">Password</label>
+          {/* PASSWORD */}
+          <div className="relative">
             <input
-              type="password"
-              placeholder="Enter password"
+              type={showPass ? "text" : "password"}
+              placeholder="Password"
               value={password}
+              autoComplete="new-password"
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full mt-1 px-4 py-2 rounded-lg bg-white/20 text-white placeholder-gray-300 outline-none focus:ring-2 focus:ring-blue-500"
+              className="inputPremium pr-10"
               required
             />
+
+            <span
+              onClick={() => setShowPass(!showPass)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 
+              text-gray-300 cursor-pointer"
+            >
+              {showPass ? <FiEyeOff /> : <FiEye />}
+            </span>
           </div>
 
-          {/* Button */}
+          {/* BUTTON */}
           <button
-            type="submit"
-            className="w-full py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition duration-300 text-white font-semibold shadow-lg"
+            disabled={loading}
+            className="w-full py-3 rounded-xl 
+            text-white font-semibold
+            bg-gradient-to-r from-blue-600 to-purple-600 
+            disabled:opacity-60"
           >
-            {isLogin ? "Login" : "Register"}
+            {loading ? "Please wait..." : isLogin ? "Login" : "Register"}
           </button>
         </form>
 
-        {/* Toggle */}
-        <p className="text-center text-gray-400 text-sm mt-6">
-          {isLogin ? "Don't have an account?" : "Already have an account?"}
-
+        {/* TOGGLE */}
+        <p className="text-center text-gray-400 text-sm mt-4">
+          {isLogin ? "Don't have admin?" : "Already registered?"}
           <span
-            onClick={() => setIsLogin(!isLogin)}
-            className="text-blue-400 cursor-pointer ml-1 hover:underline"
+            onClick={() => {
+              setIsLogin(!isLogin);
+              setError("");
+            }}
+            className="text-blue-400 cursor-pointer ml-1"
           >
             {isLogin ? "Register" : "Login"}
           </span>
         </p>
 
-        {/* Footer */}
-        <p className="text-center text-gray-500 text-xs mt-4">
-          © 2026 Admin Panel
-        </p>
-
+        {/* Demo */}
+        {/* {isLogin && (
+          <p className="text-center text-gray-500 text-xs mt-3">
+            Use your registered email & password
+          </p>
+        )} */}
       </div>
+
+      {/* Styles */}
+      <style>{`
+        .inputPremium {
+          width: 100%;
+          padding: 12px;
+          border-radius: 10px;
+          background: rgba(255,255,255,0.08);
+          border: 1px solid rgba(255,255,255,0.2);
+          color: white;
+          outline: none;
+        }
+      `}</style>
     </div>
   );
 };

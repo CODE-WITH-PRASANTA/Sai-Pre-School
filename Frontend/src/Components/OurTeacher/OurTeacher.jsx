@@ -1,41 +1,25 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./OurTeacher.css";
-
-// ✅ teacher images (make sure these files exist in src/assets/)
-import t21 from "../../assets/Teacher21.webp";
-import t22 from "../../assets/Teacher22.webp";
-import t23 from "../../assets/Teacher23.webp";
-import t24 from "../../assets/Teacher24.webp";
-import t25 from "../../assets/Teacher25.webp";
-import t26 from "../../assets/Teacher26.webp";
-import t27 from "../../assets/Teacher27.webp";
-import t28 from "../../assets/Teacher28.webp";
-import t29 from "../../assets/Teacher29.webp";
-import t30 from "../../assets/Teacher30.webp";
-import t31 from "../../assets/Teacher31.webp";
-import t32 from "../../assets/Teacher32.webp";
+import API, { IMAGE_URL } from "../../api/axios";
 
 const OurTeacher = () => {
   // ✅ component base class name
   const base = "our-teacher";
 
-  const teachers = useMemo(
-    () => [
-      { id: 1, name: "JONE DOE", role: "Teachers", img: t21, bio: "Friendly educator focused on early learning." },
-      { id: 2, name: "SARA LEE", role: "Teachers", img: t22, bio: "Creative mentor who makes learning fun." },
-      { id: 3, name: "AVA MARTIN", role: "Teachers", img: t23, bio: "Interactive teaching style for confidence." },
-      { id: 4, name: "NEHA PATEL", role: "Teachers", img: t24, bio: "Supportive mentor with strong classroom values." },
-      { id: 5, name: "EMILY ROSE", role: "Teachers", img: t25, bio: "Encourages curiosity and good habits." },
-      { id: 6, name: "ROBERT GREY", role: "Teachers", img: t26, bio: "Explains concepts with real-life examples." },
-      { id: 7, name: "SOPHIA LANE", role: "Teachers", img: t27, bio: "Patient, clear and positive teaching style." },
-      { id: 8, name: "MIA JAMES", role: "Teachers", img: t28, bio: "Builds teamwork and confidence in students." },
-      { id: 9, name: "OLIVIA CHEN", role: "Teachers", img: t29, bio: "Activity-based learning for better understanding." },
-      { id: 10, name: "DANIEL SCOTT", role: "Teachers", img: t30, bio: "Strong fundamentals with gentle guidance." },
-      { id: 11, name: "GRACE KIM", role: "Teachers", img: t31, bio: "Balances fun and learning in class." },
-      { id: 12, name: "NOAH WILSON", role: "Teachers", img: t32, bio: "Progress tracking with student care." },
-    ],
-    []
-  );
+  const [teachers, setTeachers] = useState([]);
+
+  const fetchTeachers = async () => {
+    try {
+      const res = await API.get("/teachers");
+      setTeachers(res.data.data || []);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchTeachers();
+  }, []);
 
   // ✅ Only Mobile pagination (<= 520px)
   const isMobileNow = () => {
@@ -65,7 +49,15 @@ const OurTeacher = () => {
   // ✅ Data to show
   const totalPages = Math.max(1, Math.ceil(teachers.length / perPageMobile));
   const start = (page - 1) * perPageMobile;
-  const current = isMobile ? teachers.slice(start, start + perPageMobile) : teachers;
+  const current = isMobile
+    ? teachers.slice(start, start + perPageMobile)
+    : teachers;
+
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(1);
+    }
+  }, [teachers, totalPages, page]);
 
   // ✅ modal
   const [open, setOpen] = useState(false);
@@ -74,7 +66,8 @@ const OurTeacher = () => {
   const openModal = (t) => {
     setActive(t);
     setOpen(true);
-    if (typeof document !== "undefined") document.body.style.overflow = "hidden";
+    if (typeof document !== "undefined")
+      document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
@@ -105,7 +98,11 @@ const OurTeacher = () => {
         <div className={`${base}__aboutInner`}>
           <h2 className={`${base}__h2`}>About the Teachers</h2>
           <p className={`${base}__sub`}>
-            At Sai Kids, a trusted Kids Pre School in Bhubaneswar, our experienced and caring teachers guide every child with personal attention. This is why many parents choose us as one of the Best and Top Pre Schools in Bhubaneswar, offering quality learning and safe Day Care in Bhubaneswar.
+            At Sai Kids, a trusted Kids Pre School in Bhubaneswar, our
+            experienced and caring teachers guide every child with personal
+            attention. This is why many parents choose us as one of the Best and
+            Top Pre Schools in Bhubaneswar, offering quality learning and safe
+            Day Care in Bhubaneswar.
           </p>
         </div>
       </section>
@@ -116,7 +113,7 @@ const OurTeacher = () => {
           <div className={`${base}__grid`}>
             {current.map((t, i) => (
               <button
-                key={t.id}
+                key={t._id}
                 type="button"
                 className={`${base}__card`}
                 onClick={() => openModal(t)}
@@ -124,20 +121,34 @@ const OurTeacher = () => {
                 aria-label={`Open ${t.name}`}
               >
                 <div className={`${base}__cloudFrame`}>
-                  <img className={`${base}__img`} src={t.img} alt={t.name} />
+                  <img
+                    className={`${base}__img`}
+                    src={t.image ? `${IMAGE_URL}${t.image}` : "/default.png"}
+                    alt={t.name}
+                  />
                 </div>
 
                 <div className={`${base}__hover`} aria-hidden="true">
                   <div className={`${base}__hoverInner`}>
                     <div className={`${base}__name`}>{t.name}</div>
-                    <div className={`${base}__role`}>{t.role}</div>
+                    <div className={`${base}__role`}>{t.designation}</div>
 
                     <div className={`${base}__social`}>
-                      <span className={`${base}__icon`} title="Facebook">f</span>
-                      <span className={`${base}__icon`} title="Google">G+</span>
-                      <span className={`${base}__icon`} title="LinkedIn">in</span>
-                      <span className={`${base}__icon`} title="Instagram">◎</span>
-                      <span className={`${base}__icon`} title="Twitter">𝕏</span>
+                      <span className={`${base}__icon`} title="Facebook">
+                        f
+                      </span>
+                      <span className={`${base}__icon`} title="Google">
+                        G+
+                      </span>
+                      <span className={`${base}__icon`} title="LinkedIn">
+                        in
+                      </span>
+                      <span className={`${base}__icon`} title="Instagram">
+                        ◎
+                      </span>
+                      <span className={`${base}__icon`} title="Twitter">
+                        𝕏
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -188,31 +199,58 @@ const OurTeacher = () => {
       {/* ===== MODAL ===== */}
       {open && active && (
         <div className={`${base}__modal`} role="dialog" aria-modal="true">
-          <button type="button" className={`${base}__backdrop`} onClick={closeModal} aria-label="Close" />
+          <button
+            type="button"
+            className={`${base}__backdrop`}
+            onClick={closeModal}
+            aria-label="Close"
+          />
 
           <div className={`${base}__modalCard`}>
-            <button type="button" className={`${base}__close`} onClick={closeModal} aria-label="Close">
+            <button
+              type="button"
+              className={`${base}__close`}
+              onClick={closeModal}
+              aria-label="Close"
+            >
               ✕
             </button>
 
             <div className={`${base}__modalGrid`}>
               <div className={`${base}__modalMedia`}>
                 <div className={`${base}__modalFrame`}>
-                  <img className={`${base}__modalImg`} src={active.img} alt={active.name} />
+                  <img
+                    className={`${base}__modalImg`}
+                    src={`${IMAGE_URL}${active.image}`}
+                    alt={active.name}
+                  />
                 </div>
               </div>
 
               <div className={`${base}__modalInfo`}>
                 <div className={`${base}__modalName`}>{active.name}</div>
-                <div className={`${base}__modalRole`}>{active.role}</div>
-                <p className={`${base}__modalBio`}>{active.bio}</p>
+                <div className={`${base}__modalRole`}>{active.designation}</div>
+
+                <p className={`${base}__modalBio`}>
+                  Experienced teacher dedicated to student success.
+                </p>
 
                 <div className={`${base}__modalSocial`}>
-                  <button type="button" className={`${base}__sbtn`}>f</button>
-                  <button type="button" className={`${base}__sbtn`}>G+</button>
-                  <button type="button" className={`${base}__sbtn`}>in</button>
-                  <button type="button" className={`${base}__sbtn`}>◎</button>
-                  <button type="button" className={`${base}__sbtn`}>𝕏</button>
+                  <button type="button" className={`${base}__sbtn`}>
+                    f
+                  </button>
+                  <button type="button" className={`${base}__sbtn`}>
+                    G+
+                  </button>
+                  <button type="button" className={`${base}__sbtn`}>
+                    in
+                  </button>
+                  <button type="button" className={`${base}__sbtn`}>
+                    ◎
+                  </button>
+                  <button type="button" className={`${base}__sbtn`}>
+                    𝕏
+                  </button>
                 </div>
 
                 <div className={`${base}__hint`}>
