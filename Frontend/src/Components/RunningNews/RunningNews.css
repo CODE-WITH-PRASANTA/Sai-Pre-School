@@ -1,53 +1,91 @@
 /* MAIN WRAPPER */
 .News {
   width: 100%;
-  background: #f8f9fb;
-  padding: 10px 0;
+  background: linear-gradient(90deg, #f8fbff, #eef5ff);
+  padding: 12px 0;
   overflow: hidden;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
 }
 
 /* CONTAINER */
 .News-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
   width: 100%;
   overflow: hidden;
+  max-width: 1400px;
+  margin: auto;
+  padding: 0 20px;
 }
 
-/* TRACK (ANIMATION WRAPPER) */
+/* LEFT LABEL */
+.News-label {
+  background: linear-gradient(135deg, #ff4d6d, #ff7a7a);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3);
+}
+
+/* SCROLL AREA */
+.News-scroll {
+  overflow: hidden;
+  flex: 1;
+}
+
+/* TRACK */
 .News-track {
   display: flex;
   gap: 20px;
   width: max-content;
-  animation: newsScroll 25s linear infinite;
+  animation: newsScroll 30s linear infinite;
 }
 
-/* EACH ITEM */
+/* PAUSE ON HOVER */
+.News-scroll:hover .News-track {
+  animation-play-state: paused;
+}
+
+/* ITEM */
 .News-item {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 18px;
-  border: 2px solid #a0057f; /* your teal color */
+  padding: 10px 20px;
   border-radius: 30px;
   background: #fff;
+  border: 1px solid #e0e7ff;
   white-space: nowrap;
+  transition: 0.3s;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
 
-/* NEW BADGE */
+.News-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* BADGE */
 .News-badge {
-  background: red;
+  background: linear-gradient(135deg, #ff4d6d, #ff7a7a);
   color: #fff;
   font-size: 10px;
-  font-weight: 600;
-  padding: 3px 6px;
-  border-radius: 4px;
-  position: relative;
+  font-weight: 700;
+  padding: 4px 7px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
 }
 
 /* TEXT */
 .News-text {
   font-size: 14px;
   font-weight: 500;
-  color: #1f1212;
+  color: #333;
 }
 
 /* ANIMATION */
@@ -62,6 +100,10 @@
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
+  .News-label {
+    display: none;
+  }
+
   .News-item {
     padding: 8px 14px;
   }

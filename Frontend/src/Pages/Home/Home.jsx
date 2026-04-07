@@ -10,6 +10,7 @@ import OurGallery from "../OurGallery/OurGallery";
 import Contact from "../../Components/Contact/Contact";
 import News from "../News/News";
 import ClubsSection from "../../Components/ClubSection/ClubSection";
+import AboutUs from "../../Components/AboutUs/AboutUs";
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       <div id="home">
         <HomeComponent />
       </div>
+      <AboutUs/>
 
       <HomeSecondCompo />
       <div id="about">
