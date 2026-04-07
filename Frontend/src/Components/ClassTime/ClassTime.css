@@ -171,7 +171,7 @@ line-height:1.6;
 
 .class-time__title {
   margin: 8px 0 10px;
-  font-size: 22px;
+  font-size: 50px;
   font-weight: 800;
   color: #ff4fa6;
   line-height: 1.15;
@@ -355,4 +355,48 @@ line-height:1.6;
   .class-time__bg::after {
     right: -18%;
   }
+}
+/* ===== Heading Container ===== */
+.yourClass__heading {
+    text-align: center;
+    margin: 30px 0 20px;
+    position: relative;
+}
+
+/* ===== Title Style ===== */
+.yourClass__title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #f6339a, #ff7a00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    position: relative;
+}
+
+/* ===== Underline Effect ===== */
+.yourClass__title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 3px;
+    background: linear-gradient(135deg, #f6339a, #ff7a00);
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+/* ===== Hover Animation ===== */
+.yourClass__heading:hover .yourClass__title::after {
+    width: 80%;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+    .yourClass__title {
+        font-size: 22px;
+    }
 }

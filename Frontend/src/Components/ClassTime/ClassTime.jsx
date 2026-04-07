@@ -59,7 +59,7 @@ const ClassTime = () => {
 
           {/* ✅ Heading Added */}
         <div className={`${base}__heading`}>
-          <h2>Classes</h2>
+          <h2 className={`${base}__title`}>Classes</h2>
         </div>
         
         <div className={`${base}__grid`}>

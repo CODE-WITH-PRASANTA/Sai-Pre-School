@@ -1,5 +1,7 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import API from "../api/axios";
+import Swal from "sweetalert2";
 import {
   FaTimes,
   FaHome,
@@ -16,9 +18,13 @@ import {
   FaMoneyBillWave,
   FaChevronDown,
   FaRegGem,
+  FaSignOutAlt,
+    
 } from "react-icons/fa";
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
+  const navigate = useNavigate();
+
   const menu = [
     { name: "Dashboard", path: "/", icon: <FaHome /> },
     { name: "Teacher Post", path: "/admin/teachers", icon: <FaUserTie /> },
@@ -43,8 +49,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
     },
     { name: "Classes", path: "/admin/classes", icon: <FaChalkboardTeacher /> },
     { name: "Event", path: "/admin/event", icon: <FaCalendarAlt /> },
-    
-    
+
     {
       name: "Testimonials Post",
       path: "/admin/testimonials",
@@ -59,6 +64,32 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
   const toggleMenu = (name) => {
     setOpenMenu(openMenu === name ? null : name);
+  };
+
+  // 🔥 LOGOUT FUNCTION
+
+  const handleLogout = async () => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, logout",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      await API.post("/auth/logout");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      localStorage.clear();
+
+      Swal.fire("Logged out!", "", "success");
+
+      navigate("/login", { replace: true });
+    }
   };
 
   return (
@@ -183,7 +214,9 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         </span>
                       </button>
 
-                      <div className={`submenuWrap ${isDropdownOpen ? "open" : ""}`}>
+                      <div
+                        className={`submenuWrap ${isDropdownOpen ? "open" : ""}`}
+                      >
                         <div className="submenuInner">
                           <div className="ml-6 space-y-2 border-l border-white/10 pl-4">
                             {item.submenu.map((sub) => (
@@ -245,6 +278,18 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
               );
             })}
           </nav>
+        </div>
+
+        {/* 🔥 LOGOUT BUTTON (BOTTOM) */}
+        <div className="mt-auto p-4 border-t border-white/10">
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl 
+            bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-all duration-300"
+          >
+            <FaSignOutAlt />
+            <span className="font-medium">Logout</span>
+          </button>
         </div>
       </aside>
     </>

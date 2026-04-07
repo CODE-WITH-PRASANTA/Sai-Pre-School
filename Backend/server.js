@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser")
 
 const connectDB = require("./config/db");
 
@@ -13,16 +14,28 @@ const advertisementRoutes = require("./routes/advertisement.routes");
 const enquiryRoutes = require("./routes/enquiry.routes");
 const testimonialRoutes = require("./routes/testimonialRoutes");
 const contact = require('./routes/classRoutes')
+const authRoutes = require("./routes/adminAuth.routes");
+const teacherRoutes = require("./routes/teacher.routes");
+
+
+
+
 
 dotenv.config();
 
 connectDB();
 
 const app = express();
+app.use(cookieParser())
 
 /* ================= CORS ================= */
 
-app.use(cors());
+app.use(
+  cors({
+    origin:[ "http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "http://localhost:5176"],
+    credentials: true,
+  })
+);
 
 /* ================= BODY ================= */
 
@@ -44,8 +57,11 @@ app.use("/api", classRoutes);
 app.use("/api/advertisements", advertisementRoutes);
 app.use("/api/enquiries", enquiryRoutes);
 app.use("/api", testimonialRoutes);
-
 app.use("/api",contact)
+app.use("/api/auth", authRoutes);
+app.use("/api", teacherRoutes);
+
+
 
 /* ================= SERVER ================= */
 

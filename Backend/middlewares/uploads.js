@@ -16,7 +16,8 @@ const routeFolderMap = {
   "/news": "uploads/news",
   "/events": "uploads/events",
   "/classes": "uploads/classes",
-   "/testimonials": "uploads/testimonials" 
+   "/testimonials": "uploads/testimonials" ,
+    "/teachers": "uploads/teachers",
 
 };
 

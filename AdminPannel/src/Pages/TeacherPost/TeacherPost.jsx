@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import API, { IMAGE_URL } from "../../api/axios";
+import { useState, useRef, useEffect } from "react";
 import {
   FaFacebookF,
   FaGooglePlusG,
@@ -16,7 +17,7 @@ export default function TeacherPost() {
   const fileInputRef = useRef(null);
 
   const [form, setForm] = useState({
-    image: "",
+    image: null,
     name: "",
     designation: "",
     facebook: "",
@@ -29,6 +30,19 @@ export default function TeacherPost() {
   const [teachers, setTeachers] = useState([]);
   const [editId, setEditId] = useState(null);
 
+  const fetchTeachers = async () => {
+    try {
+      const res = await API.get("/teachers");
+      setTeachers(res.data.data || []);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchTeachers();
+  }, []);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -36,51 +50,88 @@ export default function TeacherPost() {
   const handleImage = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setForm({ ...form, image: URL.createObjectURL(file) });
+      setForm({ ...form, image: file }); // 🔥 important
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!form.name.trim()) return;
 
-    if (editId) {
-      setTeachers(
-        teachers.map((t) => (t.id === editId ? { ...form, id: editId } : t))
-      );
-      setEditId(null);
-    } else {
-      setTeachers([...teachers, { ...form, id: Date.now() }]);
-    }
+    try {
+      const formData = new FormData();
 
+      formData.append("name", form.name);
+      formData.append("designation", form.designation);
+      formData.append("facebook", form.facebook);
+      formData.append("google", form.google);
+      formData.append("linkedin", form.linkedin);
+      formData.append("instagram", form.instagram);
+      formData.append("twitter", form.twitter);
+
+      if (form.image) {
+        formData.append("image", form.image);
+      }
+
+      if (editId) {
+        await API.put(`/teachers/${editId}`, formData);
+      } else {
+        await API.post("/teachers", formData);
+      }
+
+      fetchTeachers(); // 🔥 refresh list
+
+      setForm({
+        image: null,
+        name: "",
+        designation: "",
+        facebook: "",
+        google: "",
+        linkedin: "",
+        instagram: "",
+        twitter: "",
+      });
+
+      setEditId(null);
+
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Delete this teacher?")) return;
+
+    try {
+      await API.delete(`/teachers/${id}`);
+      fetchTeachers();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleEdit = (teacher) => {
     setForm({
-      image: "",
-      name: "",
-      designation: "",
-      facebook: "",
-      google: "",
-      linkedin: "",
-      instagram: "",
-      twitter: "",
+      image: teacher.image || null,
+      name: teacher.name,
+      designation: teacher.designation,
+      facebook: teacher.facebook,
+      google: teacher.google,
+      linkedin: teacher.linkedin,
+      instagram: teacher.instagram,
+      twitter: teacher.twitter,
     });
+
+    setEditId(teacher._id);
 
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  const handleDelete = (id) => {
-    setTeachers(teachers.filter((t) => t.id !== id));
-  };
-
-  const handleEdit = (teacher) => {
-    setForm(teacher);
-    setEditId(teacher.id);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   const handleClear = () => {
     setForm({
-      image: "",
+      image: null,
       name: "",
       designation: "",
       facebook: "",
@@ -290,7 +341,11 @@ export default function TeacherPost() {
                 <div className="overflow-hidden rounded-[28px] bg-slate-200 shadow-md">
                   {form.image ? (
                     <img
-                      src={form.image}
+                      src={
+                        typeof form.image === "string"
+                          ? `${IMAGE_URL}${form.image}`
+                          : URL.createObjectURL(form.image)
+                      }
                       alt={form.name || "Teacher preview"}
                       className="h-[360px] w-full object-cover"
                     />
@@ -298,7 +353,9 @@ export default function TeacherPost() {
                     <div className="flex h-[360px] w-full items-center justify-center bg-slate-100 text-slate-400">
                       <div className="text-center">
                         <FaImage className="mx-auto mb-2 text-3xl" />
-                        <p className="text-sm font-medium">Teacher Image Preview</p>
+                        <p className="text-sm font-medium">
+                          Teacher Image Preview
+                        </p>
                       </div>
                     </div>
                   )}
@@ -352,8 +409,12 @@ export default function TeacherPost() {
               <thead className="bg-slate-900 text-white">
                 <tr>
                   <th className="px-4 py-3 text-left font-semibold">Image</th>
-                  <th className="px-4 py-3 text-left font-semibold">Teacher Name</th>
-                  <th className="px-4 py-3 text-left font-semibold">Designation</th>
+                  <th className="px-4 py-3 text-left font-semibold">
+                    Teacher Name
+                  </th>
+                  <th className="px-4 py-3 text-left font-semibold">
+                    Designation
+                  </th>
                   <th className="px-4 py-3 text-left font-semibold">Action</th>
                 </tr>
               </thead>
@@ -361,7 +422,10 @@ export default function TeacherPost() {
               <tbody className="bg-white">
                 {teachers.length === 0 && (
                   <tr>
-                    <td colSpan="4" className="px-4 py-8 text-center text-slate-400">
+                    <td
+                      colSpan="4"
+                      className="px-4 py-8 text-center text-slate-400"
+                    >
                       No Teachers Added
                     </td>
                   </tr>
@@ -369,13 +433,13 @@ export default function TeacherPost() {
 
                 {teachers.map((t) => (
                   <tr
-                    key={t.id}
+                    key={t._id}
                     className="border-t border-slate-100 transition hover:bg-slate-50"
                   >
                     <td className="px-4 py-3">
                       {t.image ? (
                         <img
-                          src={t.image}
+                          src={`${IMAGE_URL}${t.image}`}
                           alt={t.name}
                           className="h-14 w-20 rounded-xl object-cover"
                         />
@@ -404,7 +468,7 @@ export default function TeacherPost() {
                         </button>
 
                         <button
-                          onClick={() => handleDelete(t.id)}
+                          onClick={() => handleDelete(t._id)}
                           className="inline-flex items-center gap-2 rounded-xl bg-red-500 px-3 py-2 text-xs font-semibold text-white transition hover:bg-red-600"
                         >
                           <FaTrash /> Delete

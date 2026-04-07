@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./BlogPosting.css";
+import API, { IMAGE_URL } from "../../api/axios";
 
-const BlogPosting= () => {
+const BlogPosting = () => {
   const [form, setForm] = useState({
     title: "",
     author: "",
@@ -12,6 +13,21 @@ const BlogPosting= () => {
 
   const [blogs, setBlogs] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
+  const [editId, setEditId] = useState(null); // 🔥 backend id
+
+  /* ================= FETCH NEWS ================= */
+  const fetchBlogs = async () => {
+    try {
+      const res = await API.get("/news");
+      setBlogs(res.data.data || []);
+    } catch (error) {
+      console.log("Fetch error:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
 
   /* ================= HANDLE INPUT ================= */
   const handleChange = (e) => {
@@ -24,13 +40,13 @@ const BlogPosting= () => {
     if (file) {
       setForm({
         ...form,
-        image: URL.createObjectURL(file),
+        image: file, // 🔥 store file (not URL)
       });
     }
   };
 
   /* ================= SUBMIT ================= */
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!form.title || !form.author) {
@@ -38,36 +54,63 @@ const BlogPosting= () => {
       return;
     }
 
-    if (editIndex !== null) {
-      const updated = [...blogs];
-      updated[editIndex] = form;
-      setBlogs(updated);
-      setEditIndex(null);
-    } else {
-      setBlogs([...blogs, form]);
-    }
+    try {
+      const formData = new FormData();
+      formData.append("title", form.title);
+      formData.append("author", form.author);
+      formData.append("date", form.date);
+      formData.append("description", form.description);
+      if (form.image) formData.append("image", form.image);
 
-    setForm({
-      title: "",
-      author: "",
-      date: "",
-      description: "",
-      image: null,
-    });
+      if (editId) {
+        // 🔥 UPDATE
+        await API.put(`/news/${editId}`, formData);
+      } else {
+        // 🔥 CREATE
+        await API.post("/news", formData);
+      }
+
+      fetchBlogs(); // refresh
+
+      setForm({
+        title: "",
+        author: "",
+        date: "",
+        description: "",
+        image: null,
+      });
+
+      setEditIndex(null);
+      setEditId(null);
+    } catch (error) {
+      console.log("Submit error:", error);
+    }
   };
 
   /* ================= EDIT ================= */
-  const handleEdit = (index) => {
-    setForm(blogs[index]);
+  const handleEdit = (blog, index) => {
+    setForm({
+      title: blog.title,
+      author: blog.author,
+      date: blog.date?.slice(0, 10),
+      description: blog.description,
+      image: null,
+    });
+
     setEditIndex(index);
+    setEditId(blog._id);
   };
 
   /* ================= DELETE ================= */
-  const handleDelete = (index) => {
+  const handleDelete = async (id) => {
     if (!window.confirm("Delete this blog?")) return;
 
-    const updated = blogs.filter((_, i) => i !== index);
-    setBlogs(updated);
+    try {
+      await API.delete(`/news/${id}`);
+      fetchBlogs();
+    } catch (error) {
+      console.log("Delete error:", error);
+    }
   };
 
   return (
@@ -87,8 +130,12 @@ const BlogPosting= () => {
 
           <input type="file" onChange={handleImage} />
 
-          {form.image && (
-            <img src={form.image} alt="preview" className="preview-img" />
+          {form.image && typeof form.image !== "string" && (
+            <img
+              src={URL.createObjectURL(form.image)}
+              alt="preview"
+              className="preview-img"
+            />
           )}
 
           <input
@@ -115,7 +162,7 @@ const BlogPosting= () => {
           />
 
           <button type="submit">
-            {editIndex !== null ? "Update Blog" : "Submit Blog"}
+            {editId ? "Update Blog" : "Submit Blog"}
           </button>
         </form>
       </div>
@@ -147,13 +194,13 @@ const BlogPosting= () => {
                 </tr>
               ) : (
                 blogs.map((blog, index) => (
-                  <tr key={index}>
+                  <tr key={blog._id}>
                     <td>{index + 1}</td>
 
                     <td>
                       {blog.image && (
                         <img
-                          src={blog.image}
+                          src={`${IMAGE_URL}${blog.image}`}
                           alt=""
                           className="table-img"
                         />
@@ -162,20 +209,20 @@ const BlogPosting= () => {
 
                     <td>{blog.title}</td>
                     <td>{blog.author}</td>
-                    <td>{blog.date}</td>
+                    <td>{blog.date?.slice(0, 10)}</td>
                     <td className="desc">{blog.description}</td>
 
                     <td>
                       <button
                         className="edit-btn"
-                        onClick={() => handleEdit(index)}
+                        onClick={() => handleEdit(blog, index)}
                       >
                         Edit
                       </button>
 
                       <button
                         className="delete-btn"
-                        onClick={() => handleDelete(index)}
+                        onClick={() => handleDelete(blog._id)}
                       >
                         Delete
                       </button>
