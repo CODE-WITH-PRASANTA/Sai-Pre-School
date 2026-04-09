@@ -19,6 +19,7 @@ import {
   FaChevronDown,
   FaRegGem,
   FaSignOutAlt,
+  FaUsers,
     
 } from "react-icons/fa";
 
@@ -57,6 +58,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
     },
     { name: "Contact", path: "/admin/contact", icon: <FaPhoneAlt /> },
     { name: "Admission", path: "/admin/admission", icon: <FaUserGraduate /> },
+    {name: "Student Details", path: "/admin/students", icon: <FaUsers/>},
     { name: "Fees", path: "/admin/fees", icon: <FaMoneyBillWave /> },
   ];
 

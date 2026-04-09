@@ -19,6 +19,7 @@ import Fees from "./Pages/Fees/Fees";
 import BlogPosting from "./Component/BlogPosting/BlogPosting";
 import Login from "./Pages/Login/Login";
 import ProtectedRoute from "./Component/ProtectedRoute/ProtectedRoute";
+import StudentDetails from "./Pages/StudentDetails/StudentDetails";
 import AdminLogin from "./Pages/AdminLogin/AdminLogin";
 
 export default function App() {
@@ -49,6 +50,7 @@ export default function App() {
           <Route path="/admin/advertisement" element={<AdminAdvertisement />} />
           <Route path="/admin/cold-lead" element={<AdminColdLeads />} />
           <Route path="/admin/admission" element={<Admission />} />
+          <Route path="/admin/students" element={<StudentDetails/>} />
           <Route path="/admin/fees" element={<Fees />} />
           <Route path="/admin/profile-login" element={<AdminLogin/>}/>
         </Route>

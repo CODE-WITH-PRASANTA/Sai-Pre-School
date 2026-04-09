@@ -45,7 +45,7 @@ const Home = () => {
       </div>
 
        <div id="testimonials">
-        <Testimonials />
+        <Testimonials/>
       </div>
 
       <div id="contact">
