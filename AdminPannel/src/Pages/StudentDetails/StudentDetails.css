@@ -1,0 +1,183 @@
+/* ROOT */
+.sd-container {
+  padding: 20px;
+  background: #f4f6fb;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+/* HEADER */
+.sd-header {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* CARD */
+.sd-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  margin-bottom: 25px;
+}
+
+.sd-cardHeader {
+  padding: 15px 20px;
+  font-weight: 600;
+  background: #f9e9ee;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  gap: 8px;
+}
+
+/* FORM */
+.sd-formRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  padding: 20px;
+}
+
+.sd-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.sd-field label {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.sd-field input,
+.sd-field select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.sd-field input:focus,
+.sd-field select:focus {
+  border-color: #3b5bdb;
+}
+
+/* BUTTON */
+.sd-buttonRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px 20px;
+}
+
+.sd-btn {
+  background: #3b5bdb;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.sd-btn:hover {
+  background: #2f4cc8;
+}
+
+/* TABLE */
+.sd-tableCard {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.sd-tableHeader {
+  padding: 15px 20px;
+  background: #f9e9ee;
+  font-weight: 600;
+}
+
+.sd-tableWrapper {
+  overflow-x: auto;
+}
+
+.sd-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.sd-table th {
+  background: #f4dbe3;
+  padding: 12px;
+  font-size: 13px;
+  text-align: left;
+}
+
+.sd-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.sd-name {
+  color: #3b5bdb;
+  font-weight: 500;
+}
+
+/* ACTION */
+.sd-action {
+  position: relative;
+  cursor: pointer;
+}
+
+.sd-dropdown {
+  position: absolute;
+  right: 0;
+  top: 25px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  display: none;
+}
+
+.sd-action:hover .sd-dropdown {
+  display: block;
+}
+
+.sd-dropdown button {
+  display: block;
+  padding: 8px 12px;
+  width: 100%;
+  border: none;
+  background: none;
+  text-align: left;
+}
+
+.sd-dropdown button:hover {
+  background: #f1f3f9;
+}
+
+/* NO DATA */
+.sd-noData {
+  text-align: center;
+  padding: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .sd-formRow {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .sd-formRow {
+    grid-template-columns: 1fr;
+  }
+
+  .sd-buttonRow {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sd-btn {
+    width: 100%;
+  }
+}
