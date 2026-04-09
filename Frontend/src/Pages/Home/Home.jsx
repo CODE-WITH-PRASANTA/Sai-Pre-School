@@ -11,12 +11,16 @@ import Contact from "../../Components/Contact/Contact";
 import News from "../News/News";
 import ClubsSection from "../../Components/ClubSection/ClubSection";
 
+import Mission from "../../Components/Mission/Mission";
+
 const Home = () => {
   return (
     <>
       <div id="home">
         <HomeComponent />
       </div>
+
+      <Mission/>
 
       <HomeSecondCompo />
       <div id="about">

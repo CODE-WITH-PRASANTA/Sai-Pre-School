@@ -24,10 +24,14 @@ const About = () => {
 
           <p className="about-text">
             Sai Kids Pre School is a trusted Kids Pre School in Bhubaneswar, known for providing a safe, playful, and caring learning environment. As one of the Best and Top Pre Schools in Bhubaneswar, we offer creative learning programs and reliable Day Care in Bhubaneswar, making us a preferred Play School in Bhubaneswar for young children.
-          </p>
-
-          <button className="about-btn">Contact Us</button>
-
+          </p><a
+            href="https://wa.me/919178681922?text=Hello%20Sai%20Kids%20Pre%20School,%20I%20want%20to%20know%20about%20admissions."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="about-btn"
+          >
+            Contact Us
+          </a>
         </div>
 
 

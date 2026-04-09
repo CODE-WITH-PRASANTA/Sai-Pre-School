@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import logo from "../../assets/logo.webp";
-import { Link } from "react-router-dom";
 import {
   FaFacebookF,
   FaGooglePlusG,
@@ -12,6 +11,7 @@ import {
   FaArrowUp,
   FaWhatsapp,
 } from "react-icons/fa";
+import "./Footer.css"
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -32,38 +32,29 @@ const Footer = () => {
     setEmail("");
   };
 
-  // ✅ WhatsApp number (with country code)
   const whatsappNumber = "919178681922";
-
-  // ✅ WhatsApp URL
   const whatsappLink = `https://wa.me/${whatsappNumber}`;
 
   return (
-    <footer className="relative bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 pt-20">
+    <footer className="relative bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 pt-20 overflow-hidden">
+      
       {/* Footer Content */}
       <div
         data-aos="fade-up"
-        className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 px-6 pb-12"
+        className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 px-6 pb-12"
       >
+
         {/* Logo + Social */}
-        <div className="flex flex-col items-center cursor-pointer">
+        <div className="flex flex-col items-center">
           <img
             src={logo}
             alt="SAI KIDS Pre School Logo"
-            className="
-              h-16 w-16
-              sm:h-18 sm:w-18
-              md:h-20 md:w-20
-              lg:h-24 lg:w-24
-              xl:h-[100px] xl:w-[100px]
-              rounded-full
-              object-cover
-              shrink-0
-            "
+            className="h-20 w-20 lg:h-24 lg:w-24 rounded-full object-cover"
           />
 
           {/* Social Icons */}
           <div className="flex gap-4 mt-4">
+
             <div className="social-btn">
               <FaFacebookF />
             </div>
@@ -76,9 +67,16 @@ const Footer = () => {
               <FaLinkedinIn />
             </div>
 
-            <div className="social-btn">
+            {/* ✅ FIXED INSTAGRAM BUTTON */}
+            <a
+              href="https://www.instagram.com/saikidspreschool/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-btn instagram-btn"
+            >
               <FaInstagram />
-            </div>
+            </a>
+
           </div>
         </div>
 
@@ -145,21 +143,24 @@ const Footer = () => {
       </div>
 
       {/* Bottom */}
-      <div className="border-t border-gray-400 text-center py-4 text-gray-700">
+      <div className="relative z-10 border-t border-gray-400 text-center py-4 text-gray-700">
         © 2026 Sai Kids Pre School. All Rights Reserved. Designed By: PRWEBSTOCK
       </div>
 
       {/* Back To Top */}
-      <button onClick={scrollTop} className="floating-btn bottom-6 right-6">
+      <button
+        onClick={scrollTop}
+        className="floating-btn bottom-6 right-6 z-20"
+      >
         <FaArrowUp />
       </button>
 
-      {/* ✅ WhatsApp Button (UPDATED) */}
+      {/* WhatsApp Button */}
       <a
         href={whatsappLink}
         target="_blank"
         rel="noopener noreferrer"
-        className="floating-btn bottom-20 right-6 bg-green-500 hover:bg-green-600"
+        className="floating-btn bottom-20 right-6 bg-green-500 hover:bg-green-600 z-20"
       >
         <FaWhatsapp />
       </a>

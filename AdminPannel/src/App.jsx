@@ -20,46 +20,32 @@ import BlogPosting from "./Component/BlogPosting/BlogPosting";
 import Login from "./Pages/Login/Login";
 import ProtectedRoute from "./Component/ProtectedRoute/ProtectedRoute";
 import StudentDetails from "./Pages/StudentDetails/StudentDetails";
+import AdminLogin from "./Pages/AdminLogin/AdminLogin";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
+         <Route path="/login" element={<Login />} /> 
 
-
-        <Route
-          element={
-            <ProtectedRoute>
-              <AdminLayout />
-            </ProtectedRoute>
-          }
-        >
+        <Route element={<AdminLayout />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
 
           <Route path="/admin/news" element={<BlogPosting />} />
-
           <Route path="/admin/event" element={<AdminEventPost />} />
-
           <Route path="/admin/gallery-post" element={<GalleryPost />} />
-
           <Route path="/admin/gallery-view" element={<GalleryView />} />
-
           <Route path="/admin/classes" element={<Classes />} />
-
           <Route path="/admin/teachers" element={<TeacherPost />} />
-
           <Route path="/admin/testimonials" element={<Testimonial />} />
-
           <Route path="/admin/contact" element={<Contact />} />
-
           <Route path="/admin/advertisement" element={<AdminAdvertisement />} />
-
           <Route path="/admin/cold-lead" element={<AdminColdLeads />} />
           <Route path="/admin/admission" element={<Admission />} />
           <Route path="/admin/students" element={<StudentDetails/>} />
           <Route path="/admin/fees" element={<Fees />} />
+          <Route path="/admin/profile-login" element={<AdminLogin/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -58,19 +58,23 @@ const Testimonials = () => {
   return (
     <section className="testimonials">
 
+      <div className="testimonial-header">
+        <h2 className="testimonial-heading">
+          Why Parents Love Sai Kids Pre School in Bhubaneswar
+        </h2>
+
+        <p className="testimonial-subtext">
+          At Sai Kids Pre School, Bhubaneswar, we provide a safe, nurturing and engaging 
+          learning environment. Parents trust our experienced teachers, creative activities, 
+          and best-in-class day care services to build a strong foundation for their children.
+        </p>
+    
+      </div>
+
       {/* Clouds */}
 
       <img src={cloudYellow} className="cloud cloud-yellow" alt="" />
       <img src={cloudBlue} className="cloud cloud-blue" alt="" />
-
-      {/* Title */}
-
-      <div className="testimonial-title">
-        <h2>Testimonials about center</h2>
-        <p>
-          Sai Kids is known as a Top Pre School in Bhubaneswar, where parents trust our teachers, learning activities, and safe Day Care in Bhubaneswar.
-        </p>
-      </div>
 
       {/* Card */}
 
@@ -79,12 +83,10 @@ const Testimonials = () => {
         {/* Image */}
 
         <div className="testimonial-image">
-
           <img
             src={`${IMAGE_URL}${data.image}`}
             alt={data.name}
           />
-
         </div>
 
         {/* Text */}
@@ -99,21 +101,16 @@ const Testimonials = () => {
 
           <div className="testimonial-footer">
 
-            <div>
+          <div className="testimonial-user">
+            <h4 className="testimonial-name">{data.name}</h4>
+            <p className="testimonial-role">{data.designation}</p>
+          </div>
 
-              <h4>{data.name}</h4>
-
-              <p>{data.designation}</p>
-
-            </div>
-
-            <div className="stars">
-
-              {[...Array(data.rating || 5)].map((_, i) => (
-                <FaStar key={i} />
-              ))}
-
-            </div>
+          <div className="testimonial-rating">
+            {[...Array(data.rating || 5)].map((_, i) => (
+              <FaStar key={i} className="testimonial-star" />
+            ))}
+          </div>
 
           </div>
 

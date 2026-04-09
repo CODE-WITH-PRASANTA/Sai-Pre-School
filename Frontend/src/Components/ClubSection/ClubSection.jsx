@@ -85,14 +85,18 @@ const ClubsSection = () => {
       <div className="clubs-header">
         <span className="clubs-badge">Sai Pre School Programs</span>
 
-        <h2>Engaging Learning Activities at Sai Pre School</h2>
+        <h2>Engaging Learning Activities at Sai Kids Pre School</h2>
 
         <p>
-          At Sai Pre School, we focus on providing a balanced learning environment
-          where children can explore, learn, and grow with confidence. Our programs
-          are designed to support early childhood development through fun,
-          interactive, and meaningful activities that help build strong foundations
-          for future learning.
+          At Sai Kids Pre School in Bhubaneswar, we provide a safe, nurturing,
+            and stimulating environment where children can explore, learn, and
+            grow with confidence. Our curriculum is designed to support early
+            childhood development through play-based learning, creative
+            activities, and interactive sessions that make education enjoyable
+            and meaningful. As one of the best pre schools in Bhubaneswar, we
+            focus on building strong foundations in literacy, numeracy, social
+            skills, and emotional development, ensuring every child is prepared
+            for future academic success.
         </p>
       </div>
 

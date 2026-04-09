@@ -30,28 +30,28 @@ const HomeSecondCompo = () => {
       >
 
         <div className="home2-stat">
-          <h2>8K+</h2>
+          <h2>1K+</h2>
           <p>Success Stories</p>
         </div>
 
         <div className="home2-divider" />
 
         <div className="home2-stat">
-          <h2>200+</h2>
+          <h2>10+</h2>
           <p>Expert Instructor</p>
         </div>
 
         <div className="home2-divider" />
 
         <div className="home2-stat">
-          <h2>108K+</h2>
-          <p>Worldwide Students</p>
+          <h2>100+</h2>
+          <p>Students</p>
         </div>
 
         <div className="home2-divider" />
 
         <div className="home2-stat">
-          <h2>310+</h2>
+          <h2>50+</h2>
           <p>Trendy Subjects</p>
         </div>
 

@@ -1,0 +1,188 @@
+/* Root */
+.adminLogin {
+  padding: 30px;
+  background: #f5f7fb;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Header */
+.adminLogin-header {
+  background: linear-gradient(135deg, #6c63ff, #8f5bff);
+  padding: 25px 30px;
+  border-radius: 18px;
+  color: #fff;
+  margin-bottom: 30px;
+}
+
+.adminLogin-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.adminLogin-header p {
+  margin-top: 6px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* Layout */
+.adminLogin-container {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+/* Left Card */
+.adminLogin-leftCard {
+  flex: 1;
+  min-width: 260px;
+  max-width: 300px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.adminLogin-avatarWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.adminLogin-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 5px solid #e0e7ff;
+  object-fit: cover;
+}
+
+.adminLogin-name {
+  margin: 10px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.adminLogin-roleTag {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: #eef0ff;
+  color: #6c63ff;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.adminLogin-changeAvatar {
+  border: none;
+  background: none;
+  color: #6c63ff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Right Card */
+.adminLogin-rightCard {
+  flex: 3;
+  min-width: 300px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 25px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Form Grid */
+.adminLogin-formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* Inputs */
+.adminLogin-inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.adminLogin-inputGroup label {
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+.adminLogin-inputGroup input,
+.adminLogin-inputGroup textarea {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  font-size: 14px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.adminLogin-inputGroup input:focus,
+.adminLogin-inputGroup textarea:focus {
+  border-color: #6c63ff;
+  box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.1);
+}
+
+.adminLogin-inputGroup textarea {
+  min-height: 100px;
+  resize: none;
+}
+
+/* Full width */
+.fullWidth {
+  margin-top: 20px;
+}
+
+/* Button */
+.adminLogin-btnWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.adminLogin-saveBtn {
+  padding: 12px 25px;
+  border-radius: 25px;
+  border: none;
+  background: linear-gradient(135deg, #6c63ff, #8f5bff);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.adminLogin-saveBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .adminLogin-container {
+    flex-direction: column;
+  }
+
+  .adminLogin-leftCard {
+    max-width: 100%;
+  }
+
+  .adminLogin-formGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .adminLogin-header h1 {
+    font-size: 22px;
+  }
+
+  .adminLogin-header p {
+    font-size: 12px;
+  }
+}
